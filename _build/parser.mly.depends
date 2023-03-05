@@ -1,2 +1,2 @@
-parser.ml: LMJ Lexing Location
+parser.ml: LMJ Lexing List Location
 parser.mli: LMJ Lexing Location

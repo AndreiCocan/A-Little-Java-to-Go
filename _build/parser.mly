@@ -59,9 +59,9 @@ java_class:
    RBRACE
    { class_name,
       {
-         extends=class_extends;
-         attributes = attribute_list;
-         methods= method_list;
+         extends = class_extends;
+         attributes = List.map (fun (x, y) -> (y, x)) attribute_list;
+         methods = method_list;
       } 
    }
 ;
@@ -87,7 +87,7 @@ java_method:
       let declarations = fst var_declarations_and_statements and statements = snd var_declarations_and_statements in 
       method_name,
       {
-         arguments = method_args;
+         arguments = List.map (fun (x, y) -> (y, x)) method_args;
          return_type = method_type;
          method_declarations = declarations;
          method_statements = statements;
@@ -177,11 +177,11 @@ raw_expression:
 | NEW INTEGER LBRACKET size = expression RBRACKET
    { EArrayAlloc size}
 
-| NEW class_name = IDENT LPAREN RPAREN
-   { EObjectAlloc class_name }
+//| NEW class_name = IDENT LPAREN RPAREN
+  // { EObjectAlloc class_name }
 
-| NOT expr = expression 
-   { EUnOp (UOpNot, expr) }
+//| NOT expr = expression 
+  // { EUnOp (UOpNot, expr) }
 
 | LPAREN expr = expression RPAREN
    { expr }
