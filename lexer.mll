@@ -43,6 +43,7 @@ rule get_token = parse
   | '{'       { LBRACE }
   | '}'       { RBRACE }
   | '.'       { DOT }
+  | "length"  { LENGTH}
   | ';'       { SEMICOLON }
   | '='       { ASSIGN }
   | ","       { COMMA }
