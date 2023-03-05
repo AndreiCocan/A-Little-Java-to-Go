@@ -6,9 +6,9 @@ ocamldep.opt -modules error.ml > error.ml.depends # cached
 # Target: error.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:error.cmo, file:error.ml, implem, ocaml, quiet }
 ocamlc.opt -c -o error.cmo error.ml # cached
 # Target: lexer.mll, tags: { extension:mll, file:lexer.mll, lexer, ocaml, ocamllex, quiet }
-ocamllex.opt -q lexer.mll
+ocamllex.opt -q lexer.mll # cached
 # Target: lexer.ml.depends, tags: { extension:ml, file:lexer.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules lexer.ml > lexer.ml.depends
+ocamldep.opt -modules lexer.ml > lexer.ml.depends # cached
 # Target: location.ml.depends, tags: { extension:ml, file:location.ml, ocaml, ocamldep, quiet }
 ocamldep.opt -modules location.ml > location.ml.depends # cached
 # Target: location.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:location.cmo, file:location.ml, implem, ocaml, quiet }
@@ -25,8 +25,10 @@ menhir --explain --dump --ocamlc ocamlc.opt --infer parser.mly # cached
 ocamldep.opt -modules parser.mli > parser.mli.depends # cached
 # Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
 ocamlc.opt -c -o parser.cmi parser.mli # cached
+# Target: lexer.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:lexer.cmo, file:lexer.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o lexer.cmo lexer.ml # cached
 # Target: lmj2mj.ml.depends, tags: { extension:ml, file:lmj2mj.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules lmj2mj.ml > lmj2mj.ml.depends # cached
+ocamldep.opt -modules lmj2mj.ml > lmj2mj.ml.depends
 # Target: MJ.mli.depends, tags: { extension:mli, file:MJ.mli, ocaml, ocamldep, quiet }
 ocamldep.opt -modules MJ.mli > MJ.mli.depends # cached
 # Target: stringMap.mli.depends, tags: { extension:mli, file:stringMap.mli, ocaml, ocamldep, quiet }
@@ -49,14 +51,13 @@ ocamldep.opt -modules print.ml > print.ml.depends # cached
 ocamlc.opt -c -o print.cmo print.ml # cached
 # Target: typechecking.ml.depends, tags: { extension:ml, file:typechecking.ml, ocaml, ocamldep, quiet }
 ocamldep.opt -modules typechecking.ml > typechecking.ml.depends # cached
-# Target: lexer.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:lexer.cmo, file:lexer.ml, implem, ocaml, quiet }
-ocamlc.opt -c -o lexer.cmo lexer.ml
 # Target: lmj2mj.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:lmj2mj.cmo, file:lmj2mj.ml, implem, ocaml, quiet }
 ocamlc.opt -c -o lmj2mj.cmo lmj2mj.ml
 + ocamlc.opt -c -o lmj2mj.cmo lmj2mj.ml
-File "lmj2mj.ml", line 16, characters 39-60:
-16 | | LMJ.SBlock is -> MJ.SBlock (List.map translate_instruction is)
-                                            ^^^^^^^^^^^^^^^^^^^^^
-Error: Unbound value translate_instruction
+File "lmj2mj.ml", line 26, characters 22-38:
+26 | | LMJ.TypeIntArray -> MJ.TypeeIntArray
+                           ^^^^^^^^^^^^^^^^
+Error: Unbound constructor MJ.TypeeIntArray
+Hint: Did you mean TypeIntArray?
 Command exited with code 2.
 # Compilation unsuccessful.

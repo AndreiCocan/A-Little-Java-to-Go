@@ -13,9 +13,9 @@ and translate_raw_expression = function
 | LMJ.EObjectAlloc id -> MJ.EObjectAlloc (Location.content id)
 
 and translate_statement = function
-| LMJ.SBlock is -> MJ.SBlock (List.map translate_instruction is)
-| LMJ.SIf (c, i1, i2) -> MJ.SIf (translate_expression c, translate_instruction i1, translate_instruction i2)
-| LMJ.SWhile (c, i) -> MJ.SWhile (translate_expression c, translate_instruction i)
+| LMJ.SBlock is -> MJ.SBlock (List.map translate_statement is)
+| LMJ.SIf (c, i1, i2) -> MJ.SIf (translate_expression c, translate_statement i1, translate_statement i2)
+| LMJ.SWhile (c, i) -> MJ.SWhile (translate_expression c, translate_statement i)
 | LMJ.SSysou e -> MJ.SSysou (translate_expression e)
 | LMJ.SSetVar (id, e) -> MJ.SSetVar (Location.content id, translate_expression e)
 | LMJ.SArraySet (a, e1, e2) -> MJ.SArraySet (Location.content a, translate_expression e1, translate_expression e2)
@@ -33,10 +33,10 @@ let translate_bindings f bindings =
 
 let translate_java_method m =
   {
-    MJ.formals = List.map (fun (id, t) -> (Location.content id, translate_typ t)) m.LMJ.formals;
-    MJ.result  = translate_typ m.LMJ.result;
-    MJ.locals  = translate_bindings translate_typ m.LMJ.locals;
-    MJ.body    = translate_instruction m.LMJ.body;
+    MJ.formals = List.map (fun (id, t) -> (Location.content id, translate_java_type t)) m.LMJ.formals;
+    MJ.result  = translate_java_type m.LMJ.result;
+    MJ.locals  = translate_bindings translate_java_type m.LMJ.locals;
+    MJ.body    = translate_statement m.LMJ.body;
     MJ.return  = translate_expression m.LMJ.return
   }
 
@@ -46,14 +46,14 @@ let translate_java_class c =
       (match c.LMJ.extends with
       | None -> None
       | Some id -> Some (Location.content id));
-    MJ.attributes = translate_bindings translate_typ c.LMJ.attributes;
-    MJ.methods = translate_bindings translate_metho c.LMJ.methods
+    MJ.attributes = translate_bindings translate_java_type c.LMJ.attributes;
+    MJ.methods = translate_bindings translate_java_method c.LMJ.methods
   }
 
 let translate_program p =
   {
     MJ.name = Location.content p.LMJ.name;
-    MJ.defs = translate_bindings translate_clas p.LMJ.defs;
-    MJ.main = translate_instruction p.LMJ.main;
+    MJ.defs = translate_bindings translate_java_class p.LMJ.defs;
+    MJ.main = translate_statement p.LMJ.main;
     MJ.main_args = Location.content p.LMJ.main_args
   }
