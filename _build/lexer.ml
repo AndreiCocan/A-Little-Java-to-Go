@@ -1974,12 +1974,12 @@ and __ocaml_lex_parse_comment_rec lexbuf __ocaml_lex_state =
 
   | 2 ->
 # 72 "lexer.mll"
-         ( raise Error "Unexpected end of the file before the end of a comment")
+         ( raise (Error ("Unexpected end of the file before the end of a comment")))
 # 1979 "lexer.ml"
 
   | 3 ->
 # 73 "lexer.mll"
-         ( comment lexbuf )
+         ( parse_comment lexbuf )
 # 1984 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf;

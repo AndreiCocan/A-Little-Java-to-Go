@@ -132,7 +132,7 @@ let width column =
 
 let pad width x =
   let y = String.make width ' ' in
-  String.blit x 0 y 0 (String.length x);
+  String.blit x 0 (Bytes.of_string y) 0 (String.length x); (*I converted the byte to string here because it wasn't working*)
   y
 
 let pad column =
