@@ -34,6 +34,8 @@ program:
        main = i
      }
    }
+;
+
 
 main_class:
 | CLASS c = IDENT
@@ -44,6 +46,8 @@ main_class:
    RBRACE
    RBRACE
    { (c, a, i) }
+;
+
 
 java_class:
 |  CLASS 
@@ -60,9 +64,13 @@ java_class:
          methods= method_list;
       } 
    }
+;
+
 
 defs:
 | c = list(java_class) { c }
+;
+
 
 java_method:
 | PUBLIC
@@ -86,6 +94,8 @@ java_method:
          return_expression = return_expr;
       }
    }
+;
+
 
 var_declarations_and_statements:
 | var_type = java_type 
@@ -99,10 +109,12 @@ var_declarations_and_statements:
    { 
       ([],statements) 
    }
+;
+
 
 statement:
-| stmnt_blck = statement_block 
-   { stmnt_blck }
+| LBRACE statements = list(statement) RBRACE 
+   { SBlock statements }
 
 | IF LPAREN if_expr = expression RPAREN if_stmnt = statement ELSE else_stmnt = statement
    { SIf (if_expr,if_stmnt,else_stmnt) }
@@ -116,8 +128,17 @@ statement:
 | var_name = IDENT ASSIGN expr = expression SEMICOLON
    { SSetVar (var_name,expr) }
 
-| var_array_name = IDENT LBRACKET array_expr = expression RBRACKET ASSIGN expr = expression SEMICOLON
-   { SArraySet (var_array_name, array_expr, expr) }
+| var_array_name = IDENT LBRACKET array_index = expression RBRACKET ASSIGN expr = expression SEMICOLON
+   { SArraySet (var_array_name, array_index, expr) }
+;
+
+
+java_type:
+| INTEGER                   { TypeInt }
+| INTEGER LBRACKET RBRACKET {TypeIntArray}
+| BOOLEAN                   { TypeBool }
+| type_name = IDENT         { Type type_name }
+;
 
 expression:
 |  e = raw_expression
@@ -125,15 +146,54 @@ expression:
 
 | LPAREN e = expression RPAREN
    { e }
+;
+
 
 raw_expression:
+| left_expr = expression operator = binop right_expr = expression
+   { EBinOp (operator, left_expr, right_expr) }
+
+| array = expression LBRACKET array_index = expression RBRACKET 
+   { EArrayGet (array_expr, array_index) }
+
+| array = expression DOT LENGTH
+   { EArrayLength array}
+
+| object = expression DOT method_name = IDENT LPAREN exprs = separated_list ( COMMA , expression ) RPAREN
+   { EMethodCall (object, method_name, exprs) }
+
 | i = INT_CONST
    { EConst (ConstInt i) }
 
-java_type:
-| INTEGER                   { TypeInt }
-| INTEGER LBRACKET RBRACKET {TypeIntArray}
-| BOOLEAN                   { TypeBool }
-| 
+|bool = BOOL_CONST
+   { EConst (ConstBool bool)}
+
+|var_name = IDENT 
+   { EGetVar var_name }
+
+| THIS
+   { EThis }
+
+| NEW INTEGER LBRACKET size = expression RBRACKET
+   { EArrayAlloc size}
+
+| NEW class_name = IDENT LPAREN RPAREN
+   { EObjectAlloc class_name }
+
+| NOT expr = expression 
+   { EUnOp (UOpNot, expr) }
+
+| LPAREN expr = expression RPAREN
+   { expr }
+;
+
+
+binop:
+| AND      { OpAnd }
+| LT       { OpLt }
+| PLUS     { OpAdd }
+| MINUS    { OpSub }
+| MULTIPLY { OpMul }
+;
 
 
