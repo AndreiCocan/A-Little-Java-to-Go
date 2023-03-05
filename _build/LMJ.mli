@@ -49,7 +49,7 @@ and java_method = {
 
   method_declarations: (identifier * java_type) list;
 
-  method_statements: statement list;
+  method_statements: statement;
 
   return_expression: expression
 

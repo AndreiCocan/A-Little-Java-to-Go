@@ -1040,7 +1040,7 @@ State 80:
 ## Known stack suffix:
 ## statement
 ## LR(1) items:
-list(statement) -> statement . list(statement) [ RETURN RBRACE ]
+list(statement) -> statement . list(statement) [ RBRACE ]
 ## Transitions:
 -- On WHILE shift to state 15
 -- On SYSOU shift to state 57
@@ -1050,17 +1050,17 @@ list(statement) -> statement . list(statement) [ RETURN RBRACE ]
 -- On statement shift to state 80
 -- On list(statement) shift to state 81
 ## Reductions:
--- On RETURN RBRACE
+-- On RBRACE
 --   reduce production list(statement) ->
 
 State 81:
 ## Known stack suffix:
 ## statement list(statement)
 ## LR(1) items:
-list(statement) -> statement list(statement) . [ RETURN RBRACE ]
+list(statement) -> statement list(statement) . [ RBRACE ]
 ## Transitions:
 ## Reductions:
--- On RETURN RBRACE
+-- On RBRACE
 --   reduce production list(statement) -> statement list(statement)
 
 State 82:
@@ -1360,20 +1360,17 @@ java_method -> PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COM
 -- On IDENT shift to state 110
 -- On BOOLEAN shift to state 100
 -- On var_declarations_and_statements shift to state 111
--- On statement shift to state 80
--- On list(statement) shift to state 116
+-- On statement shift to state 116
 -- On java_type shift to state 117
 ## Reductions:
--- On RETURN
---   reduce production list(statement) ->
 
 State 110:
 ## Known stack suffix:
 ## IDENT
 ## LR(1) items:
 java_type -> IDENT . [ IDENT ]
-statement -> IDENT . ASSIGN expression SEMICOLON [ WHILE SYSOU RETURN LBRACE IF IDENT ]
-statement -> IDENT . LBRACKET expression RBRACKET ASSIGN expression SEMICOLON [ WHILE SYSOU RETURN LBRACE IF IDENT ]
+statement -> IDENT . ASSIGN expression SEMICOLON [ RETURN ]
+statement -> IDENT . LBRACKET expression RBRACKET ASSIGN expression SEMICOLON [ RETURN ]
 ## Transitions:
 -- On LBRACKET shift to state 68
 -- On ASSIGN shift to state 74
@@ -1449,13 +1446,13 @@ java_method -> PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COM
 
 State 116:
 ## Known stack suffix:
-## list(statement)
+## statement
 ## LR(1) items:
-var_declarations_and_statements -> list(statement) . [ RETURN ]
+var_declarations_and_statements -> statement . [ RETURN ]
 ## Transitions:
 ## Reductions:
 -- On RETURN
---   reduce production var_declarations_and_statements -> list(statement)
+--   reduce production var_declarations_and_statements -> statement
 
 State 117:
 ## Known stack suffix:
@@ -1489,12 +1486,9 @@ var_declarations_and_statements -> java_type IDENT SEMICOLON . var_declarations_
 -- On IDENT shift to state 110
 -- On BOOLEAN shift to state 100
 -- On var_declarations_and_statements shift to state 120
--- On statement shift to state 80
--- On list(statement) shift to state 116
+-- On statement shift to state 116
 -- On java_type shift to state 117
 ## Reductions:
--- On RETURN
---   reduce production list(statement) ->
 
 State 120:
 ## Known stack suffix:

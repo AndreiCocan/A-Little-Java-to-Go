@@ -23,7 +23,7 @@ and translate_statement = function
 let translate_java_type = function
 | LMJ.TypeInt -> MJ.TypeInt
 | LMJ.TypeBool -> MJ.TypeBool
-| LMJ.TypeIntArray -> MJ.TypeeIntArray
+| LMJ.TypeIntArray -> MJ.TypeIntArray
 | LMJ.Type id -> MJ.Type (Location.content id)
 
 let translate_binding f (id, t) = (Location.content id, f t)
@@ -33,11 +33,11 @@ let translate_bindings f bindings =
 
 let translate_java_method m =
   {
-    MJ.formals = List.map (fun (id, t) -> (Location.content id, translate_java_type t)) m.LMJ.formals;
-    MJ.result  = translate_java_type m.LMJ.result;
-    MJ.locals  = translate_bindings translate_java_type m.LMJ.locals;
-    MJ.body    = translate_statement m.LMJ.body;
-    MJ.return  = translate_expression m.LMJ.return
+    MJ.arguments = List.map (fun (id, t) -> (Location.content id, translate_java_type t)) m.LMJ.arguments;
+    MJ.return_type  = translate_java_type m.LMJ.return_type;
+    MJ.method_declarations  = translate_bindings translate_java_type m.LMJ.method_declarations;
+    MJ.method_statements    = translate_statement m.LMJ.method_statements;
+    MJ.return_expression  = translate_expression m.LMJ.return_expression
   }
 
 let translate_java_class c =

@@ -105,7 +105,7 @@ var_declarations_and_statements:
       let declarations,statements = rest_dec_and_stat in
       ((var_name, var_type) :: declarations,statements)
    }
-| statements = list(statement)
+| statements = statement
    { 
       ([],statements) 
    }
