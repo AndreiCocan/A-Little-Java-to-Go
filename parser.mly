@@ -54,14 +54,14 @@ java_class:
    class_name = IDENT 
    class_extends = option(preceded(EXTENDS,IDENT)) 
    LBRACE
-   attribute_list= list(pair(java_type,terminated(IDENT,SEMICOLON))) //CHANGE THAT
+   attribute_list= list(pair(java_type,terminated(IDENT,SEMICOLON))) 
    method_list= list(java_method)
    RBRACE
    { class_name,
       {
-         extends=class_extends;
+         extends = class_extends;
          attributes = attribute_list;
-         methods= method_list;
+         methods = method_list;
       } 
    }
 ;
@@ -159,8 +159,8 @@ raw_expression:
 | array = expression DOT LENGTH
    { EArrayLength array}
 
-| object = expression DOT method_name = IDENT LPAREN exprs = separated_list ( COMMA , expression ) RPAREN
-   { EMethodCall (object, method_name, exprs) }
+| java_object = expression DOT method_name = IDENT LPAREN exprs = separated_list ( COMMA , expression ) RPAREN
+   { EMethodCall (java_object, method_name, exprs) }
 
 | i = INT_CONST
    { EConst (ConstInt i) }

@@ -26,9 +26,9 @@ and binop = LMJ.binop =
 and unop = LMJ.unop = UOpNot
 
 and statement =
-| SBlock of instruction list
-| SIf of expression * instruction * instruction
-| SWhile of expression * instruction
+| SBlock of statement list
+| SIf of expression * statement * statement
+| SWhile of expression * statement
 | SSysou of expression
 | SSetVar of identifier * expression
 | SArraySet of identifier * expression * expression
@@ -41,15 +41,15 @@ and java_type =
 
 and java_method = {
 
-  formals: (string * typ) list;
+  arguments: (string * java_type) list;
 
-  result: typ;
+  return_type: java_type;
 
-  locals: typ StringMap.t;
+  method_declarations: java_type StringMap.t;
 
-  body: instruction;
+  method_statements: statement;
 
-  return: expression
+  return_expression: expression
 
 }
 
@@ -57,9 +57,9 @@ and java_class = {
 
   extends: string option;
 
-  attributes: typ StringMap.t;
+  attributes: java_type StringMap.t;
 
-  methods: metho StringMap.t;
+  methods: java_method StringMap.t;
 
 }
 
@@ -67,10 +67,10 @@ and program = {
 
   name: string;
 
-  defs: clas StringMap.t;
+  defs: java_class StringMap.t;
 
   main_args: string;
 
-  main: instruction
+  main: statement
 
 }

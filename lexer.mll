@@ -68,6 +68,6 @@ rule get_token = parse
 
 and parse_comment = parse
   | '\n' { newline lexbuf; parse_comment lexbuf}
-  | "*/" {get_token lexbuf}
+  | "*/" { get_token lexbuf}
   | eof  { raise Error "Unexpected end of the file before the end of a comment"}
   | _    { comment lexbuf }

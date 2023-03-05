@@ -17,6 +17,7 @@ let letter = ['a'-'z''A'-'Z''_']
 let ident = letter (digit | letter)*
 
 rule get_token = parse
+  | "//" [^ '\n']* '\n'
   | '\n'      { newline lexbuf; get_token lexbuf }
   | space+    { get_token lexbuf }
   | "/*"      { parse_comment lexbuf }
@@ -67,6 +68,6 @@ rule get_token = parse
 
 and parse_comment = parse
   | '\n' { newline lexbuf; parse_comment lexbuf}
-  | "*/" {get_token lexbuf}
+  | "*/" { get_token lexbuf}
   | eof  { raise Error "Unexpected end of the file before the end of a comment"}
   | _    { comment lexbuf }

@@ -28,9 +28,9 @@ and binop =
 and unop = UOpNot
 
 and statement =
-| SBlock of instruction list
-| SIf of expression * instruction * instruction
-| SWhile of expression * instruction
+| SBlock of statement list
+| SIf of expression * statement * statement
+| SWhile of expression * statement
 | SSysou of expression
 | SSetVar of identifier * expression
 | SArraySet of identifier * expression * expression
@@ -43,15 +43,15 @@ and java_type =
 
 and java_method = {
 
-  formals: (identifier * typ) list;
+  arguments: (identifier * java_type) list;
 
-  result: typ;
+  return_type: java_type;
 
-  locals: (identifier * typ) list;
+  method_declarations: (identifier * java_type) list;
 
-  body: instruction;
+  method_statements: statement;
 
-  return: expression
+  return_expression: expression
 
 }
 
@@ -59,9 +59,9 @@ and java_class = {
 
   extends: identifier option;
 
-  attributes: (identifier * typ) list;
+  attributes: (identifier * java_type) list;
 
-  methods: (identifier * metho) list
+  methods: (identifier * java_method) list
 
 }
 
@@ -69,10 +69,10 @@ and program = {
 
   name: identifier;
 
-  defs: (identifier * clas) list;
+  defs: (identifier * java_class) list;
 
   main_args: identifier;
 
-  main: instruction
+  main: statement
 
 }
