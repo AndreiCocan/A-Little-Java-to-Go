@@ -1,0 +1,78 @@
+
+** Conflict (shift/reduce) in state 54.
+** Tokens involved: PLUS MULTIPLY MINUS LT LBRACKET DOT AND
+** The following explanations concentrate on token PLUS.
+** This state is reached from program after reading:
+
+main_class CLASS IDENT option(preceded(EXTENDS,IDENT)) LBRACE list(pair(java_type,terminated(IDENT,SEMICOLON))) PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COMMA,pair(java_type,IDENT))) RPAREN LBRACE WHILE LPAREN NOT expression
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+program 
+main_class defs EOF 
+           list(java_class) 
+           java_class list(java_class) 
+           CLASS IDENT option(preceded(EXTENDS,IDENT)) LBRACE list(pair(java_type,terminated(IDENT,SEMICOLON))) list(java_method) RBRACE 
+                                                                                                                java_method list(java_method) 
+                                                                                                                PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COMMA,pair(java_type,IDENT))) RPAREN LBRACE var_declarations_and_statements RETURN expression SEMICOLON RBRACE 
+                                                                                                                                                                                                                          list(statement) 
+                                                                                                                                                                                                                          statement list(statement) 
+                                                                                                                                                                                                                          WHILE LPAREN expression RPAREN statement 
+                                                                                                                                                                                                                                       raw_expression 
+                                                                                                                                                                                                                                       (?)
+
+** In state 54, looking ahead at PLUS, shifting is permitted
+** because of the following sub-derivation:
+
+NOT expression 
+    raw_expression 
+    expression binop expression 
+               . PLUS 
+
+** In state 54, looking ahead at PLUS, reducing production
+** raw_expression -> NOT expression
+** is permitted because of the following sub-derivation:
+
+expression binop expression // lookahead token appears because binop can begin with PLUS
+raw_expression // lookahead token is inherited
+NOT expression . 
+
+** Conflict (shift/reduce) in state 48.
+** Tokens involved: PLUS MULTIPLY MINUS LT LBRACKET DOT AND
+** The following explanations concentrate on token PLUS.
+** This state is reached from program after reading:
+
+main_class CLASS IDENT option(preceded(EXTENDS,IDENT)) LBRACE list(pair(java_type,terminated(IDENT,SEMICOLON))) PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COMMA,pair(java_type,IDENT))) RPAREN LBRACE WHILE LPAREN expression binop expression
+
+** The derivations that appear below have the following common factor:
+** (The question mark symbol (?) represents the spot where the derivations begin to differ.)
+
+program 
+main_class defs EOF 
+           list(java_class) 
+           java_class list(java_class) 
+           CLASS IDENT option(preceded(EXTENDS,IDENT)) LBRACE list(pair(java_type,terminated(IDENT,SEMICOLON))) list(java_method) RBRACE 
+                                                                                                                java_method list(java_method) 
+                                                                                                                PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COMMA,pair(java_type,IDENT))) RPAREN LBRACE var_declarations_and_statements RETURN expression SEMICOLON RBRACE 
+                                                                                                                                                                                                                          list(statement) 
+                                                                                                                                                                                                                          statement list(statement) 
+                                                                                                                                                                                                                          WHILE LPAREN expression RPAREN statement 
+                                                                                                                                                                                                                                       raw_expression 
+                                                                                                                                                                                                                                       (?)
+
+** In state 48, looking ahead at PLUS, shifting is permitted
+** because of the following sub-derivation:
+
+expression binop expression 
+                 raw_expression 
+                 expression binop expression 
+                            . PLUS 
+
+** In state 48, looking ahead at PLUS, reducing production
+** raw_expression -> expression binop expression
+** is permitted because of the following sub-derivation:
+
+expression binop expression // lookahead token appears because binop can begin with PLUS
+raw_expression // lookahead token is inherited
+expression binop expression . 

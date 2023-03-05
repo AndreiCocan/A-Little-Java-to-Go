@@ -72,6 +72,7 @@ defs:
 ;
 
 
+
 java_method:
 | PUBLIC
    method_type = java_type 
@@ -84,7 +85,7 @@ java_method:
    RETURN return_expr = expression SEMICOLON
    RBRACE
    {
-      let declarations = fst var_declarations_and_statements and statements = snd var_declarations_and_statements in 
+      let declarations = fst var_decls_and_statemnts and statements = snd var_decls_and_statemnts in 
       method_name,
       {
          arguments = List.map (fun (x, y) -> (y, x)) method_args;
@@ -95,7 +96,6 @@ java_method:
       }
    }
 ;
-
 
 var_declarations_and_statements:
 | var_type = java_type 
@@ -110,6 +110,7 @@ var_declarations_and_statements:
       ([],statements) 
    }
 ;
+
 
 
 statement:
@@ -154,7 +155,7 @@ raw_expression:
    { EBinOp (operator, left_expr, right_expr) }
 
 | array = expression LBRACKET array_index = expression RBRACKET 
-   { EArrayGet (array_expr, array_index) }
+   { EArrayGet (array, array_index) }
 
 | array = expression DOT LENGTH
    { EArrayLength array}
@@ -177,14 +178,12 @@ raw_expression:
 | NEW INTEGER LBRACKET size = expression RBRACKET
    { EArrayAlloc size}
 
-//| NEW class_name = IDENT LPAREN RPAREN
-  // { EObjectAlloc class_name }
+| NEW class_name = IDENT LPAREN RPAREN
+   { EObjectAlloc class_name }
 
-//| NOT expr = expression 
-  // { EUnOp (UOpNot, expr) }
+| NOT expr = expression 
+   { EUnOp (UOpNot, expr) }
 
-| LPAREN expr = expression RPAREN
-   { expr }
 ;
 
 

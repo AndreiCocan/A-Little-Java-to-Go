@@ -1,8 +1,6 @@
-type identifier = string Location.t
+type identifier = string
 
-type expression = raw_expression Location.t
-
-and raw_expression =
+type expression =
 | EConst of constant
 | EGetVar of identifier
 | EUnOp of unop * expression
@@ -14,18 +12,18 @@ and raw_expression =
 | EThis
 | EObjectAlloc of identifier
 
-and constant =
+and constant = LMJ.constant =
 | ConstBool of bool
 | ConstInt of int32
 
-and binop =
+and binop = LMJ.binop =
 | OpAdd
 | OpSub
 | OpMul
 | OpLt
 | OpAnd
 
-and unop = UOpNot
+and unop = LMJ.unop = UOpNot
 
 and statement =
 | SBlock of statement list
@@ -43,13 +41,13 @@ and java_type =
 
 and java_method = {
 
-  arguments: (identifier * java_type) list;
+  arguments: (string * java_type) list;
 
   return_type: java_type;
 
-  method_declarations: (identifier * java_type) list;
+  method_declarations: java_type StringMap.t;
 
-  method_statements: statement list;
+  method_statements: statement;
 
   return_expression: expression
 
@@ -57,21 +55,21 @@ and java_method = {
 
 and java_class = {
 
-  extends: identifier option;
+  extends: string option;
 
-  attributes: (identifier * java_type) list;
+  attributes: java_type StringMap.t;
 
-  methods: (identifier * java_method) list
+  methods: java_method StringMap.t;
 
 }
 
 and program = {
 
-  name: identifier;
+  name: string;
 
-  defs: (identifier * java_class) list;
+  defs: java_class StringMap.t;
 
-  main_args: identifier;
+  main_args: string;
 
   main: statement
 

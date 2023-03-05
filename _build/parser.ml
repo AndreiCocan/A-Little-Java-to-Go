@@ -1,748 +1,594 @@
 
-type token = 
-  | WHILE
-  | VOID
-  | THIS
-  | SYSOU
-  | STRING
-  | STATIC
-  | SEMICOLON
-  | RPAREN
-  | RETURN
-  | RBRACKET
-  | RBRACE
-  | PUBLIC
-  | PLUS
-  | NOT
-  | NEW
-  | MULTIPLY
-  | MINUS
-  | MAIN
-  | LT
-  | LPAREN
-  | LENGTH
-  | LBRACKET
-  | LBRACE
-  | INT_CONST of (
+module MenhirBasics = struct
+  
+  exception Error
+  
+  let _eRR =
+    fun _s ->
+      raise Error
+  
+  type token = 
+    | WHILE
+    | VOID
+    | THIS
+    | SYSOU
+    | STRING
+    | STATIC
+    | SEMICOLON
+    | RPAREN
+    | RETURN
+    | RBRACKET
+    | RBRACE
+    | PUBLIC
+    | PLUS
+    | NOT
+    | NEW
+    | MULTIPLY
+    | MINUS
+    | MAIN
+    | LT
+    | LPAREN
+    | LENGTH
+    | LBRACKET
+    | LBRACE
+    | INT_CONST of (
 # 5 "parser.mly"
        (int32)
-# 30 "parser.ml"
-)
-  | INTEGER
-  | IF
-  | IDENT of (
+# 38 "parser.ml"
+  )
+    | INTEGER
+    | IF
+    | IDENT of (
 # 8 "parser.mly"
        (string Location.t)
-# 37 "parser.ml"
-)
-  | EXTENDS
-  | EOF
-  | ELSE
-  | DOT
-  | COMMA
-  | CLASS
-  | BOOL_CONST of (
+# 45 "parser.ml"
+  )
+    | EXTENDS
+    | EOF
+    | ELSE
+    | DOT
+    | COMMA
+    | CLASS
+    | BOOL_CONST of (
 # 6 "parser.mly"
        (bool)
-# 48 "parser.ml"
-)
-  | BOOLEAN
-  | ASSIGN
-  | AND
+# 56 "parser.ml"
+  )
+    | BOOLEAN
+    | ASSIGN
+    | AND
+  
+end
+
+include MenhirBasics
 
 # 1 "parser.mly"
   
   open LMJ
 
-# 58 "parser.ml"
+# 70 "parser.ml"
 
-let menhir_begin_marker =
-  0
+type ('s, 'r) _menhir_state = 
+  | MenhirState014 : ('s _menhir_cell0_IDENT _menhir_cell0_LPAREN _menhir_cell0_RBRACKET _menhir_cell0_IDENT _menhir_cell0_RPAREN, _menhir_box_program) _menhir_state
+    (** State 014.
+        Stack shape : IDENT LPAREN RBRACKET IDENT RPAREN.
+        Start symbol: program. *)
 
-and (xv_var_declarations_and_statements, xv_terminated_IDENT_SEMICOLON_, xv_statement, xv_separated_nonempty_list_COMMA_pair_java_type_IDENT__, xv_separated_nonempty_list_COMMA_expression_, xv_separated_list_COMMA_pair_java_type_IDENT__, xv_separated_list_COMMA_expression_, xv_raw_expression, xv_program, xv_preceded_EXTENDS_IDENT_, xv_pair_java_type_terminated_IDENT_SEMICOLON__, xv_pair_java_type_IDENT_, xv_option_preceded_EXTENDS_IDENT__, xv_main_class, xv_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___, xv_loption_separated_nonempty_list_COMMA_expression__, xv_list_statement_, xv_list_pair_java_type_terminated_IDENT_SEMICOLON___, xv_list_java_method_, xv_list_java_class_, xv_java_type, xv_java_method, xv_java_class, xv_expression, xv_defs, xv_binop) =
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 187 "<standard.mly>"
-        _2
-# 67 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 187 "<standard.mly>"
-  x
-# 71 "parser.ml"
-   : (
+  | MenhirState016 : (('s, _menhir_box_program) _menhir_cell1_WHILE _menhir_cell0_LPAREN, _menhir_box_program) _menhir_state
+    (** State 016.
+        Stack shape : WHILE LPAREN.
+        Start symbol: program. *)
+
+  | MenhirState018 : (('s, _menhir_box_program) _menhir_cell1_NOT, _menhir_box_program) _menhir_state
+    (** State 018.
+        Stack shape : NOT.
+        Start symbol: program. *)
+
+  | MenhirState021 : (('s, _menhir_box_program) _menhir_cell1_NEW, _menhir_box_program) _menhir_state
+    (** State 021.
+        Stack shape : NEW.
+        Start symbol: program. *)
+
+  | MenhirState022 : (('s, _menhir_box_program) _menhir_cell1_LPAREN, _menhir_box_program) _menhir_state
+    (** State 022.
+        Stack shape : LPAREN.
+        Start symbol: program. *)
+
+  | MenhirState033 : (('s, _menhir_box_program) _menhir_cell1_expression, _menhir_box_program) _menhir_state
+    (** State 033.
+        Stack shape : expression.
+        Start symbol: program. *)
+
+  | MenhirState039 : (('s, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_state
+    (** State 039.
+        Stack shape : expression IDENT LPAREN.
+        Start symbol: program. *)
+
+  | MenhirState044 : (('s, _menhir_box_program) _menhir_cell1_expression, _menhir_box_program) _menhir_state
+    (** State 044.
+        Stack shape : expression.
+        Start symbol: program. *)
+
+  | MenhirState047 : (('s, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_binop, _menhir_box_program) _menhir_state
+    (** State 047.
+        Stack shape : expression binop.
+        Start symbol: program. *)
+
+  | MenhirState056 : ((('s, _menhir_box_program) _menhir_cell1_WHILE _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RPAREN, _menhir_box_program) _menhir_state
+    (** State 056.
+        Stack shape : WHILE LPAREN expression RPAREN.
+        Start symbol: program. *)
+
+  | MenhirState058 : (('s, _menhir_box_program) _menhir_cell1_SYSOU _menhir_cell0_LPAREN, _menhir_box_program) _menhir_state
+    (** State 058.
+        Stack shape : SYSOU LPAREN.
+        Start symbol: program. *)
+
+  | MenhirState062 : (('s, _menhir_box_program) _menhir_cell1_LBRACE, _menhir_box_program) _menhir_state
+    (** State 062.
+        Stack shape : LBRACE.
+        Start symbol: program. *)
+
+  | MenhirState064 : (('s, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN, _menhir_box_program) _menhir_state
+    (** State 064.
+        Stack shape : IF LPAREN.
+        Start symbol: program. *)
+
+  | MenhirState066 : ((('s, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RPAREN, _menhir_box_program) _menhir_state
+    (** State 066.
+        Stack shape : IF LPAREN expression RPAREN.
+        Start symbol: program. *)
+
+  | MenhirState068 : (('s, _menhir_box_program) _menhir_cell1_IDENT, _menhir_box_program) _menhir_state
+    (** State 068.
+        Stack shape : IDENT.
+        Start symbol: program. *)
+
+  | MenhirState071 : ((('s, _menhir_box_program) _menhir_cell1_IDENT, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RBRACKET, _menhir_box_program) _menhir_state
+    (** State 071.
+        Stack shape : IDENT expression RBRACKET.
+        Start symbol: program. *)
+
+  | MenhirState074 : (('s, _menhir_box_program) _menhir_cell1_IDENT, _menhir_box_program) _menhir_state
+    (** State 074.
+        Stack shape : IDENT.
+        Start symbol: program. *)
+
+  | MenhirState078 : (((('s, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RPAREN, _menhir_box_program) _menhir_cell1_statement, _menhir_box_program) _menhir_state
+    (** State 078.
+        Stack shape : IF LPAREN expression RPAREN statement.
+        Start symbol: program. *)
+
+  | MenhirState080 : (('s, _menhir_box_program) _menhir_cell1_statement, _menhir_box_program) _menhir_state
+    (** State 080.
+        Stack shape : statement.
+        Start symbol: program. *)
+
+  | MenhirState089 : ('s _menhir_cell0_main_class, _menhir_box_program) _menhir_state
+    (** State 089.
+        Stack shape : main_class.
+        Start symbol: program. *)
+
+  | MenhirState095 : (('s, _menhir_box_program) _menhir_cell1_CLASS _menhir_cell0_IDENT _menhir_cell0_option_preceded_EXTENDS_IDENT__, _menhir_box_program) _menhir_state
+    (** State 095.
+        Stack shape : CLASS IDENT option(preceded(EXTENDS,IDENT)).
+        Start symbol: program. *)
+
+  | MenhirState101 : ((('s, _menhir_box_program) _menhir_cell1_CLASS _menhir_cell0_IDENT _menhir_cell0_option_preceded_EXTENDS_IDENT__, _menhir_box_program) _menhir_cell1_list_pair_java_type_terminated_IDENT_SEMICOLON___, _menhir_box_program) _menhir_state
+    (** State 101.
+        Stack shape : CLASS IDENT option(preceded(EXTENDS,IDENT)) list(pair(java_type,terminated(IDENT,SEMICOLON))).
+        Start symbol: program. *)
+
+  | MenhirState102 : (('s, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_state
+    (** State 102.
+        Stack shape : PUBLIC.
+        Start symbol: program. *)
+
+  | MenhirState105 : ((('s, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_state
+    (** State 105.
+        Stack shape : PUBLIC java_type IDENT LPAREN.
+        Start symbol: program. *)
+
+  | MenhirState109 : (((('s, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ _menhir_cell0_RPAREN, _menhir_box_program) _menhir_state
+    (** State 109.
+        Stack shape : PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COMMA,pair(java_type,IDENT))) RPAREN.
+        Start symbol: program. *)
+
+  | MenhirState112 : ((((('s, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ _menhir_cell0_RPAREN, _menhir_box_program) _menhir_cell1_var_declarations_and_statements, _menhir_box_program) _menhir_state
+    (** State 112.
+        Stack shape : PUBLIC java_type IDENT LPAREN loption(separated_nonempty_list(COMMA,pair(java_type,IDENT))) RPAREN var_declarations_and_statements.
+        Start symbol: program. *)
+
+  | MenhirState119 : (('s, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT, _menhir_box_program) _menhir_state
+    (** State 119.
+        Stack shape : java_type IDENT.
+        Start symbol: program. *)
+
+  | MenhirState123 : (('s, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT, _menhir_box_program) _menhir_state
+    (** State 123.
+        Stack shape : java_type IDENT.
+        Start symbol: program. *)
+
+  | MenhirState127 : (('s, _menhir_box_program) _menhir_cell1_java_method, _menhir_box_program) _menhir_state
+    (** State 127.
+        Stack shape : java_method.
+        Start symbol: program. *)
+
+  | MenhirState131 : (('s, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT, _menhir_box_program) _menhir_state
+    (** State 131.
+        Stack shape : java_type IDENT.
+        Start symbol: program. *)
+
+  | MenhirState134 : (('s, _menhir_box_program) _menhir_cell1_java_class, _menhir_box_program) _menhir_state
+    (** State 134.
+        Stack shape : java_class.
+        Start symbol: program. *)
+
+
+and 's _menhir_cell0_binop = 
+  | MenhirCell0_binop of 's * (LMJ.binop)
+
+and ('s, 'r) _menhir_cell1_expression = 
+  | MenhirCell1_expression of 's * ('s, 'r) _menhir_state * (LMJ.expression) * Lexing.position * Lexing.position
+
+and ('s, 'r) _menhir_cell1_java_class = 
+  | MenhirCell1_java_class of 's * ('s, 'r) _menhir_state * (LMJ.identifier * LMJ.java_class)
+
+and ('s, 'r) _menhir_cell1_java_method = 
+  | MenhirCell1_java_method of 's * ('s, 'r) _menhir_state * (LMJ.identifier * LMJ.java_method)
+
+and ('s, 'r) _menhir_cell1_java_type = 
+  | MenhirCell1_java_type of 's * ('s, 'r) _menhir_state * (LMJ.java_type)
+
+and ('s, 'r) _menhir_cell1_list_pair_java_type_terminated_IDENT_SEMICOLON___ = 
+  | MenhirCell1_list_pair_java_type_terminated_IDENT_SEMICOLON___ of 's * ('s, 'r) _menhir_state * ((LMJ.java_type * LMJ.identifier) list)
+
+and ('s, 'r) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ = 
+  | MenhirCell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ of 's * ('s, 'r) _menhir_state * ((LMJ.java_type * LMJ.identifier) list)
+
+and 's _menhir_cell0_main_class = 
+  | MenhirCell0_main_class of 's * (LMJ.identifier * LMJ.identifier * LMJ.statement)
+
+and 's _menhir_cell0_option_preceded_EXTENDS_IDENT__ = 
+  | MenhirCell0_option_preceded_EXTENDS_IDENT__ of 's * (LMJ.identifier option)
+
+and ('s, 'r) _menhir_cell1_statement = 
+  | MenhirCell1_statement of 's * ('s, 'r) _menhir_state * (LMJ.statement)
+
+and ('s, 'r) _menhir_cell1_var_declarations_and_statements = 
+  | MenhirCell1_var_declarations_and_statements of 's * ('s, 'r) _menhir_state * ((LMJ.identifier * LMJ.java_type) list * LMJ.statement list)
+
+and ('s, 'r) _menhir_cell1_CLASS = 
+  | MenhirCell1_CLASS of 's * ('s, 'r) _menhir_state
+
+and ('s, 'r) _menhir_cell1_IDENT = 
+  | MenhirCell1_IDENT of 's * ('s, 'r) _menhir_state * (
 # 8 "parser.mly"
        (string Location.t)
-# 75 "parser.ml"
-  )) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 269 "parser.ml"
+) * Lexing.position * Lexing.position
+
+and 's _menhir_cell0_IDENT = 
+  | MenhirCell0_IDENT of 's * (
+# 8 "parser.mly"
+       (string Location.t)
+# 276 "parser.ml"
+) * Lexing.position * Lexing.position
+
+and ('s, 'r) _menhir_cell1_IF = 
+  | MenhirCell1_IF of 's * ('s, 'r) _menhir_state
+
+and ('s, 'r) _menhir_cell1_LBRACE = 
+  | MenhirCell1_LBRACE of 's * ('s, 'r) _menhir_state
+
+and ('s, 'r) _menhir_cell1_LPAREN = 
+  | MenhirCell1_LPAREN of 's * ('s, 'r) _menhir_state * Lexing.position
+
+and 's _menhir_cell0_LPAREN = 
+  | MenhirCell0_LPAREN of 's * Lexing.position
+
+and ('s, 'r) _menhir_cell1_NEW = 
+  | MenhirCell1_NEW of 's * ('s, 'r) _menhir_state * Lexing.position
+
+and ('s, 'r) _menhir_cell1_NOT = 
+  | MenhirCell1_NOT of 's * ('s, 'r) _menhir_state * Lexing.position
+
+and ('s, 'r) _menhir_cell1_PUBLIC = 
+  | MenhirCell1_PUBLIC of 's * ('s, 'r) _menhir_state
+
+and 's _menhir_cell0_RBRACKET = 
+  | MenhirCell0_RBRACKET of 's * Lexing.position
+
+and 's _menhir_cell0_RPAREN = 
+  | MenhirCell0_RPAREN of 's * Lexing.position
+
+and ('s, 'r) _menhir_cell1_SYSOU = 
+  | MenhirCell1_SYSOU of 's * ('s, 'r) _menhir_state
+
+and ('s, 'r) _menhir_cell1_WHILE = 
+  | MenhirCell1_WHILE of 's * ('s, 'r) _menhir_state
+
+and _menhir_box_program = 
+  | MenhirBox_program of (LMJ.program) [@@unboxed]
+
+let _menhir_action_01 =
+  fun () ->
     (
+# 191 "parser.mly"
+           ( OpAnd )
+# 320 "parser.ml"
+     : (LMJ.binop))
+
+let _menhir_action_02 =
+  fun () ->
+    (
+# 192 "parser.mly"
+           ( OpLt )
+# 328 "parser.ml"
+     : (LMJ.binop))
+
+let _menhir_action_03 =
+  fun () ->
+    (
+# 193 "parser.mly"
+           ( OpAdd )
+# 336 "parser.ml"
+     : (LMJ.binop))
+
+let _menhir_action_04 =
+  fun () ->
+    (
+# 194 "parser.mly"
+           ( OpSub )
+# 344 "parser.ml"
+     : (LMJ.binop))
+
+let _menhir_action_05 =
+  fun () ->
+    (
+# 195 "parser.mly"
+           ( OpMul )
+# 352 "parser.ml"
+     : (LMJ.binop))
+
+let _menhir_action_06 =
+  fun c ->
+    (
+# 71 "parser.mly"
+                       ( c )
+# 360 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_class) list))
+
+let _menhir_action_07 =
+  fun _endpos_e_ _startpos_e_ e ->
+    let _endpos = _endpos_e_ in
+    let _startpos = _startpos_e_ in
+    (
+# 146 "parser.mly"
+   ( Location.make _startpos _endpos e )
+# 370 "parser.ml"
+     : (LMJ.expression))
+
+let _menhir_action_08 =
+  fun e ->
+    (
+# 149 "parser.mly"
+   ( e )
+# 378 "parser.ml"
+     : (LMJ.expression))
+
+let _menhir_action_09 =
+  fun attribute_list class_extends class_name method_list ->
+    (
+# 60 "parser.mly"
+   ( class_name,
+      {
+         extends = class_extends;
+         attributes = List.map (fun (x, y) -> (y, x)) attribute_list;
+         methods = method_list;
+      } 
+   )
+# 392 "parser.ml"
+     : (LMJ.identifier * LMJ.java_class))
+
+let _menhir_action_10 =
+  fun method_name method_type return_expr var_decls_and_statemnts xs ->
+    let method_args = 
+# 229 "<standard.mly>"
+    ( xs )
+# 400 "parser.ml"
+     in
+    (
+# 87 "parser.mly"
+   (
+      let declarations = fst var_decls_and_statemnts and statements = snd var_decls_and_statemnts in 
+      method_name,
+      {
+         arguments = List.map (fun (x, y) -> (y, x)) method_args;
+         return_type = method_type;
+         method_declarations = declarations;
+         method_statements = statements;
+         return_expression = return_expr;
+      }
+   )
+# 415 "parser.ml"
+     : (LMJ.identifier * LMJ.java_method))
+
+let _menhir_action_11 =
+  fun () ->
+    (
+# 138 "parser.mly"
+                            ( TypeInt )
+# 423 "parser.ml"
+     : (LMJ.java_type))
+
+let _menhir_action_12 =
+  fun () ->
+    (
+# 139 "parser.mly"
+                            (TypeIntArray)
+# 431 "parser.ml"
+     : (LMJ.java_type))
+
+let _menhir_action_13 =
+  fun () ->
+    (
+# 140 "parser.mly"
+                            ( TypeBool )
+# 439 "parser.ml"
+     : (LMJ.java_type))
+
+let _menhir_action_14 =
+  fun type_name ->
+    (
+# 141 "parser.mly"
+                            ( Type type_name )
+# 447 "parser.ml"
+     : (LMJ.java_type))
+
+let _menhir_action_15 =
+  fun () ->
+    (
+# 208 "<standard.mly>"
+    ( [] )
+# 455 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_class) list))
+
+let _menhir_action_16 =
+  fun x xs ->
+    (
+# 210 "<standard.mly>"
+    ( x :: xs )
+# 463 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_class) list))
+
+let _menhir_action_17 =
+  fun () ->
+    (
+# 208 "<standard.mly>"
+    ( [] )
+# 471 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_method) list))
+
+let _menhir_action_18 =
+  fun x xs ->
+    (
+# 210 "<standard.mly>"
+    ( x :: xs )
+# 479 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_method) list))
+
+let _menhir_action_19 =
+  fun () ->
+    (
+# 208 "<standard.mly>"
+    ( [] )
+# 487 "parser.ml"
+     : ((LMJ.java_type * LMJ.identifier) list))
+
+let _menhir_action_20 =
+  fun x x_inlined1 xs ->
+    let x =
+      let y =
+        let x = x_inlined1 in
+        
 # 188 "<standard.mly>"
     ( x )
-# 80 "parser.ml"
-     : 'tv_terminated_IDENT_SEMICOLON_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 239 "<standard.mly>"
-                    xs
-# 85 "parser.ml"
-   : 'tv_separated_nonempty_list_COMMA_pair_java_type_IDENT__) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) (
-# 239 "<standard.mly>"
-        _2
-# 89 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 239 "<standard.mly>"
-  x
-# 93 "parser.ml"
-   : 'tv_pair_java_type_IDENT_) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 498 "parser.ml"
+        
+      in
+      
+# 164 "<standard.mly>"
+    ( (x, y) )
+# 504 "parser.ml"
+      
+    in
     (
-# 240 "<standard.mly>"
+# 210 "<standard.mly>"
     ( x :: xs )
-# 98 "parser.ml"
-     : 'tv_separated_nonempty_list_COMMA_pair_java_type_IDENT__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 237 "<standard.mly>"
-  x
-# 103 "parser.ml"
-   : 'tv_pair_java_type_IDENT_) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 510 "parser.ml"
+     : ((LMJ.java_type * LMJ.identifier) list))
+
+let _menhir_action_21 =
+  fun () ->
     (
-# 238 "<standard.mly>"
-    ( [ x ] )
-# 108 "parser.ml"
-     : 'tv_separated_nonempty_list_COMMA_pair_java_type_IDENT__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 239 "<standard.mly>"
-                    xs
-# 113 "parser.ml"
-   : 'tv_separated_nonempty_list_COMMA_expression_) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) (
-# 239 "<standard.mly>"
-        _2
-# 117 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 239 "<standard.mly>"
-  x
-# 121 "parser.ml"
-   : 'tv_expression) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 208 "<standard.mly>"
+    ( [] )
+# 518 "parser.ml"
+     : (LMJ.statement list))
+
+let _menhir_action_22 =
+  fun x xs ->
     (
-# 240 "<standard.mly>"
+# 210 "<standard.mly>"
     ( x :: xs )
-# 126 "parser.ml"
-     : 'tv_separated_nonempty_list_COMMA_expression_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 237 "<standard.mly>"
-  x
-# 131 "parser.ml"
-   : 'tv_expression) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 526 "parser.ml"
+     : (LMJ.statement list))
+
+let _menhir_action_23 =
+  fun () ->
     (
-# 238 "<standard.mly>"
-    ( [ x ] )
-# 136 "parser.ml"
-     : 'tv_separated_nonempty_list_COMMA_expression_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 228 "<standard.mly>"
-  xs
-# 141 "parser.ml"
-   : 'tv_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) ->
+# 139 "<standard.mly>"
+    ( [] )
+# 534 "parser.ml"
+     : (LMJ.expression list))
+
+let _menhir_action_24 =
+  fun x ->
     (
-# 229 "<standard.mly>"
-    ( xs )
-# 146 "parser.ml"
-     : 'tv_separated_list_COMMA_pair_java_type_IDENT__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 228 "<standard.mly>"
-  xs
-# 151 "parser.ml"
-   : 'tv_loption_separated_nonempty_list_COMMA_expression__) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) ->
-    (
-# 229 "<standard.mly>"
-    ( xs )
-# 156 "parser.ml"
-     : 'tv_separated_list_COMMA_expression_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 179 "<standard.mly>"
-           x
-# 161 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 165 "parser.ml"
-  )) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) (
-# 178 "<standard.mly>"
-                                     _1
-# 170 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 180 "<standard.mly>"
+# 141 "<standard.mly>"
     ( x )
-# 175 "parser.ml"
-     : 'tv_preceded_EXTENDS_IDENT_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 163 "<standard.mly>"
-         y
-# 180 "parser.ml"
-   : 'tv_terminated_IDENT_SEMICOLON_) (_startpos_y_ : Lexing.position) (_endpos_y_ : Lexing.position) (_startofs_y_ : int) (_endofs_y_ : int) (_loc_y_ : Lexing.position * Lexing.position) (
-# 163 "<standard.mly>"
-  x
-# 184 "parser.ml"
-   : 'tv_java_type) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 542 "parser.ml"
+     : (LMJ.expression list))
+
+let _menhir_action_25 =
+  fun () ->
     (
-# 164 "<standard.mly>"
-    ( (x, y) )
-# 189 "parser.ml"
-     : 'tv_pair_java_type_terminated_IDENT_SEMICOLON__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 163 "<standard.mly>"
-         y
-# 194 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 198 "parser.ml"
-  )) (_startpos_y_ : Lexing.position) (_endpos_y_ : Lexing.position) (_startofs_y_ : int) (_endofs_y_ : int) (_loc_y_ : Lexing.position * Lexing.position) (
-# 163 "<standard.mly>"
-  x
-# 202 "parser.ml"
-   : 'tv_java_type) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 139 "<standard.mly>"
+    ( [] )
+# 550 "parser.ml"
+     : ((LMJ.java_type * LMJ.identifier) list))
+
+let _menhir_action_26 =
+  fun x ->
     (
-# 164 "<standard.mly>"
-    ( (x, y) )
-# 207 "parser.ml"
-     : 'tv_pair_java_type_IDENT_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 112 "<standard.mly>"
-  x
-# 212 "parser.ml"
-   : 'tv_preceded_EXTENDS_IDENT_) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 141 "<standard.mly>"
+    ( x )
+# 558 "parser.ml"
+     : ((LMJ.java_type * LMJ.identifier) list))
+
+let _menhir_action_27 =
+  fun a c i ->
     (
-# 113 "<standard.mly>"
-    ( Some x )
-# 217 "parser.ml"
-     : 'tv_option_preceded_EXTENDS_IDENT__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
+# 48 "parser.mly"
+   ( (c, a, i) )
+# 566 "parser.ml"
+     : (LMJ.identifier * LMJ.identifier * LMJ.statement))
+
+let _menhir_action_28 =
+  fun () ->
     (
 # 111 "<standard.mly>"
     ( None )
-# 223 "parser.ml"
-     : 'tv_option_preceded_EXTENDS_IDENT__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 140 "<standard.mly>"
-  x
-# 228 "parser.ml"
-   : 'tv_separated_nonempty_list_COMMA_pair_java_type_IDENT__) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
-    (
-# 141 "<standard.mly>"
+# 574 "parser.ml"
+     : (LMJ.identifier option))
+
+let _menhir_action_29 =
+  fun x ->
+    let x = 
+# 180 "<standard.mly>"
     ( x )
-# 233 "parser.ml"
-     : 'tv_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
+# 582 "parser.ml"
+     in
     (
-# 139 "<standard.mly>"
-    ( [] )
-# 239 "parser.ml"
-     : 'tv_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 140 "<standard.mly>"
-  x
-# 244 "parser.ml"
-   : 'tv_separated_nonempty_list_COMMA_expression_) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
+# 113 "<standard.mly>"
+    ( Some x )
+# 587 "parser.ml"
+     : (LMJ.identifier option))
+
+let _menhir_action_30 =
+  fun d m ->
     (
-# 141 "<standard.mly>"
-    ( x )
-# 249 "parser.ml"
-     : 'tv_loption_separated_nonempty_list_COMMA_expression__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
-    (
-# 139 "<standard.mly>"
-    ( [] )
-# 255 "parser.ml"
-     : 'tv_loption_separated_nonempty_list_COMMA_expression__) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-         xs
-# 260 "parser.ml"
-   : 'tv_list_statement_) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-  x
-# 264 "parser.ml"
-   : 'tv_statement) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
-    (
-# 210 "<standard.mly>"
-    ( x :: xs )
-# 269 "parser.ml"
-     : 'tv_list_statement_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
-    (
-# 208 "<standard.mly>"
-    ( [] )
-# 275 "parser.ml"
-     : 'tv_list_statement_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-         xs
-# 280 "parser.ml"
-   : 'tv_list_pair_java_type_terminated_IDENT_SEMICOLON___) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-  x
-# 284 "parser.ml"
-   : 'tv_pair_java_type_terminated_IDENT_SEMICOLON__) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
-    (
-# 210 "<standard.mly>"
-    ( x :: xs )
-# 289 "parser.ml"
-     : 'tv_list_pair_java_type_terminated_IDENT_SEMICOLON___) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
-    (
-# 208 "<standard.mly>"
-    ( [] )
-# 295 "parser.ml"
-     : 'tv_list_pair_java_type_terminated_IDENT_SEMICOLON___) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-         xs
-# 300 "parser.ml"
-   : 'tv_list_java_method_) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-  x
-# 304 "parser.ml"
-   : 'tv_java_method) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
-    (
-# 210 "<standard.mly>"
-    ( x :: xs )
-# 309 "parser.ml"
-     : 'tv_list_java_method_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
-    (
-# 208 "<standard.mly>"
-    ( [] )
-# 315 "parser.ml"
-     : 'tv_list_java_method_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-         xs
-# 320 "parser.ml"
-   : 'tv_list_java_class_) (_startpos_xs_ : Lexing.position) (_endpos_xs_ : Lexing.position) (_startofs_xs_ : int) (_endofs_xs_ : int) (_loc_xs_ : Lexing.position * Lexing.position) (
-# 209 "<standard.mly>"
-  x
-# 324 "parser.ml"
-   : 'tv_java_class) (_startpos_x_ : Lexing.position) (_endpos_x_ : Lexing.position) (_startofs_x_ : int) (_endofs_x_ : int) (_loc_x_ : Lexing.position * Lexing.position) ->
-    (
-# 210 "<standard.mly>"
-    ( x :: xs )
-# 329 "parser.ml"
-     : 'tv_list_java_class_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) ->
-    (
-# 208 "<standard.mly>"
-    ( [] )
-# 335 "parser.ml"
-     : 'tv_list_java_class_) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 108 "parser.mly"
-  statements
-# 340 "parser.ml"
-   : 'tv_list_statement_) (_startpos_statements_ : Lexing.position) (_endpos_statements_ : Lexing.position) (_startofs_statements_ : int) (_endofs_statements_ : int) (_loc_statements_ : Lexing.position * Lexing.position) ->
-    (
-# 109 "parser.mly"
-   ( 
-      ([],statements) 
-   )
-# 347 "parser.ml"
-     : 'tv_var_declarations_and_statements) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 103 "parser.mly"
-   rest_dec_and_stat
-# 352 "parser.ml"
-   : 'tv_var_declarations_and_statements) (_startpos_rest_dec_and_stat_ : Lexing.position) (_endpos_rest_dec_and_stat_ : Lexing.position) (_startofs_rest_dec_and_stat_ : int) (_endofs_rest_dec_and_stat_ : int) (_loc_rest_dec_and_stat_ : Lexing.position * Lexing.position) (
-# 102 "parser.mly"
-                   _3
-# 356 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 102 "parser.mly"
-   var_name
-# 360 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 364 "parser.ml"
-  )) (_startpos_var_name_ : Lexing.position) (_endpos_var_name_ : Lexing.position) (_startofs_var_name_ : int) (_endofs_var_name_ : int) (_loc_var_name_ : Lexing.position * Lexing.position) (
-# 101 "parser.mly"
-  var_type
-# 368 "parser.ml"
-   : 'tv_java_type) (_startpos_var_type_ : Lexing.position) (_endpos_var_type_ : Lexing.position) (_startofs_var_type_ : int) (_endofs_var_type_ : int) (_loc_var_type_ : Lexing.position * Lexing.position) ->
-    (
-# 104 "parser.mly"
-   (
-      let declarations,statements = rest_dec_and_stat in
-      ((var_name, var_type) :: declarations,statements)
-   )
-# 376 "parser.ml"
-     : 'tv_var_declarations_and_statements) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-                                                                                            _7
-# 381 "parser.ml"
-   : unit) (_startpos__7_ : Lexing.position) (_endpos__7_ : Lexing.position) (_startofs__7_ : int) (_endofs__7_ : int) (_loc__7_ : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-                                                                           expr
-# 385 "parser.ml"
-   : 'tv_expression) (_startpos_expr_ : Lexing.position) (_endpos_expr_ : Lexing.position) (_startofs_expr_ : int) (_endofs_expr_ : int) (_loc_expr_ : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-                                                                   _5
-# 389 "parser.ml"
-   : unit) (_startpos__5_ : Lexing.position) (_endpos__5_ : Lexing.position) (_startofs__5_ : int) (_endofs__5_ : int) (_loc__5_ : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-                                                          _4
-# 393 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-                                  array_index
-# 397 "parser.ml"
-   : 'tv_expression) (_startpos_array_index_ : Lexing.position) (_endpos_array_index_ : Lexing.position) (_startofs_array_index_ : int) (_endofs_array_index_ : int) (_loc_array_index_ : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-                        _2
-# 401 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 131 "parser.mly"
-  var_array_name
-# 405 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 409 "parser.ml"
-  )) (_startpos_var_array_name_ : Lexing.position) (_endpos_var_array_name_ : Lexing.position) (_startofs_var_array_name_ : int) (_endofs_var_array_name_ : int) (_loc_var_array_name_ : Lexing.position * Lexing.position) ->
-    (
-# 132 "parser.mly"
-   ( SArraySet (var_array_name, array_index, expr) )
-# 414 "parser.ml"
-     : 'tv_statement) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 128 "parser.mly"
-                                           _4
-# 419 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 128 "parser.mly"
-                          expr
-# 423 "parser.ml"
-   : 'tv_expression) (_startpos_expr_ : Lexing.position) (_endpos_expr_ : Lexing.position) (_startofs_expr_ : int) (_endofs_expr_ : int) (_loc_expr_ : Lexing.position * Lexing.position) (
-# 128 "parser.mly"
-                  _2
-# 427 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 128 "parser.mly"
-  var_name
-# 431 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 435 "parser.ml"
-  )) (_startpos_var_name_ : Lexing.position) (_endpos_var_name_ : Lexing.position) (_startofs_var_name_ : int) (_endofs_var_name_ : int) (_loc_var_name_ : Lexing.position * Lexing.position) ->
-    (
-# 129 "parser.mly"
-   ( SSetVar (var_name,expr) )
-# 440 "parser.ml"
-     : 'tv_statement) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 125 "parser.mly"
-                                             _5
-# 445 "parser.ml"
-   : unit) (_startpos__5_ : Lexing.position) (_endpos__5_ : Lexing.position) (_startofs__5_ : int) (_endofs__5_ : int) (_loc__5_ : Lexing.position * Lexing.position) (
-# 125 "parser.mly"
-                                      _4
-# 449 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 125 "parser.mly"
-               print_expr
-# 453 "parser.ml"
-   : 'tv_expression) (_startpos_print_expr_ : Lexing.position) (_endpos_print_expr_ : Lexing.position) (_startofs_print_expr_ : int) (_endofs_print_expr_ : int) (_loc_print_expr_ : Lexing.position * Lexing.position) (
-# 125 "parser.mly"
-       _2
-# 457 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 125 "parser.mly"
- _1
-# 461 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 126 "parser.mly"
-   ( SSysou print_expr)
-# 466 "parser.ml"
-     : 'tv_statement) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 122 "parser.mly"
-                                              while_stmnt
-# 471 "parser.ml"
-   : 'tv_statement) (_startpos_while_stmnt_ : Lexing.position) (_endpos_while_stmnt_ : Lexing.position) (_startofs_while_stmnt_ : int) (_endofs_while_stmnt_ : int) (_loc_while_stmnt_ : Lexing.position * Lexing.position) (
-# 122 "parser.mly"
-                                      _4
-# 475 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 122 "parser.mly"
-               while_expr
-# 479 "parser.ml"
-   : 'tv_expression) (_startpos_while_expr_ : Lexing.position) (_endpos_while_expr_ : Lexing.position) (_startofs_while_expr_ : int) (_endofs_while_expr_ : int) (_loc_while_expr_ : Lexing.position * Lexing.position) (
-# 122 "parser.mly"
-       _2
-# 483 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 122 "parser.mly"
- _1
-# 487 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 123 "parser.mly"
-   ( SWhile (while_expr,while_stmnt) )
-# 492 "parser.ml"
-     : 'tv_statement) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
-                                                                  else_stmnt
-# 497 "parser.ml"
-   : 'tv_statement) (_startpos_else_stmnt_ : Lexing.position) (_endpos_else_stmnt_ : Lexing.position) (_startofs_else_stmnt_ : int) (_endofs_else_stmnt_ : int) (_loc_else_stmnt_ : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
-                                                            _6
-# 501 "parser.ml"
-   : unit) (_startpos__6_ : Lexing.position) (_endpos__6_ : Lexing.position) (_startofs__6_ : int) (_endofs__6_ : int) (_loc__6_ : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
-                                        if_stmnt
-# 505 "parser.ml"
-   : 'tv_statement) (_startpos_if_stmnt_ : Lexing.position) (_endpos_if_stmnt_ : Lexing.position) (_startofs_if_stmnt_ : int) (_endofs_if_stmnt_ : int) (_loc_if_stmnt_ : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
-                                _4
-# 509 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
-            if_expr
-# 513 "parser.ml"
-   : 'tv_expression) (_startpos_if_expr_ : Lexing.position) (_endpos_if_expr_ : Lexing.position) (_startofs_if_expr_ : int) (_endofs_if_expr_ : int) (_loc_if_expr_ : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
-    _2
-# 517 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 119 "parser.mly"
- _1
-# 521 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 120 "parser.mly"
-   ( SIf (if_expr,if_stmnt,else_stmnt) )
-# 526 "parser.ml"
-     : 'tv_statement) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 116 "parser.mly"
-                                     _3
-# 531 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 116 "parser.mly"
-         statements
-# 535 "parser.ml"
-   : 'tv_list_statement_) (_startpos_statements_ : Lexing.position) (_endpos_statements_ : Lexing.position) (_startofs_statements_ : int) (_endofs_statements_ : int) (_loc_statements_ : Lexing.position * Lexing.position) (
-# 116 "parser.mly"
- _1
-# 539 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 117 "parser.mly"
-   ( SBlock statements )
-# 544 "parser.ml"
-     : 'tv_statement) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 186 "parser.mly"
-                          _3
-# 549 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 186 "parser.mly"
-         expr
-# 553 "parser.ml"
-   : 'tv_expression) (_startpos_expr_ : Lexing.position) (_endpos_expr_ : Lexing.position) (_startofs_expr_ : int) (_endofs_expr_ : int) (_loc_expr_ : Lexing.position * Lexing.position) (
-# 186 "parser.mly"
- _1
-# 557 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 187 "parser.mly"
-   ( expr )
-# 562 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 177 "parser.mly"
-                                        _5
-# 567 "parser.ml"
-   : unit) (_startpos__5_ : Lexing.position) (_endpos__5_ : Lexing.position) (_startofs__5_ : int) (_endofs__5_ : int) (_loc__5_ : Lexing.position * Lexing.position) (
-# 177 "parser.mly"
-                       size
-# 571 "parser.ml"
-   : 'tv_expression) (_startpos_size_ : Lexing.position) (_endpos_size_ : Lexing.position) (_startofs_size_ : int) (_endofs_size_ : int) (_loc_size_ : Lexing.position * Lexing.position) (
-# 177 "parser.mly"
-             _3
-# 575 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 177 "parser.mly"
-     _2
-# 579 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 177 "parser.mly"
- _1
-# 583 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 178 "parser.mly"
-   ( EArrayAlloc size)
-# 588 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 174 "parser.mly"
- _1
-# 593 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 175 "parser.mly"
-   ( EThis )
-# 598 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 171 "parser.mly"
- var_name
-# 603 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 607 "parser.ml"
-  )) (_startpos_var_name_ : Lexing.position) (_endpos_var_name_ : Lexing.position) (_startofs_var_name_ : int) (_endofs_var_name_ : int) (_loc_var_name_ : Lexing.position * Lexing.position) ->
-    (
-# 172 "parser.mly"
-   ( EGetVar var_name )
-# 612 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 168 "parser.mly"
- bool
-# 617 "parser.ml"
-   : (
-# 6 "parser.mly"
-       (bool)
-# 621 "parser.ml"
-  )) (_startpos_bool_ : Lexing.position) (_endpos_bool_ : Lexing.position) (_startofs_bool_ : int) (_endofs_bool_ : int) (_loc_bool_ : Lexing.position * Lexing.position) ->
-    (
-# 169 "parser.mly"
-   ( EConst (ConstBool bool))
-# 626 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 165 "parser.mly"
-  i
-# 631 "parser.ml"
-   : (
-# 5 "parser.mly"
-       (int32)
-# 635 "parser.ml"
-  )) (_startpos_i_ : Lexing.position) (_endpos_i_ : Lexing.position) (_startofs_i_ : int) (_endofs_i_ : int) (_loc_i_ : Lexing.position * Lexing.position) ->
-    (
-# 166 "parser.mly"
-   ( EConst (ConstInt i) )
-# 640 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 162 "parser.mly"
-                                                                                                       _6
-# 645 "parser.ml"
-   : unit) (_startpos__6_ : Lexing.position) (_endpos__6_ : Lexing.position) (_startofs__6_ : int) (_endofs__6_ : int) (_loc__6_ : Lexing.position * Lexing.position) (
-# 162 "parser.mly"
-                                                          exprs
-# 649 "parser.ml"
-   : 'tv_separated_list_COMMA_expression_) (_startpos_exprs_ : Lexing.position) (_endpos_exprs_ : Lexing.position) (_startofs_exprs_ : int) (_endofs_exprs_ : int) (_loc_exprs_ : Lexing.position * Lexing.position) (
-# 162 "parser.mly"
-                                                  _4
-# 653 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 162 "parser.mly"
-                               method_name
-# 657 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 661 "parser.ml"
-  )) (_startpos_method_name_ : Lexing.position) (_endpos_method_name_ : Lexing.position) (_startofs_method_name_ : int) (_endofs_method_name_ : int) (_loc_method_name_ : Lexing.position * Lexing.position) (
-# 162 "parser.mly"
-                          _2
-# 665 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 162 "parser.mly"
-  java_object
-# 669 "parser.ml"
-   : 'tv_expression) (_startpos_java_object_ : Lexing.position) (_endpos_java_object_ : Lexing.position) (_startofs_java_object_ : int) (_endofs_java_object_ : int) (_loc_java_object_ : Lexing.position * Lexing.position) ->
-    (
-# 163 "parser.mly"
-   ( EMethodCall (java_object, method_name, exprs) )
-# 674 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 159 "parser.mly"
-                        _3
-# 679 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 159 "parser.mly"
-                    _2
-# 683 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 159 "parser.mly"
-  array
-# 687 "parser.ml"
-   : 'tv_expression) (_startpos_array_ : Lexing.position) (_endpos_array_ : Lexing.position) (_startofs_array_ : int) (_endofs_array_ : int) (_loc_array_ : Lexing.position * Lexing.position) ->
-    (
-# 160 "parser.mly"
-   ( EArrayLength array)
-# 692 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 156 "parser.mly"
-                                                      _4
-# 697 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 156 "parser.mly"
-                              array_index
-# 701 "parser.ml"
-   : 'tv_expression) (_startpos_array_index_ : Lexing.position) (_endpos_array_index_ : Lexing.position) (_startofs_array_index_ : int) (_endofs_array_index_ : int) (_loc_array_index_ : Lexing.position * Lexing.position) (
-# 156 "parser.mly"
-                    _2
-# 705 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 156 "parser.mly"
-  array
-# 709 "parser.ml"
-   : 'tv_expression) (_startpos_array_ : Lexing.position) (_endpos_array_ : Lexing.position) (_startofs_array_ : int) (_endofs_array_ : int) (_loc_array_ : Lexing.position * Lexing.position) ->
-    (
-# 157 "parser.mly"
-   ( EArrayGet (array_expr, array_index) )
-# 714 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 153 "parser.mly"
-                                          right_expr
-# 719 "parser.ml"
-   : 'tv_expression) (_startpos_right_expr_ : Lexing.position) (_endpos_right_expr_ : Lexing.position) (_startofs_right_expr_ : int) (_endofs_right_expr_ : int) (_loc_right_expr_ : Lexing.position * Lexing.position) (
-# 153 "parser.mly"
-                         operator
-# 723 "parser.ml"
-   : 'tv_binop) (_startpos_operator_ : Lexing.position) (_endpos_operator_ : Lexing.position) (_startofs_operator_ : int) (_endofs_operator_ : int) (_loc_operator_ : Lexing.position * Lexing.position) (
-# 153 "parser.mly"
-  left_expr
-# 727 "parser.ml"
-   : 'tv_expression) (_startpos_left_expr_ : Lexing.position) (_endpos_left_expr_ : Lexing.position) (_startofs_left_expr_ : int) (_endofs_left_expr_ : int) (_loc_left_expr_ : Lexing.position * Lexing.position) ->
-    (
-# 154 "parser.mly"
-   ( EBinOp (operator, left_expr, right_expr) )
-# 732 "parser.ml"
-     : 'tv_raw_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 27 "parser.mly"
-                         _3
-# 737 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 27 "parser.mly"
-                 d
-# 741 "parser.ml"
-   : 'tv_defs) (_startpos_d_ : Lexing.position) (_endpos_d_ : Lexing.position) (_startofs_d_ : int) (_endofs_d_ : int) (_loc_d_ : Lexing.position * Lexing.position) (
-# 27 "parser.mly"
-  m
-# 745 "parser.ml"
-   : 'tv_main_class) (_startpos_m_ : Lexing.position) (_endpos_m_ : Lexing.position) (_startofs_m_ : int) (_endofs_m_ : int) (_loc_m_ : Lexing.position * Lexing.position) ->
-    ((
 # 28 "parser.mly"
    (
      let c, a, i = m in
@@ -753,347 +599,2349 @@ and (xv_var_declarations_and_statements, xv_terminated_IDENT_SEMICOLON_, xv_stat
        main = i
      }
    )
-# 758 "parser.ml"
-     : 'tv_program) : (
-# 22 "parser.mly"
-      (LMJ.program)
-# 762 "parser.ml"
-    )) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 46 "parser.mly"
-         _17
-# 768 "parser.ml"
-   : unit) (_startpos__17_ : Lexing.position) (_endpos__17_ : Lexing.position) (_startofs__17_ : int) (_endofs__17_ : int) (_loc__17_ : Lexing.position * Lexing.position) (
-# 45 "parser.mly"
-                _16
-# 773 "parser.ml"
-   : unit) (_startpos__16_ : Lexing.position) (_endpos__16_ : Lexing.position) (_startofs__16_ : int) (_endofs__16_ : int) (_loc__16_ : Lexing.position * Lexing.position) (
-# 45 "parser.mly"
-   i
-# 777 "parser.ml"
-   : 'tv_statement) (_startpos_i_ : Lexing.position) (_endpos_i_ : Lexing.position) (_startofs_i_ : int) (_endofs_i_ : int) (_loc_i_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                                                                           _14
-# 782 "parser.ml"
-   : unit) (_startpos__14_ : Lexing.position) (_endpos__14_ : Lexing.position) (_startofs__14_ : int) (_endofs__14_ : int) (_loc__14_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                                                                    _13
-# 786 "parser.ml"
-   : unit) (_startpos__13_ : Lexing.position) (_endpos__13_ : Lexing.position) (_startofs__13_ : int) (_endofs__13_ : int) (_loc__13_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                                                           a
-# 790 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 794 "parser.ml"
-  )) (_startpos_a_ : Lexing.position) (_endpos_a_ : Lexing.position) (_startofs_a_ : int) (_endofs_a_ : int) (_loc_a_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                                                 _11
-# 798 "parser.ml"
-   : unit) (_startpos__11_ : Lexing.position) (_endpos__11_ : Lexing.position) (_startofs__11_ : int) (_endofs__11_ : int) (_loc__11_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                                        _10
-# 802 "parser.ml"
-   : unit) (_startpos__10_ : Lexing.position) (_endpos__10_ : Lexing.position) (_startofs__10_ : int) (_endofs__10_ : int) (_loc__10_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                                 _9
-# 806 "parser.ml"
-   : unit) (_startpos__9_ : Lexing.position) (_endpos__9_ : Lexing.position) (_startofs__9_ : int) (_endofs__9_ : int) (_loc__9_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                          _8
-# 810 "parser.ml"
-   : unit) (_startpos__8_ : Lexing.position) (_endpos__8_ : Lexing.position) (_startofs__8_ : int) (_endofs__8_ : int) (_loc__8_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                     _7
-# 814 "parser.ml"
-   : unit) (_startpos__7_ : Lexing.position) (_endpos__7_ : Lexing.position) (_startofs__7_ : int) (_endofs__7_ : int) (_loc__7_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-                _6
-# 818 "parser.ml"
-   : unit) (_startpos__6_ : Lexing.position) (_endpos__6_ : Lexing.position) (_startofs__6_ : int) (_endofs__6_ : int) (_loc__6_ : Lexing.position * Lexing.position) (
-# 43 "parser.mly"
-         _5
-# 822 "parser.ml"
-   : unit) (_startpos__5_ : Lexing.position) (_endpos__5_ : Lexing.position) (_startofs__5_ : int) (_endofs__5_ : int) (_loc__5_ : Lexing.position * Lexing.position) (
-# 42 "parser.mly"
-         _4
-# 827 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 41 "parser.mly"
-                 _3
-# 832 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 41 "parser.mly"
-        c
-# 836 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 840 "parser.ml"
-  )) (_startpos_c_ : Lexing.position) (_endpos_c_ : Lexing.position) (_startofs_c_ : int) (_endofs_c_ : int) (_loc_c_ : Lexing.position * Lexing.position) (
-# 41 "parser.mly"
- _1
-# 844 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 48 "parser.mly"
-   ( (c, a, i) )
-# 849 "parser.ml"
-     : 'tv_main_class) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 140 "parser.mly"
-  type_name
-# 854 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 858 "parser.ml"
-  )) (_startpos_type_name_ : Lexing.position) (_endpos_type_name_ : Lexing.position) (_startofs_type_name_ : int) (_endofs_type_name_ : int) (_loc_type_name_ : Lexing.position * Lexing.position) ->
-    (
-# 140 "parser.mly"
-                            ( Type type_name )
-# 863 "parser.ml"
-     : 'tv_java_type) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 139 "parser.mly"
- _1
-# 868 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 139 "parser.mly"
-                            ( TypeBool )
-# 873 "parser.ml"
-     : 'tv_java_type) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 138 "parser.mly"
-                  _3
-# 878 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 138 "parser.mly"
-         _2
-# 882 "parser.ml"
-   : unit) (_startpos__2_ : Lexing.position) (_endpos__2_ : Lexing.position) (_startofs__2_ : int) (_endofs__2_ : int) (_loc__2_ : Lexing.position * Lexing.position) (
-# 138 "parser.mly"
- _1
-# 886 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 138 "parser.mly"
-                            (TypeIntArray)
-# 891 "parser.ml"
-     : 'tv_java_type) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 137 "parser.mly"
- _1
-# 896 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 137 "parser.mly"
-                            ( TypeInt )
-# 901 "parser.ml"
-     : 'tv_java_type) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 84 "parser.mly"
-                                            _12
-# 907 "parser.ml"
-   : unit) (_startpos__12_ : Lexing.position) (_endpos__12_ : Lexing.position) (_startofs__12_ : int) (_endofs__12_ : int) (_loc__12_ : Lexing.position * Lexing.position) (
-# 84 "parser.mly"
-                                  _11
-# 911 "parser.ml"
-   : unit) (_startpos__11_ : Lexing.position) (_endpos__11_ : Lexing.position) (_startofs__11_ : int) (_endofs__11_ : int) (_loc__11_ : Lexing.position * Lexing.position) (
-# 84 "parser.mly"
-          return_expr
-# 915 "parser.ml"
-   : 'tv_expression) (_startpos_return_expr_ : Lexing.position) (_endpos_return_expr_ : Lexing.position) (_startofs_return_expr_ : int) (_endofs_return_expr_ : int) (_loc_return_expr_ : Lexing.position * Lexing.position) (
-# 83 "parser.mly"
-                                                            _9
-# 920 "parser.ml"
-   : unit) (_startpos__9_ : Lexing.position) (_endpos__9_ : Lexing.position) (_startofs__9_ : int) (_endofs__9_ : int) (_loc__9_ : Lexing.position * Lexing.position) (
-# 83 "parser.mly"
-   var_decls_and_statemnts
-# 924 "parser.ml"
-   : 'tv_var_declarations_and_statements) (_startpos_var_decls_and_statemnts_ : Lexing.position) (_endpos_var_decls_and_statemnts_ : Lexing.position) (_startofs_var_decls_and_statemnts_ : int) (_endofs_var_decls_and_statemnts_ : int) (_loc_var_decls_and_statemnts_ : Lexing.position * Lexing.position) (
-# 81 "parser.mly"
-         _7
-# 929 "parser.ml"
-   : unit) (_startpos__7_ : Lexing.position) (_endpos__7_ : Lexing.position) (_startofs__7_ : int) (_endofs__7_ : int) (_loc__7_ : Lexing.position * Lexing.position) (
-# 80 "parser.mly"
-                                                              _6
-# 934 "parser.ml"
-   : unit) (_startpos__6_ : Lexing.position) (_endpos__6_ : Lexing.position) (_startofs__6_ : int) (_endofs__6_ : int) (_loc__6_ : Lexing.position * Lexing.position) (
-# 80 "parser.mly"
-   method_args
-# 938 "parser.ml"
-   : 'tv_separated_list_COMMA_pair_java_type_IDENT__) (_startpos_method_args_ : Lexing.position) (_endpos_method_args_ : Lexing.position) (_startofs_method_args_ : int) (_endofs_method_args_ : int) (_loc_method_args_ : Lexing.position * Lexing.position) (
-# 78 "parser.mly"
-                      _4
-# 943 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 78 "parser.mly"
-   method_name
-# 947 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 951 "parser.ml"
-  )) (_startpos_method_name_ : Lexing.position) (_endpos_method_name_ : Lexing.position) (_startofs_method_name_ : int) (_endofs_method_name_ : int) (_loc_method_name_ : Lexing.position * Lexing.position) (
-# 77 "parser.mly"
-   method_type
-# 955 "parser.ml"
-   : 'tv_java_type) (_startpos_method_type_ : Lexing.position) (_endpos_method_type_ : Lexing.position) (_startofs_method_type_ : int) (_endofs_method_type_ : int) (_loc_method_type_ : Lexing.position * Lexing.position) (
-# 76 "parser.mly"
- _1
-# 959 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 86 "parser.mly"
-   (
-      let declarations = fst var_declarations_and_statements and statements = snd var_declarations_and_statements in 
-      method_name,
-      {
-         arguments = List.map (fun (x, y) -> (y, x)) method_args;
-         return_type = method_type;
-         method_declarations = declarations;
-         method_statements = statements;
-         return_expression = return_expr;
-      }
-   )
-# 974 "parser.ml"
-     : 'tv_java_method) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 58 "parser.mly"
-                                 _7
-# 980 "parser.ml"
-   : unit) (_startpos__7_ : Lexing.position) (_endpos__7_ : Lexing.position) (_startofs__7_ : int) (_endofs__7_ : int) (_loc__7_ : Lexing.position * Lexing.position) (
-# 58 "parser.mly"
-   method_list
-# 984 "parser.ml"
-   : 'tv_list_java_method_) (_startpos_method_list_ : Lexing.position) (_endpos_method_list_ : Lexing.position) (_startofs_method_list_ : int) (_endofs_method_list_ : int) (_loc_method_list_ : Lexing.position * Lexing.position) (
-# 57 "parser.mly"
-   attribute_list
-# 988 "parser.ml"
-   : 'tv_list_pair_java_type_terminated_IDENT_SEMICOLON___) (_startpos_attribute_list_ : Lexing.position) (_endpos_attribute_list_ : Lexing.position) (_startofs_attribute_list_ : int) (_endofs_attribute_list_ : int) (_loc_attribute_list_ : Lexing.position * Lexing.position) (
-# 55 "parser.mly"
-                                                  _4
-# 993 "parser.ml"
-   : unit) (_startpos__4_ : Lexing.position) (_endpos__4_ : Lexing.position) (_startofs__4_ : int) (_endofs__4_ : int) (_loc__4_ : Lexing.position * Lexing.position) (
-# 55 "parser.mly"
-   class_extends
-# 997 "parser.ml"
-   : 'tv_option_preceded_EXTENDS_IDENT__) (_startpos_class_extends_ : Lexing.position) (_endpos_class_extends_ : Lexing.position) (_startofs_class_extends_ : int) (_endofs_class_extends_ : int) (_loc_class_extends_ : Lexing.position * Lexing.position) (
-# 54 "parser.mly"
-   class_name
-# 1001 "parser.ml"
-   : (
-# 8 "parser.mly"
-       (string Location.t)
-# 1005 "parser.ml"
-  )) (_startpos_class_name_ : Lexing.position) (_endpos_class_name_ : Lexing.position) (_startofs_class_name_ : int) (_endofs_class_name_ : int) (_loc_class_name_ : Lexing.position * Lexing.position) (
-# 53 "parser.mly"
- _1
-# 1009 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 60 "parser.mly"
-   ( class_name,
-      {
-         extends = class_extends;
-         attributes = List.map (fun (x, y) -> (y, x)) attribute_list;
-         methods = method_list;
-      } 
-   )
-# 1020 "parser.ml"
-     : 'tv_java_class) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 147 "parser.mly"
-                       _3
-# 1025 "parser.ml"
-   : unit) (_startpos__3_ : Lexing.position) (_endpos__3_ : Lexing.position) (_startofs__3_ : int) (_endofs__3_ : int) (_loc__3_ : Lexing.position * Lexing.position) (
-# 147 "parser.mly"
-         e
-# 1029 "parser.ml"
-   : 'tv_expression) (_startpos_e_ : Lexing.position) (_endpos_e_ : Lexing.position) (_startofs_e_ : int) (_endofs_e_ : int) (_loc_e_ : Lexing.position * Lexing.position) (
-# 147 "parser.mly"
- _1
-# 1033 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 148 "parser.mly"
-   ( e )
-# 1038 "parser.ml"
-     : 'tv_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 144 "parser.mly"
-   e
-# 1043 "parser.ml"
-   : 'tv_raw_expression) (_startpos_e_ : Lexing.position) (_endpos_e_ : Lexing.position) (_startofs_e_ : int) (_endofs_e_ : int) (_loc_e_ : Lexing.position * Lexing.position) ->
-    (
-# 145 "parser.mly"
-   ( Location.make _startpos _endpos e )
-# 1048 "parser.ml"
-     : 'tv_expression) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 71 "parser.mly"
-  c
-# 1053 "parser.ml"
-   : 'tv_list_java_class_) (_startpos_c_ : Lexing.position) (_endpos_c_ : Lexing.position) (_startofs_c_ : int) (_endofs_c_ : int) (_loc_c_ : Lexing.position * Lexing.position) ->
-    (
-# 71 "parser.mly"
-                       ( c )
-# 1058 "parser.ml"
-     : 'tv_defs) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 196 "parser.mly"
- _1
-# 1063 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 196 "parser.mly"
-           ( OpMul )
-# 1068 "parser.ml"
-     : 'tv_binop) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 195 "parser.mly"
- _1
-# 1073 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 195 "parser.mly"
-           ( OpSub )
-# 1078 "parser.ml"
-     : 'tv_binop) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 194 "parser.mly"
- _1
-# 1083 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 194 "parser.mly"
-           ( OpAdd )
-# 1088 "parser.ml"
-     : 'tv_binop) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 193 "parser.mly"
- _1
-# 1093 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 193 "parser.mly"
-           ( OpLt )
-# 1098 "parser.ml"
-     : 'tv_binop) in
-  let _ = fun (_startpos : Lexing.position) (_endpos : Lexing.position) (_endpos__0_ : Lexing.position) (_symbolstartpos : Lexing.position) (_startofs : int) (_endofs : int) (_endofs__0_ : int) (_symbolstartofs : int) (_sloc : Lexing.position * Lexing.position) (_loc : Lexing.position * Lexing.position) (
-# 192 "parser.mly"
- _1
-# 1103 "parser.ml"
-   : unit) (_startpos__1_ : Lexing.position) (_endpos__1_ : Lexing.position) (_startofs__1_ : int) (_endofs__1_ : int) (_loc__1_ : Lexing.position * Lexing.position) ->
-    (
-# 192 "parser.mly"
-           ( OpAnd )
-# 1108 "parser.ml"
-     : 'tv_binop) in
-  ((let rec diverge() = diverge() in diverge()) : 'tv_var_declarations_and_statements * 'tv_terminated_IDENT_SEMICOLON_ * 'tv_statement * 'tv_separated_nonempty_list_COMMA_pair_java_type_IDENT__ * 'tv_separated_nonempty_list_COMMA_expression_ * 'tv_separated_list_COMMA_pair_java_type_IDENT__ * 'tv_separated_list_COMMA_expression_ * 'tv_raw_expression * 'tv_program * 'tv_preceded_EXTENDS_IDENT_ * 'tv_pair_java_type_terminated_IDENT_SEMICOLON__ * 'tv_pair_java_type_IDENT_ * 'tv_option_preceded_EXTENDS_IDENT__ * 'tv_main_class * 'tv_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ * 'tv_loption_separated_nonempty_list_COMMA_expression__ * 'tv_list_statement_ * 'tv_list_pair_java_type_terminated_IDENT_SEMICOLON___ * 'tv_list_java_method_ * 'tv_list_java_class_ * 'tv_java_type * 'tv_java_method * 'tv_java_class * 'tv_expression * 'tv_defs * 'tv_binop)
+# 603 "parser.ml"
+     : (LMJ.program))
 
-and menhir_end_marker =
-  0
+let _menhir_action_31 =
+  fun left_expr operator right_expr ->
+    (
+# 155 "parser.mly"
+   ( EBinOp (operator, left_expr, right_expr) )
+# 611 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_32 =
+  fun array array_index ->
+    (
+# 158 "parser.mly"
+   ( EArrayGet (array, array_index) )
+# 619 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_33 =
+  fun array ->
+    (
+# 161 "parser.mly"
+   ( EArrayLength array)
+# 627 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_34 =
+  fun java_object method_name xs ->
+    let exprs = 
+# 229 "<standard.mly>"
+    ( xs )
+# 635 "parser.ml"
+     in
+    (
+# 164 "parser.mly"
+   ( EMethodCall (java_object, method_name, exprs) )
+# 640 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_35 =
+  fun i ->
+    (
+# 167 "parser.mly"
+   ( EConst (ConstInt i) )
+# 648 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_36 =
+  fun bool ->
+    (
+# 170 "parser.mly"
+   ( EConst (ConstBool bool))
+# 656 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_37 =
+  fun var_name ->
+    (
+# 173 "parser.mly"
+   ( EGetVar var_name )
+# 664 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_38 =
+  fun () ->
+    (
+# 176 "parser.mly"
+   ( EThis )
+# 672 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_39 =
+  fun size ->
+    (
+# 179 "parser.mly"
+   ( EArrayAlloc size)
+# 680 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_40 =
+  fun class_name ->
+    (
+# 182 "parser.mly"
+   ( EObjectAlloc class_name )
+# 688 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_41 =
+  fun expr ->
+    (
+# 185 "parser.mly"
+   ( EUnOp (UOpNot, expr) )
+# 696 "parser.ml"
+     : (LMJ.raw_expression))
+
+let _menhir_action_42 =
+  fun x ->
+    (
+# 238 "<standard.mly>"
+    ( [ x ] )
+# 704 "parser.ml"
+     : (LMJ.expression list))
+
+let _menhir_action_43 =
+  fun x xs ->
+    (
+# 240 "<standard.mly>"
+    ( x :: xs )
+# 712 "parser.ml"
+     : (LMJ.expression list))
+
+let _menhir_action_44 =
+  fun x y ->
+    let x = 
+# 164 "<standard.mly>"
+    ( (x, y) )
+# 720 "parser.ml"
+     in
+    (
+# 238 "<standard.mly>"
+    ( [ x ] )
+# 725 "parser.ml"
+     : ((LMJ.java_type * LMJ.identifier) list))
+
+let _menhir_action_45 =
+  fun x xs y ->
+    let x = 
+# 164 "<standard.mly>"
+    ( (x, y) )
+# 733 "parser.ml"
+     in
+    (
+# 240 "<standard.mly>"
+    ( x :: xs )
+# 738 "parser.ml"
+     : ((LMJ.java_type * LMJ.identifier) list))
+
+let _menhir_action_46 =
+  fun statements ->
+    (
+# 118 "parser.mly"
+   ( SBlock statements )
+# 746 "parser.ml"
+     : (LMJ.statement))
+
+let _menhir_action_47 =
+  fun else_stmnt if_expr if_stmnt ->
+    (
+# 121 "parser.mly"
+   ( SIf (if_expr,if_stmnt,else_stmnt) )
+# 754 "parser.ml"
+     : (LMJ.statement))
+
+let _menhir_action_48 =
+  fun while_expr while_stmnt ->
+    (
+# 124 "parser.mly"
+   ( SWhile (while_expr,while_stmnt) )
+# 762 "parser.ml"
+     : (LMJ.statement))
+
+let _menhir_action_49 =
+  fun print_expr ->
+    (
+# 127 "parser.mly"
+   ( SSysou print_expr)
+# 770 "parser.ml"
+     : (LMJ.statement))
+
+let _menhir_action_50 =
+  fun expr var_name ->
+    (
+# 130 "parser.mly"
+   ( SSetVar (var_name,expr) )
+# 778 "parser.ml"
+     : (LMJ.statement))
+
+let _menhir_action_51 =
+  fun array_index expr var_array_name ->
+    (
+# 133 "parser.mly"
+   ( SArraySet (var_array_name, array_index, expr) )
+# 786 "parser.ml"
+     : (LMJ.statement))
+
+let _menhir_action_52 =
+  fun rest_dec_and_stat var_name var_type ->
+    (
+# 104 "parser.mly"
+   (
+      let declarations,statements = rest_dec_and_stat in
+      ((var_name, var_type) :: declarations,statements)
+   )
+# 797 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_type) list * LMJ.statement list))
+
+let _menhir_action_53 =
+  fun statements ->
+    (
+# 109 "parser.mly"
+   ( 
+      ([],statements) 
+   )
+# 807 "parser.ml"
+     : ((LMJ.identifier * LMJ.java_type) list * LMJ.statement list))
+
+let _menhir_print_token : token -> string =
+  fun _tok ->
+    match _tok with
+    | AND ->
+        "AND"
+    | ASSIGN ->
+        "ASSIGN"
+    | BOOLEAN ->
+        "BOOLEAN"
+    | BOOL_CONST _ ->
+        "BOOL_CONST"
+    | CLASS ->
+        "CLASS"
+    | COMMA ->
+        "COMMA"
+    | DOT ->
+        "DOT"
+    | ELSE ->
+        "ELSE"
+    | EOF ->
+        "EOF"
+    | EXTENDS ->
+        "EXTENDS"
+    | IDENT _ ->
+        "IDENT"
+    | IF ->
+        "IF"
+    | INTEGER ->
+        "INTEGER"
+    | INT_CONST _ ->
+        "INT_CONST"
+    | LBRACE ->
+        "LBRACE"
+    | LBRACKET ->
+        "LBRACKET"
+    | LENGTH ->
+        "LENGTH"
+    | LPAREN ->
+        "LPAREN"
+    | LT ->
+        "LT"
+    | MAIN ->
+        "MAIN"
+    | MINUS ->
+        "MINUS"
+    | MULTIPLY ->
+        "MULTIPLY"
+    | NEW ->
+        "NEW"
+    | NOT ->
+        "NOT"
+    | PLUS ->
+        "PLUS"
+    | PUBLIC ->
+        "PUBLIC"
+    | RBRACE ->
+        "RBRACE"
+    | RBRACKET ->
+        "RBRACKET"
+    | RETURN ->
+        "RETURN"
+    | RPAREN ->
+        "RPAREN"
+    | SEMICOLON ->
+        "SEMICOLON"
+    | STATIC ->
+        "STATIC"
+    | STRING ->
+        "STRING"
+    | SYSOU ->
+        "SYSOU"
+    | THIS ->
+        "THIS"
+    | VOID ->
+        "VOID"
+    | WHILE ->
+        "WHILE"
+
+let _menhir_fail : unit -> 'a =
+  fun () ->
+    Printf.eprintf "Internal failure -- please contact the parser generator's developers.\n%!";
+    assert false
+
+include struct
+  
+  [@@@ocaml.warning "-4-37-39"]
+  
+  let rec _menhir_run_133_spec_089 : type  ttv_stack. ttv_stack _menhir_cell0_main_class -> _ -> _menhir_box_program =
+    fun _menhir_stack _v ->
+      let _v =
+        let c = _v in
+        _menhir_action_06 c
+      in
+      let MenhirCell0_main_class (_menhir_stack, m) = _menhir_stack in
+      let d = _v in
+      let _v = _menhir_action_30 d m in
+      MenhirBox_program _v
+  
+  let rec _menhir_run_135 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_java_class -> _ -> _menhir_box_program =
+    fun _menhir_stack _v ->
+      let MenhirCell1_java_class (_menhir_stack, _menhir_s, x) = _menhir_stack in
+      let xs = _v in
+      let _v = _menhir_action_16 x xs in
+      _menhir_goto_list_java_class_ _menhir_stack _v _menhir_s
+  
+  and _menhir_goto_list_java_class_ : type  ttv_stack. ttv_stack -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _v _menhir_s ->
+      match _menhir_s with
+      | MenhirState134 ->
+          _menhir_run_135 _menhir_stack _v
+      | MenhirState089 ->
+          _menhir_run_133_spec_089 _menhir_stack _v
+      | _ ->
+          _menhir_fail ()
+  
+  let rec _menhir_run_015 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _menhir_stack = MenhirCell1_WHILE (_menhir_stack, _menhir_s) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LPAREN ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _menhir_stack = MenhirCell0_LPAREN (_menhir_stack, _startpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | THIS ->
+              let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos__1_, _startpos__1_) = (_endpos, _startpos_0) in
+              let _v = _menhir_action_38 () in
+              _menhir_run_026_spec_016 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+          | NOT ->
+              _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState016
+          | NEW ->
+              _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState016
+          | LPAREN ->
+              _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState016
+          | INT_CONST _v ->
+              let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos_1, _v) in
+              let _v = _menhir_action_35 i in
+              _menhir_run_026_spec_016 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+          | IDENT _v ->
+              let _startpos_2 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos_2, _v) in
+              let _v = _menhir_action_37 var_name in
+              _menhir_run_026_spec_016 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+          | BOOL_CONST _v ->
+              let _startpos_3 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos_3, _v) in
+              let _v = _menhir_action_36 bool in
+              _menhir_run_026_spec_016 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_016 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_WHILE _menhir_cell0_LPAREN -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_055 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState016 _tok
+  
+  and _menhir_run_055 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_WHILE _menhir_cell0_LPAREN as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+      match (_tok : MenhirBasics.token) with
+      | RPAREN ->
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_RPAREN (_menhir_stack, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | WHILE ->
+              _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState056
+          | SYSOU ->
+              _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState056
+          | LBRACE ->
+              _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState056
+          | IF ->
+              _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState056
+          | IDENT _v ->
+              _menhir_run_067 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState056
+          | _ ->
+              _eRR ())
+      | PLUS ->
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_057 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _menhir_stack = MenhirCell1_SYSOU (_menhir_stack, _menhir_s) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LPAREN ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _menhir_stack = MenhirCell0_LPAREN (_menhir_stack, _startpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | THIS ->
+              let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos__1_, _startpos__1_) = (_endpos, _startpos_0) in
+              let _v = _menhir_action_38 () in
+              _menhir_run_026_spec_058 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+          | NOT ->
+              _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState058
+          | NEW ->
+              _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState058
+          | LPAREN ->
+              _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState058
+          | INT_CONST _v ->
+              let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos_1, _v) in
+              let _v = _menhir_action_35 i in
+              _menhir_run_026_spec_058 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+          | IDENT _v ->
+              let _startpos_2 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos_2, _v) in
+              let _v = _menhir_action_37 var_name in
+              _menhir_run_026_spec_058 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+          | BOOL_CONST _v ->
+              let _startpos_3 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos_3, _v) in
+              let _v = _menhir_action_36 bool in
+              _menhir_run_026_spec_058 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_058 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_SYSOU _menhir_cell0_LPAREN -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_059 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState058 _tok
+  
+  and _menhir_run_059 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_SYSOU _menhir_cell0_LPAREN as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | RPAREN ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | SEMICOLON ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let MenhirCell0_LPAREN (_menhir_stack, _) = _menhir_stack in
+              let MenhirCell1_SYSOU (_menhir_stack, _menhir_s) = _menhir_stack in
+              let print_expr = _v in
+              let _v = _menhir_action_49 print_expr in
+              _menhir_goto_statement _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+          | _ ->
+              _eRR ())
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_goto_statement : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      match _menhir_s with
+      | MenhirState014 ->
+          _menhir_run_085 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState056 ->
+          _menhir_run_084 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState119 ->
+          _menhir_run_080 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState109 ->
+          _menhir_run_080 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState080 ->
+          _menhir_run_080 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState062 ->
+          _menhir_run_080 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState078 ->
+          _menhir_run_079 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState066 ->
+          _menhir_run_077 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_085 : type  ttv_stack. ttv_stack _menhir_cell0_IDENT _menhir_cell0_LPAREN _menhir_cell0_RBRACKET _menhir_cell0_IDENT _menhir_cell0_RPAREN -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      match (_tok : MenhirBasics.token) with
+      | RBRACE ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | RBRACE ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let MenhirCell0_RPAREN (_menhir_stack, _) = _menhir_stack in
+              let MenhirCell0_IDENT (_menhir_stack, a, _, _) = _menhir_stack in
+              let MenhirCell0_RBRACKET (_menhir_stack, _) = _menhir_stack in
+              let MenhirCell0_LPAREN (_menhir_stack, _) = _menhir_stack in
+              let MenhirCell0_IDENT (_menhir_stack, c, _, _) = _menhir_stack in
+              let i = _v in
+              let _v = _menhir_action_27 a c i in
+              let _menhir_stack = MenhirCell0_main_class (_menhir_stack, _v) in
+              (match (_tok : MenhirBasics.token) with
+              | CLASS ->
+                  _menhir_run_090 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState089
+              | EOF ->
+                  let _v = _menhir_action_15 () in
+                  _menhir_run_133_spec_089 _menhir_stack _v
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_090 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _menhir_stack = MenhirCell1_CLASS (_menhir_stack, _menhir_s) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | IDENT _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v, _startpos, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | EXTENDS ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | IDENT _v_0 ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let x = _v_0 in
+                  let _v = _menhir_action_29 x in
+                  _menhir_goto_option_preceded_EXTENDS_IDENT__ _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+              | _ ->
+                  _eRR ())
+          | LBRACE ->
+              let _v = _menhir_action_28 () in
+              _menhir_goto_option_preceded_EXTENDS_IDENT__ _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_goto_option_preceded_EXTENDS_IDENT__ : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_CLASS _menhir_cell0_IDENT -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let _menhir_stack = MenhirCell0_option_preceded_EXTENDS_IDENT__ (_menhir_stack, _v) in
+      match (_tok : MenhirBasics.token) with
+      | LBRACE ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | INTEGER ->
+              _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState095
+          | IDENT _v_0 ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let type_name = _v_0 in
+              let _v = _menhir_action_14 type_name in
+              _menhir_run_129 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState095 _tok
+          | BOOLEAN ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let _v = _menhir_action_13 () in
+              _menhir_run_129 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState095 _tok
+          | PUBLIC | RBRACE ->
+              let _v = _menhir_action_19 () in
+              _menhir_run_101 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState095 _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_096 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LBRACKET ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | RBRACKET ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let _v = _menhir_action_12 () in
+              _menhir_goto_java_type _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+          | _ ->
+              _eRR ())
+      | IDENT _ ->
+          let _v = _menhir_action_11 () in
+          _menhir_goto_java_type _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_goto_java_type : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      match _menhir_s with
+      | MenhirState131 ->
+          _menhir_run_129 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState095 ->
+          _menhir_run_129 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState123 ->
+          _menhir_run_121 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState105 ->
+          _menhir_run_121 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState119 ->
+          _menhir_run_117 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState109 ->
+          _menhir_run_117 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | MenhirState102 ->
+          _menhir_run_103 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_129 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_java_type (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | IDENT _v_0 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v_0, _startpos, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | SEMICOLON ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | INTEGER ->
+                  _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState131
+              | IDENT _v_1 ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let type_name = _v_1 in
+                  let _v = _menhir_action_14 type_name in
+                  _menhir_run_129 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState131 _tok
+              | BOOLEAN ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let _v = _menhir_action_13 () in
+                  _menhir_run_129 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState131 _tok
+              | PUBLIC | RBRACE ->
+                  let _v = _menhir_action_19 () in
+                  _menhir_run_132 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_132 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let MenhirCell0_IDENT (_menhir_stack, x_inlined1, _, _) = _menhir_stack in
+      let MenhirCell1_java_type (_menhir_stack, _menhir_s, x) = _menhir_stack in
+      let xs = _v in
+      let _v = _menhir_action_20 x x_inlined1 xs in
+      _menhir_goto_list_pair_java_type_terminated_IDENT_SEMICOLON___ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+  
+  and _menhir_goto_list_pair_java_type_terminated_IDENT_SEMICOLON___ : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      match _menhir_s with
+      | MenhirState131 ->
+          _menhir_run_132 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState095 ->
+          _menhir_run_101 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_101 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_CLASS _menhir_cell0_IDENT _menhir_cell0_option_preceded_EXTENDS_IDENT__ as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_list_pair_java_type_terminated_IDENT_SEMICOLON___ (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | PUBLIC ->
+          _menhir_run_102 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState101
+      | RBRACE ->
+          let _v = _menhir_action_17 () in
+          _menhir_run_125 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_102 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _menhir_stack = MenhirCell1_PUBLIC (_menhir_stack, _menhir_s) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | INTEGER ->
+          _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState102
+      | IDENT _v ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let type_name = _v in
+          let _v = _menhir_action_14 type_name in
+          _menhir_run_103 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState102 _tok
+      | BOOLEAN ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let _v = _menhir_action_13 () in
+          _menhir_run_103 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState102 _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_103 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_java_type (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | IDENT _v_0 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v_0, _startpos, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | LPAREN ->
+              let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _menhir_stack = MenhirCell0_LPAREN (_menhir_stack, _startpos_1) in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | INTEGER ->
+                  _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState105
+              | IDENT _v_2 ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let type_name = _v_2 in
+                  let _v = _menhir_action_14 type_name in
+                  _menhir_run_121 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState105 _tok
+              | BOOLEAN ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let _v = _menhir_action_13 () in
+                  _menhir_run_121 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState105 _tok
+              | RPAREN ->
+                  let _v = _menhir_action_25 () in
+                  _menhir_run_107 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState105
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_121 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | IDENT _v_0 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | COMMA ->
+              let _menhir_stack = MenhirCell1_java_type (_menhir_stack, _menhir_s, _v) in
+              let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v_0, _startpos, _endpos) in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | INTEGER ->
+                  _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState123
+              | IDENT _v_1 ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let type_name = _v_1 in
+                  let _v = _menhir_action_14 type_name in
+                  _menhir_run_121 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState123 _tok
+              | BOOLEAN ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let _v = _menhir_action_13 () in
+                  _menhir_run_121 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState123 _tok
+              | _ ->
+                  _eRR ())
+          | RPAREN ->
+              let (x, y) = (_v, _v_0) in
+              let _v = _menhir_action_44 x y in
+              _menhir_goto_separated_nonempty_list_COMMA_pair_java_type_IDENT__ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_goto_separated_nonempty_list_COMMA_pair_java_type_IDENT__ : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s ->
+      match _menhir_s with
+      | MenhirState123 ->
+          _menhir_run_124 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | MenhirState105 ->
+          _menhir_run_106_spec_105 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_124 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let MenhirCell0_IDENT (_menhir_stack, y, _, _) = _menhir_stack in
+      let MenhirCell1_java_type (_menhir_stack, _menhir_s, x) = _menhir_stack in
+      let xs = _v in
+      let _v = _menhir_action_45 x xs y in
+      _menhir_goto_separated_nonempty_list_COMMA_pair_java_type_IDENT__ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s
+  
+  and _menhir_run_106_spec_105 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let x = _v in
+      let _v = _menhir_action_26 x in
+      _menhir_run_107 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState105
+  
+  and _menhir_run_107 : type  ttv_stack. (((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s ->
+      let _menhir_stack = MenhirCell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ (_menhir_stack, _menhir_s, _v) in
+      let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+      let _menhir_stack = MenhirCell0_RPAREN (_menhir_stack, _endpos) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LBRACE ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | WHILE ->
+              _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState109
+          | SYSOU ->
+              _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState109
+          | LBRACE ->
+              _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState109
+          | INTEGER ->
+              _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState109
+          | IF ->
+              _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState109
+          | IDENT _v_0 ->
+              _menhir_run_110 _menhir_stack _menhir_lexbuf _menhir_lexer _v_0 MenhirState109
+          | BOOLEAN ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let _v = _menhir_action_13 () in
+              _menhir_run_117 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState109 _tok
+          | RETURN ->
+              let _v = _menhir_action_21 () in
+              _menhir_run_116_spec_109 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_062 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _menhir_stack = MenhirCell1_LBRACE (_menhir_stack, _menhir_s) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | WHILE ->
+          _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState062
+      | SYSOU ->
+          _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState062
+      | LBRACE ->
+          _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState062
+      | IF ->
+          _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState062
+      | IDENT _v ->
+          _menhir_run_067 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState062
+      | RBRACE ->
+          let _v = _menhir_action_21 () in
+          _menhir_run_082 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_063 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _menhir_stack = MenhirCell1_IF (_menhir_stack, _menhir_s) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LPAREN ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _menhir_stack = MenhirCell0_LPAREN (_menhir_stack, _startpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | THIS ->
+              let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos__1_, _startpos__1_) = (_endpos, _startpos_0) in
+              let _v = _menhir_action_38 () in
+              _menhir_run_026_spec_064 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+          | NOT ->
+              _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState064
+          | NEW ->
+              _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState064
+          | LPAREN ->
+              _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState064
+          | INT_CONST _v ->
+              let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos_1, _v) in
+              let _v = _menhir_action_35 i in
+              _menhir_run_026_spec_064 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+          | IDENT _v ->
+              let _startpos_2 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos_2, _v) in
+              let _v = _menhir_action_37 var_name in
+              _menhir_run_026_spec_064 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+          | BOOL_CONST _v ->
+              let _startpos_3 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos_3, _v) in
+              let _v = _menhir_action_36 bool in
+              _menhir_run_026_spec_064 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_064 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_065 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState064 _tok
+  
+  and _menhir_run_065 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+      match (_tok : MenhirBasics.token) with
+      | RPAREN ->
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_RPAREN (_menhir_stack, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | WHILE ->
+              _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState066
+          | SYSOU ->
+              _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState066
+          | LBRACE ->
+              _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState066
+          | IF ->
+              _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState066
+          | IDENT _v ->
+              _menhir_run_067 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState066
+          | _ ->
+              _eRR ())
+      | PLUS ->
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_067 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s ->
+      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+      let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+      let _menhir_stack = MenhirCell1_IDENT (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LBRACKET ->
+          _menhir_run_068 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | ASSIGN ->
+          _menhir_run_074 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_068 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_IDENT -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | THIS ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos__1_, _startpos__1_) = (_endpos, _startpos) in
+          let _v = _menhir_action_38 () in
+          _menhir_run_026_spec_068 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+      | NOT ->
+          _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState068
+      | NEW ->
+          _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState068
+      | LPAREN ->
+          _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState068
+      | INT_CONST _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_35 i in
+          _menhir_run_026_spec_068 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+      | IDENT _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_37 var_name in
+          _menhir_run_026_spec_068 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+      | BOOL_CONST _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_36 bool in
+          _menhir_run_026_spec_068 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_068 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_IDENT -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_069 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState068 _tok
+  
+  and _menhir_run_069 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_IDENT as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+      match (_tok : MenhirBasics.token) with
+      | RBRACKET ->
+          let _endpos_0 = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_RBRACKET (_menhir_stack, _endpos_0) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | ASSIGN ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | THIS ->
+                  let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_2 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos__1_, _startpos__1_) = (_endpos_2, _startpos_1) in
+                  let _v = _menhir_action_38 () in
+                  _menhir_run_026_spec_071 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+              | NOT ->
+                  _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState071
+              | NEW ->
+                  _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState071
+              | LPAREN ->
+                  _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState071
+              | INT_CONST _v_4 ->
+                  let _startpos_5 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_6 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_i_, _startpos_i_, i) = (_endpos_6, _startpos_5, _v_4) in
+                  let _v = _menhir_action_35 i in
+                  _menhir_run_026_spec_071 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+              | IDENT _v_8 ->
+                  let _startpos_9 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_10 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos_10, _startpos_9, _v_8) in
+                  let _v = _menhir_action_37 var_name in
+                  _menhir_run_026_spec_071 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+              | BOOL_CONST _v_12 ->
+                  let _startpos_13 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_14 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_bool_, _startpos_bool_, bool) = (_endpos_14, _startpos_13, _v_12) in
+                  let _v = _menhir_action_36 bool in
+                  _menhir_run_026_spec_071 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | PLUS ->
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_071 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_IDENT, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RBRACKET -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_072 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState071 _tok
+  
+  and _menhir_run_072 : type  ttv_stack. (((ttv_stack, _menhir_box_program) _menhir_cell1_IDENT, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RBRACKET as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | SEMICOLON ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell0_RBRACKET (_menhir_stack, _) = _menhir_stack in
+          let MenhirCell1_expression (_menhir_stack, _, array_index, _, _) = _menhir_stack in
+          let MenhirCell1_IDENT (_menhir_stack, _menhir_s, var_array_name, _, _) = _menhir_stack in
+          let expr = _v in
+          let _v = _menhir_action_51 array_index expr var_array_name in
+          _menhir_goto_statement _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_029 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let _v = _menhir_action_03 () in
+      _menhir_goto_binop _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+  
+  and _menhir_goto_binop : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let _menhir_stack = MenhirCell0_binop (_menhir_stack, _v) in
+      match (_tok : MenhirBasics.token) with
+      | THIS ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos__1_, _startpos__1_) = (_endpos, _startpos) in
+          let _v = _menhir_action_38 () in
+          _menhir_run_026_spec_047 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+      | NOT ->
+          _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState047
+      | NEW ->
+          _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState047
+      | LPAREN ->
+          _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState047
+      | INT_CONST _v_1 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos, _v_1) in
+          let _v = _menhir_action_35 i in
+          _menhir_run_026_spec_047 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+      | IDENT _v_3 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos, _v_3) in
+          let _v = _menhir_action_37 var_name in
+          _menhir_run_026_spec_047 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+      | BOOL_CONST _v_5 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos, _v_5) in
+          let _v = _menhir_action_36 bool in
+          _menhir_run_026_spec_047 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_047 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_binop -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_048 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState047 _tok
+  
+  and _menhir_run_048 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_binop as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | COMMA | RBRACKET | RPAREN | SEMICOLON ->
+          let MenhirCell0_binop (_menhir_stack, operator) = _menhir_stack in
+          let MenhirCell1_expression (_menhir_stack, _menhir_s, left_expr, _startpos_left_expr_, _) = _menhir_stack in
+          let (_endpos_right_expr_, right_expr) = (_endpos, _v) in
+          let _v = _menhir_action_31 left_expr operator right_expr in
+          _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_right_expr_ _startpos_left_expr_ _v _menhir_s _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_030 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let _v = _menhir_action_05 () in
+      _menhir_goto_binop _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+  
+  and _menhir_run_031 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let _v = _menhir_action_04 () in
+      _menhir_goto_binop _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+  
+  and _menhir_run_032 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let _v = _menhir_action_02 () in
+      _menhir_goto_binop _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+  
+  and _menhir_run_033 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | THIS ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos__1_, _startpos__1_) = (_endpos, _startpos) in
+          let _v = _menhir_action_38 () in
+          _menhir_run_026_spec_033 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+      | NOT ->
+          _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState033
+      | NEW ->
+          _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState033
+      | LPAREN ->
+          _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState033
+      | INT_CONST _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_35 i in
+          _menhir_run_026_spec_033 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+      | IDENT _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_37 var_name in
+          _menhir_run_026_spec_033 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+      | BOOL_CONST _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_36 bool in
+          _menhir_run_026_spec_033 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_033 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_034 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState033 _tok
+  
+  and _menhir_run_034 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_expression as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | RBRACKET ->
+          let _endpos_0 = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell1_expression (_menhir_stack, _menhir_s, array, _startpos_array_, _) = _menhir_stack in
+          let (_endpos__4_, array_index) = (_endpos_0, _v) in
+          let _v = _menhir_action_32 array array_index in
+          _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__4_ _startpos_array_ _v _menhir_s _tok
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_goto_raw_expression : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_goto_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v _menhir_s _tok
+  
+  and _menhir_goto_expression : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match _menhir_s with
+      | MenhirState112 ->
+          _menhir_run_113 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState074 ->
+          _menhir_run_075 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState071 ->
+          _menhir_run_072 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState068 ->
+          _menhir_run_069 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState064 ->
+          _menhir_run_065 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState058 ->
+          _menhir_run_059 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState016 ->
+          _menhir_run_055 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState018 ->
+          _menhir_run_054 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState021 ->
+          _menhir_run_049 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState047 ->
+          _menhir_run_048 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState044 ->
+          _menhir_run_043 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState039 ->
+          _menhir_run_043 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState033 ->
+          _menhir_run_034 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | MenhirState022 ->
+          _menhir_run_027 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_113 : type  ttv_stack. (((((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ _menhir_cell0_RPAREN, _menhir_box_program) _menhir_cell1_var_declarations_and_statements as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | SEMICOLON ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | RBRACE ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let MenhirCell1_var_declarations_and_statements (_menhir_stack, _, var_decls_and_statemnts) = _menhir_stack in
+              let MenhirCell0_RPAREN (_menhir_stack, _) = _menhir_stack in
+              let MenhirCell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ (_menhir_stack, _, xs) = _menhir_stack in
+              let MenhirCell0_LPAREN (_menhir_stack, _) = _menhir_stack in
+              let MenhirCell0_IDENT (_menhir_stack, method_name, _, _) = _menhir_stack in
+              let MenhirCell1_java_type (_menhir_stack, _, method_type) = _menhir_stack in
+              let MenhirCell1_PUBLIC (_menhir_stack, _menhir_s) = _menhir_stack in
+              let return_expr = _v in
+              let _v = _menhir_action_10 method_name method_type return_expr var_decls_and_statemnts xs in
+              let _menhir_stack = MenhirCell1_java_method (_menhir_stack, _menhir_s, _v) in
+              (match (_tok : MenhirBasics.token) with
+              | PUBLIC ->
+                  _menhir_run_102 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState127
+              | RBRACE ->
+                  let _v = _menhir_action_17 () in
+                  _menhir_run_128 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_128 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_java_method -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let MenhirCell1_java_method (_menhir_stack, _menhir_s, x) = _menhir_stack in
+      let xs = _v in
+      let _v = _menhir_action_18 x xs in
+      _menhir_goto_list_java_method_ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s
+  
+  and _menhir_goto_list_java_method_ : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s ->
+      match _menhir_s with
+      | MenhirState127 ->
+          _menhir_run_128 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | MenhirState101 ->
+          _menhir_run_125 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_125 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_CLASS _menhir_cell0_IDENT _menhir_cell0_option_preceded_EXTENDS_IDENT__, _menhir_box_program) _menhir_cell1_list_pair_java_type_terminated_IDENT_SEMICOLON___ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let MenhirCell1_list_pair_java_type_terminated_IDENT_SEMICOLON___ (_menhir_stack, _, attribute_list) = _menhir_stack in
+      let MenhirCell0_option_preceded_EXTENDS_IDENT__ (_menhir_stack, class_extends) = _menhir_stack in
+      let MenhirCell0_IDENT (_menhir_stack, class_name, _, _) = _menhir_stack in
+      let MenhirCell1_CLASS (_menhir_stack, _menhir_s) = _menhir_stack in
+      let method_list = _v in
+      let _v = _menhir_action_09 attribute_list class_extends class_name method_list in
+      let _menhir_stack = MenhirCell1_java_class (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | CLASS ->
+          _menhir_run_090 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState134
+      | EOF ->
+          let _v = _menhir_action_15 () in
+          _menhir_run_135 _menhir_stack _v
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_036 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LENGTH ->
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell1_expression (_menhir_stack, _menhir_s, array, _startpos_array_, _) = _menhir_stack in
+          let _endpos__3_ = _endpos in
+          let _v = _menhir_action_33 array in
+          _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__3_ _startpos_array_ _v _menhir_s _tok
+      | IDENT _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v, _startpos, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | LPAREN ->
+              let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _menhir_stack = MenhirCell0_LPAREN (_menhir_stack, _startpos_0) in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | THIS ->
+                  let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_2 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos__1_, _startpos__1_) = (_endpos_2, _startpos_1) in
+                  let _v = _menhir_action_38 () in
+                  _menhir_run_026_spec_039 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+              | NOT ->
+                  _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState039
+              | NEW ->
+                  _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState039
+              | LPAREN ->
+                  _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState039
+              | INT_CONST _v_4 ->
+                  let _startpos_5 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_6 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_i_, _startpos_i_, i) = (_endpos_6, _startpos_5, _v_4) in
+                  let _v = _menhir_action_35 i in
+                  _menhir_run_026_spec_039 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+              | IDENT _v_8 ->
+                  let _startpos_9 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_10 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos_10, _startpos_9, _v_8) in
+                  let _v = _menhir_action_37 var_name in
+                  _menhir_run_026_spec_039 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+              | BOOL_CONST _v_12 ->
+                  let _startpos_13 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos_14 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_bool_, _startpos_bool_, bool) = (_endpos_14, _startpos_13, _v_12) in
+                  let _v = _menhir_action_36 bool in
+                  _menhir_run_026_spec_039 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+              | RPAREN ->
+                  let _v = _menhir_action_23 () in
+                  _menhir_run_041 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_039 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_IDENT _menhir_cell0_LPAREN -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_043 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState039 _tok
+  
+  and _menhir_run_043 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | COMMA ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | THIS ->
+              let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos_1 = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos__1_, _startpos__1_) = (_endpos_1, _startpos_0) in
+              let _v = _menhir_action_38 () in
+              _menhir_run_026_spec_044 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+          | NOT ->
+              _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState044
+          | NEW ->
+              _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState044
+          | LPAREN ->
+              _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState044
+          | INT_CONST _v_3 ->
+              let _startpos_4 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos_5 = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_i_, _startpos_i_, i) = (_endpos_5, _startpos_4, _v_3) in
+              let _v = _menhir_action_35 i in
+              _menhir_run_026_spec_044 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+          | IDENT _v_7 ->
+              let _startpos_8 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos_9 = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos_9, _startpos_8, _v_7) in
+              let _v = _menhir_action_37 var_name in
+              _menhir_run_026_spec_044 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+          | BOOL_CONST _v_11 ->
+              let _startpos_12 = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos_13 = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_bool_, _startpos_bool_, bool) = (_endpos_13, _startpos_12, _v_11) in
+              let _v = _menhir_action_36 bool in
+              _menhir_run_026_spec_044 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+          | _ ->
+              _eRR ())
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | RPAREN ->
+          let x = _v in
+          let _v = _menhir_action_42 x in
+          _menhir_goto_separated_nonempty_list_COMMA_expression_ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_044 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_043 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState044 _tok
+  
+  and _menhir_run_018 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+      let _menhir_stack = MenhirCell1_NOT (_menhir_stack, _menhir_s, _startpos) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | THIS ->
+          let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos__1_, _startpos__1_) = (_endpos, _startpos_0) in
+          let _v = _menhir_action_38 () in
+          _menhir_run_026_spec_018 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+      | NOT ->
+          _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState018
+      | NEW ->
+          _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState018
+      | LPAREN ->
+          _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState018
+      | INT_CONST _v ->
+          let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos_1, _v) in
+          let _v = _menhir_action_35 i in
+          _menhir_run_026_spec_018 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+      | IDENT _v ->
+          let _startpos_2 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos_2, _v) in
+          let _v = _menhir_action_37 var_name in
+          _menhir_run_026_spec_018 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+      | BOOL_CONST _v ->
+          let _startpos_3 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos_3, _v) in
+          let _v = _menhir_action_36 bool in
+          _menhir_run_026_spec_018 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_018 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_NOT -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_054 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState018 _tok
+  
+  and _menhir_run_054 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_NOT as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | COMMA | RBRACKET | RPAREN | SEMICOLON ->
+          let MenhirCell1_NOT (_menhir_stack, _menhir_s, _startpos__1_) = _menhir_stack in
+          let (_endpos_expr_, expr) = (_endpos, _v) in
+          let _v = _menhir_action_41 expr in
+          _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_expr_ _startpos__1_ _v _menhir_s _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_046 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let _v = _menhir_action_01 () in
+      _menhir_goto_binop _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+  
+  and _menhir_run_019 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | INTEGER ->
+          let _menhir_stack = MenhirCell1_NEW (_menhir_stack, _menhir_s, _startpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | LBRACKET ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | THIS ->
+                  let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos__1_, _startpos__1_) = (_endpos, _startpos_0) in
+                  let _v = _menhir_action_38 () in
+                  _menhir_run_026_spec_021 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+              | NOT ->
+                  _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState021
+              | NEW ->
+                  _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState021
+              | LPAREN ->
+                  _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState021
+              | INT_CONST _v ->
+                  let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos_1, _v) in
+                  let _v = _menhir_action_35 i in
+                  _menhir_run_026_spec_021 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+              | IDENT _v ->
+                  let _startpos_2 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos_2, _v) in
+                  let _v = _menhir_action_37 var_name in
+                  _menhir_run_026_spec_021 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+              | BOOL_CONST _v ->
+                  let _startpos_3 = _menhir_lexbuf.Lexing.lex_start_p in
+                  let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos_3, _v) in
+                  let _v = _menhir_action_36 bool in
+                  _menhir_run_026_spec_021 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | IDENT _v ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | LPAREN ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | RPAREN ->
+                  let _endpos_6 = _menhir_lexbuf.Lexing.lex_curr_p in
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let (_startpos__1_, _endpos__4_, class_name) = (_startpos, _endpos_6, _v) in
+                  let _v = _menhir_action_40 class_name in
+                  _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__4_ _startpos__1_ _v _menhir_s _tok
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_021 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_NEW -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_049 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState021 _tok
+  
+  and _menhir_run_049 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_NEW as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | RBRACKET ->
+          let _endpos_0 = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell1_NEW (_menhir_stack, _menhir_s, _startpos__1_) = _menhir_stack in
+          let (_endpos__5_, size) = (_endpos_0, _v) in
+          let _v = _menhir_action_39 size in
+          _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__5_ _startpos__1_ _v _menhir_s _tok
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_022 : type  ttv_stack. ttv_stack -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _menhir_s ->
+      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+      let _menhir_stack = MenhirCell1_LPAREN (_menhir_stack, _menhir_s, _startpos) in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | THIS ->
+          let _startpos_0 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos__1_, _startpos__1_) = (_endpos, _startpos_0) in
+          let _v = _menhir_action_38 () in
+          _menhir_run_026_spec_022 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+      | NOT ->
+          _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState022
+      | NEW ->
+          _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState022
+      | LPAREN ->
+          _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState022
+      | INT_CONST _v ->
+          let _startpos_1 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos_1, _v) in
+          let _v = _menhir_action_35 i in
+          _menhir_run_026_spec_022 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+      | IDENT _v ->
+          let _startpos_2 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos_2, _v) in
+          let _v = _menhir_action_37 var_name in
+          _menhir_run_026_spec_022 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+      | BOOL_CONST _v ->
+          let _startpos_3 = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos_3, _v) in
+          let _v = _menhir_action_36 bool in
+          _menhir_run_026_spec_022 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_022 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_LPAREN -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_027 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState022 _tok
+  
+  and _menhir_run_027 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_LPAREN as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | RPAREN ->
+          let _endpos_0 = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell1_LPAREN (_menhir_stack, _menhir_s, _startpos__1_) = _menhir_stack in
+          let (e, _endpos__3_) = (_v, _endpos_0) in
+          let _v = _menhir_action_08 e in
+          _menhir_goto_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__3_ _startpos__1_ _v _menhir_s _tok
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_goto_separated_nonempty_list_COMMA_expression_ : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s ->
+      match _menhir_s with
+      | MenhirState044 ->
+          _menhir_run_045 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | MenhirState039 ->
+          _menhir_run_040_spec_039 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_045 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let MenhirCell1_expression (_menhir_stack, _menhir_s, x, _, _) = _menhir_stack in
+      let xs = _v in
+      let _v = _menhir_action_43 x xs in
+      _menhir_goto_separated_nonempty_list_COMMA_expression_ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s
+  
+  and _menhir_run_040_spec_039 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_IDENT _menhir_cell0_LPAREN -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let x = _v in
+      let _v = _menhir_action_24 x in
+      _menhir_run_041 _menhir_stack _menhir_lexbuf _menhir_lexer _v
+  
+  and _menhir_run_041 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_IDENT _menhir_cell0_LPAREN -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v ->
+      let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      let MenhirCell0_LPAREN (_menhir_stack, _) = _menhir_stack in
+      let MenhirCell0_IDENT (_menhir_stack, method_name, _, _) = _menhir_stack in
+      let MenhirCell1_expression (_menhir_stack, _menhir_s, java_object, _startpos_java_object_, _) = _menhir_stack in
+      let (xs, _endpos__6_) = (_v, _endpos) in
+      let _v = _menhir_action_34 java_object method_name xs in
+      _menhir_goto_raw_expression _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__6_ _startpos_java_object_ _v _menhir_s _tok
+  
+  and _menhir_run_075 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_IDENT as 'stack) -> _ -> _ -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _menhir_s _tok ->
+      match (_tok : MenhirBasics.token) with
+      | SEMICOLON ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell1_IDENT (_menhir_stack, _menhir_s, var_name, _, _) = _menhir_stack in
+          let expr = _v in
+          let _v = _menhir_action_50 expr var_name in
+          _menhir_goto_statement _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | PLUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_029 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MULTIPLY ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_030 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | MINUS ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_031 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_032 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_033 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | DOT ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_036 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | AND ->
+          let _menhir_stack = MenhirCell1_expression (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_046 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_074 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_IDENT -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | THIS ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos__1_, _startpos__1_) = (_endpos, _startpos) in
+          let _v = _menhir_action_38 () in
+          _menhir_run_026_spec_074 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+      | NOT ->
+          _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState074
+      | NEW ->
+          _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState074
+      | LPAREN ->
+          _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState074
+      | INT_CONST _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_35 i in
+          _menhir_run_026_spec_074 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+      | IDENT _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_37 var_name in
+          _menhir_run_026_spec_074 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+      | BOOL_CONST _v ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos, _v) in
+          let _v = _menhir_action_36 bool in
+          _menhir_run_026_spec_074 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_074 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_IDENT -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_075 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState074 _tok
+  
+  and _menhir_run_082 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_LBRACE -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      match (_tok : MenhirBasics.token) with
+      | RBRACE ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          let MenhirCell1_LBRACE (_menhir_stack, _menhir_s) = _menhir_stack in
+          let statements = _v in
+          let _v = _menhir_action_46 statements in
+          _menhir_goto_statement _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_110 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s ->
+      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+      let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | LBRACKET ->
+          let _menhir_stack = MenhirCell1_IDENT (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_068 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | ASSIGN ->
+          let _menhir_stack = MenhirCell1_IDENT (_menhir_stack, _menhir_s, _v, _startpos, _endpos) in
+          _menhir_run_074 _menhir_stack _menhir_lexbuf _menhir_lexer
+      | IDENT _ ->
+          let type_name = _v in
+          let _v = _menhir_action_14 type_name in
+          _menhir_goto_java_type _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_117 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_java_type (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | IDENT _v_0 ->
+          let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+          let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v_0, _startpos, _endpos) in
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | SEMICOLON ->
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | WHILE ->
+                  _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState119
+              | SYSOU ->
+                  _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState119
+              | LBRACE ->
+                  _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState119
+              | INTEGER ->
+                  _menhir_run_096 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState119
+              | IF ->
+                  _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState119
+              | IDENT _v_1 ->
+                  _menhir_run_110 _menhir_stack _menhir_lexbuf _menhir_lexer _v_1 MenhirState119
+              | BOOLEAN ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  let _v = _menhir_action_13 () in
+                  _menhir_run_117 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState119 _tok
+              | RETURN ->
+                  let _v = _menhir_action_21 () in
+                  _menhir_run_116_spec_119 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_116_spec_119 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let statements = _v in
+      let _v = _menhir_action_53 statements in
+      _menhir_run_120 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+  
+  and _menhir_run_120 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let MenhirCell0_IDENT (_menhir_stack, var_name, _, _) = _menhir_stack in
+      let MenhirCell1_java_type (_menhir_stack, _menhir_s, var_type) = _menhir_stack in
+      let rest_dec_and_stat = _v in
+      let _v = _menhir_action_52 rest_dec_and_stat var_name var_type in
+      _menhir_goto_var_declarations_and_statements _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+  
+  and _menhir_goto_var_declarations_and_statements : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      match _menhir_s with
+      | MenhirState119 ->
+          _menhir_run_120 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState109 ->
+          _menhir_run_111 _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_111 : type  ttv_stack. ((((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ _menhir_cell0_RPAREN as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_var_declarations_and_statements (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | RETURN ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | THIS ->
+              let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos__1_, _startpos__1_) = (_endpos, _startpos) in
+              let _v = _menhir_action_38 () in
+              _menhir_run_026_spec_112 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos__1_ _startpos__1_ _v _tok
+          | NOT ->
+              _menhir_run_018 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState112
+          | NEW ->
+              _menhir_run_019 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState112
+          | LPAREN ->
+              _menhir_run_022 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState112
+          | INT_CONST _v_1 ->
+              let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_i_, _startpos_i_, i) = (_endpos, _startpos, _v_1) in
+              let _v = _menhir_action_35 i in
+              _menhir_run_026_spec_112 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_i_ _startpos_i_ _v _tok
+          | IDENT _v_3 ->
+              let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_var_name_, _startpos_var_name_, var_name) = (_endpos, _startpos, _v_3) in
+              let _v = _menhir_action_37 var_name in
+              _menhir_run_026_spec_112 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_var_name_ _startpos_var_name_ _v _tok
+          | BOOL_CONST _v_5 ->
+              let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              let (_endpos_bool_, _startpos_bool_, bool) = (_endpos, _startpos, _v_5) in
+              let _v = _menhir_action_36 bool in
+              _menhir_run_026_spec_112 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_bool_ _startpos_bool_ _v _tok
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_026_spec_112 : type  ttv_stack. ((((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ _menhir_cell0_RPAREN, _menhir_box_program) _menhir_cell1_var_declarations_and_statements -> _ -> _ -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _endpos _startpos _v _tok ->
+      let (_endpos_e_, _startpos_e_, e) = (_endpos, _startpos, _v) in
+      let _v = _menhir_action_07 _endpos_e_ _startpos_e_ e in
+      _menhir_run_113 _menhir_stack _menhir_lexbuf _menhir_lexer _endpos_e_ _startpos_e_ _v MenhirState112 _tok
+  
+  and _menhir_run_116_spec_109 : type  ttv_stack. (((ttv_stack, _menhir_box_program) _menhir_cell1_PUBLIC, _menhir_box_program) _menhir_cell1_java_type _menhir_cell0_IDENT _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_loption_separated_nonempty_list_COMMA_pair_java_type_IDENT___ _menhir_cell0_RPAREN -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let statements = _v in
+      let _v = _menhir_action_53 statements in
+      _menhir_run_111 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState109 _tok
+  
+  and _menhir_run_084 : type  ttv_stack. ((ttv_stack, _menhir_box_program) _menhir_cell1_WHILE _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RPAREN -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let MenhirCell0_RPAREN (_menhir_stack, _) = _menhir_stack in
+      let MenhirCell1_expression (_menhir_stack, _, while_expr, _, _) = _menhir_stack in
+      let MenhirCell0_LPAREN (_menhir_stack, _) = _menhir_stack in
+      let MenhirCell1_WHILE (_menhir_stack, _menhir_s) = _menhir_stack in
+      let while_stmnt = _v in
+      let _v = _menhir_action_48 while_expr while_stmnt in
+      _menhir_goto_statement _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+  
+  and _menhir_run_080 : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_statement (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | WHILE ->
+          _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState080
+      | SYSOU ->
+          _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState080
+      | LBRACE ->
+          _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState080
+      | IF ->
+          _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState080
+      | IDENT _v_0 ->
+          _menhir_run_067 _menhir_stack _menhir_lexbuf _menhir_lexer _v_0 MenhirState080
+      | RBRACE | RETURN ->
+          let _v = _menhir_action_21 () in
+          _menhir_run_081 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | _ ->
+          _eRR ()
+  
+  and _menhir_run_081 : type  ttv_stack. (ttv_stack, _menhir_box_program) _menhir_cell1_statement -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let MenhirCell1_statement (_menhir_stack, _menhir_s, x) = _menhir_stack in
+      let xs = _v in
+      let _v = _menhir_action_22 x xs in
+      _menhir_goto_list_statement_ _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+  
+  and _menhir_goto_list_statement_ : type  ttv_stack. ttv_stack -> _ -> _ -> _ -> (ttv_stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      match _menhir_s with
+      | MenhirState119 ->
+          _menhir_run_116_spec_119 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState109 ->
+          _menhir_run_116_spec_109 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState062 ->
+          _menhir_run_082 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | MenhirState080 ->
+          _menhir_run_081 _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok
+      | _ ->
+          _menhir_fail ()
+  
+  and _menhir_run_079 : type  ttv_stack. (((ttv_stack, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RPAREN, _menhir_box_program) _menhir_cell1_statement -> _ -> _ -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _tok ->
+      let MenhirCell1_statement (_menhir_stack, _, if_stmnt) = _menhir_stack in
+      let MenhirCell0_RPAREN (_menhir_stack, _) = _menhir_stack in
+      let MenhirCell1_expression (_menhir_stack, _, if_expr, _, _) = _menhir_stack in
+      let MenhirCell0_LPAREN (_menhir_stack, _) = _menhir_stack in
+      let MenhirCell1_IF (_menhir_stack, _menhir_s) = _menhir_stack in
+      let else_stmnt = _v in
+      let _v = _menhir_action_47 else_stmnt if_expr if_stmnt in
+      _menhir_goto_statement _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok
+  
+  and _menhir_run_077 : type  ttv_stack. (((ttv_stack, _menhir_box_program) _menhir_cell1_IF _menhir_cell0_LPAREN, _menhir_box_program) _menhir_cell1_expression _menhir_cell0_RPAREN as 'stack) -> _ -> _ -> _ -> ('stack, _menhir_box_program) _menhir_state -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer _v _menhir_s _tok ->
+      let _menhir_stack = MenhirCell1_statement (_menhir_stack, _menhir_s, _v) in
+      match (_tok : MenhirBasics.token) with
+      | ELSE ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | WHILE ->
+              _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState078
+          | SYSOU ->
+              _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState078
+          | LBRACE ->
+              _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState078
+          | IF ->
+              _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState078
+          | IDENT _v ->
+              _menhir_run_067 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState078
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+  let rec _menhir_run_000 : type  ttv_stack. ttv_stack -> _ -> _ -> _menhir_box_program =
+    fun _menhir_stack _menhir_lexbuf _menhir_lexer ->
+      let _tok = _menhir_lexer _menhir_lexbuf in
+      match (_tok : MenhirBasics.token) with
+      | CLASS ->
+          let _tok = _menhir_lexer _menhir_lexbuf in
+          (match (_tok : MenhirBasics.token) with
+          | IDENT _v ->
+              let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+              let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+              let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v, _startpos, _endpos) in
+              let _tok = _menhir_lexer _menhir_lexbuf in
+              (match (_tok : MenhirBasics.token) with
+              | LBRACE ->
+                  let _tok = _menhir_lexer _menhir_lexbuf in
+                  (match (_tok : MenhirBasics.token) with
+                  | PUBLIC ->
+                      let _tok = _menhir_lexer _menhir_lexbuf in
+                      (match (_tok : MenhirBasics.token) with
+                      | STATIC ->
+                          let _tok = _menhir_lexer _menhir_lexbuf in
+                          (match (_tok : MenhirBasics.token) with
+                          | VOID ->
+                              let _tok = _menhir_lexer _menhir_lexbuf in
+                              (match (_tok : MenhirBasics.token) with
+                              | MAIN ->
+                                  let _tok = _menhir_lexer _menhir_lexbuf in
+                                  (match (_tok : MenhirBasics.token) with
+                                  | LPAREN ->
+                                      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+                                      let _menhir_stack = MenhirCell0_LPAREN (_menhir_stack, _startpos) in
+                                      let _tok = _menhir_lexer _menhir_lexbuf in
+                                      (match (_tok : MenhirBasics.token) with
+                                      | STRING ->
+                                          let _tok = _menhir_lexer _menhir_lexbuf in
+                                          (match (_tok : MenhirBasics.token) with
+                                          | LBRACKET ->
+                                              let _tok = _menhir_lexer _menhir_lexbuf in
+                                              (match (_tok : MenhirBasics.token) with
+                                              | RBRACKET ->
+                                                  let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                                                  let _menhir_stack = MenhirCell0_RBRACKET (_menhir_stack, _endpos) in
+                                                  let _tok = _menhir_lexer _menhir_lexbuf in
+                                                  (match (_tok : MenhirBasics.token) with
+                                                  | IDENT _v ->
+                                                      let _startpos = _menhir_lexbuf.Lexing.lex_start_p in
+                                                      let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                                                      let _menhir_stack = MenhirCell0_IDENT (_menhir_stack, _v, _startpos, _endpos) in
+                                                      let _tok = _menhir_lexer _menhir_lexbuf in
+                                                      (match (_tok : MenhirBasics.token) with
+                                                      | RPAREN ->
+                                                          let _endpos = _menhir_lexbuf.Lexing.lex_curr_p in
+                                                          let _menhir_stack = MenhirCell0_RPAREN (_menhir_stack, _endpos) in
+                                                          let _tok = _menhir_lexer _menhir_lexbuf in
+                                                          (match (_tok : MenhirBasics.token) with
+                                                          | LBRACE ->
+                                                              let _tok = _menhir_lexer _menhir_lexbuf in
+                                                              (match (_tok : MenhirBasics.token) with
+                                                              | WHILE ->
+                                                                  _menhir_run_015 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState014
+                                                              | SYSOU ->
+                                                                  _menhir_run_057 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState014
+                                                              | LBRACE ->
+                                                                  _menhir_run_062 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState014
+                                                              | IF ->
+                                                                  _menhir_run_063 _menhir_stack _menhir_lexbuf _menhir_lexer MenhirState014
+                                                              | IDENT _v ->
+                                                                  _menhir_run_067 _menhir_stack _menhir_lexbuf _menhir_lexer _v MenhirState014
+                                                              | _ ->
+                                                                  _eRR ())
+                                                          | _ ->
+                                                              _eRR ())
+                                                      | _ ->
+                                                          _eRR ())
+                                                  | _ ->
+                                                      _eRR ())
+                                              | _ ->
+                                                  _eRR ())
+                                          | _ ->
+                                              _eRR ())
+                                      | _ ->
+                                          _eRR ())
+                                  | _ ->
+                                      _eRR ())
+                              | _ ->
+                                  _eRR ())
+                          | _ ->
+                              _eRR ())
+                      | _ ->
+                          _eRR ())
+                  | _ ->
+                      _eRR ())
+              | _ ->
+                  _eRR ())
+          | _ ->
+              _eRR ())
+      | _ ->
+          _eRR ()
+  
+end
+
+let program =
+  fun _menhir_lexer _menhir_lexbuf ->
+    let _menhir_stack = () in
+    let MenhirBox_program v = _menhir_run_000 _menhir_stack _menhir_lexbuf _menhir_lexer in
+    v

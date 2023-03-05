@@ -13,21 +13,46 @@ ocamldep.opt -modules location.ml > location.ml.depends # cached
 ocamlc.opt -c -o location.cmo location.ml # cached
 # Target: parser.mly.depends, tags: { extension:mly, file:parser.mly, infer, menhir_ocamldep, ocaml, ocamldep, quiet }
 menhir --explain --dump --raw-depend --ocamldep 'ocamldep.opt -modules' parser.mly > parser.mly.depends
-+ menhir --explain --dump --raw-depend --ocamldep 'ocamldep.opt -modules' parser.mly > parser.mly.depends
-File "parser.mly", line 10, characters 27-30:
-Warning: the token NOT is unused.
 # Target: LMJ.mli.depends, tags: { extension:mli, file:LMJ.mli, ocaml, ocamldep, quiet }
-ocamldep.opt -modules LMJ.mli > LMJ.mli.depends # cached
+ocamldep.opt -modules LMJ.mli > LMJ.mli.depends
 # Target: LMJ.cmi, tags: { byte, compile, extension:mli, file:LMJ.mli, interf, ocaml, quiet }
-ocamlc.opt -c -o LMJ.cmi LMJ.mli # cached
+ocamlc.opt -c -o LMJ.cmi LMJ.mli
 # Target: parser.mly, tags: { byte, compile, extension:ml, extension:mly, file:parser.ml, file:parser.mly, infer, menhir, ocaml, parser, quiet }
 menhir --explain --dump --ocamlc ocamlc.opt --infer parser.mly
 + menhir --explain --dump --ocamlc ocamlc.opt --infer parser.mly
-File "parser.mly", line 10, characters 27-30:
-Warning: the token NOT is unused.
-File "parser.mly", line 178, characters 3-22:
-Error: This expression has type LMJ.raw_expression
-       but an expression was expected of type
-         LMJ.expression = LMJ.raw_expression Location.t
-Command exited with code 1.
+Warning: 2 states have shift/reduce conflicts.
+Warning: 14 shift/reduce conflicts were arbitrarily resolved.
+# Target: parser.mli.depends, tags: { extension:mli, file:parser.mli, ocaml, ocamldep, quiet }
+ocamldep.opt -modules parser.mli > parser.mli.depends
+# Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
+ocamlc.opt -c -o parser.cmi parser.mli
+# Target: lmj2mj.ml.depends, tags: { extension:ml, file:lmj2mj.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules lmj2mj.ml > lmj2mj.ml.depends
+# Target: MJ.mli.depends, tags: { extension:mli, file:MJ.mli, ocaml, ocamldep, quiet }
+ocamldep.opt -modules MJ.mli > MJ.mli.depends
+# Target: stringMap.mli.depends, tags: { extension:mli, file:stringMap.mli, ocaml, ocamldep, quiet }
+ocamldep.opt -modules stringMap.mli > stringMap.mli.depends
+# Target: stringSet.mli.depends, tags: { extension:mli, file:stringSet.mli, ocaml, ocamldep, quiet }
+ocamldep.opt -modules stringSet.mli > stringSet.mli.depends
+# Target: stringSet.cmi, tags: { byte, compile, extension:mli, file:stringSet.mli, interf, ocaml, quiet }
+ocamlc.opt -c -o stringSet.cmi stringSet.mli
+# Target: stringMap.cmi, tags: { byte, compile, extension:mli, file:stringMap.mli, interf, ocaml, quiet }
+ocamlc.opt -c -o stringMap.cmi stringMap.mli
+# Target: MJ.cmi, tags: { byte, compile, extension:mli, file:MJ.mli, interf, ocaml, quiet }
+ocamlc.opt -c -o MJ.cmi MJ.mli
+# Target: mj2c.ml.depends, tags: { extension:ml, file:mj2c.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules mj2c.ml > mj2c.ml.depends
+# Target: printMJ.ml.depends, tags: { extension:ml, file:printMJ.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules printMJ.ml > printMJ.ml.depends
+# Target: print.ml.depends, tags: { extension:ml, file:print.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules print.ml > print.ml.depends
+# Target: print.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:print.cmo, file:print.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o print.cmo print.ml
++ ocamlc.opt -c -o print.cmo print.ml
+File "print.ml", line 135, characters 18-19:
+135 |   String.blit x 0 y 0 (String.length x);
+                        ^
+Error: This expression has type string but an expression was expected of type
+         bytes
+Command exited with code 2.
 # Compilation unsuccessful.
