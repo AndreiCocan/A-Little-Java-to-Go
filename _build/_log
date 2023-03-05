@@ -12,40 +12,37 @@ ocamldep.opt -modules location.ml > location.ml.depends # cached
 # Target: location.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:location.cmo, file:location.ml, implem, ocaml, quiet }
 ocamlc.opt -c -o location.cmo location.ml # cached
 # Target: parser.mly.depends, tags: { extension:mly, file:parser.mly, infer, menhir_ocamldep, ocaml, ocamldep, quiet }
-menhir --explain --dump --raw-depend --ocamldep 'ocamldep.opt -modules' parser.mly > parser.mly.depends
+menhir --explain --dump --raw-depend --ocamldep 'ocamldep.opt -modules' parser.mly > parser.mly.depends # cached
 # Target: LMJ.mli.depends, tags: { extension:mli, file:LMJ.mli, ocaml, ocamldep, quiet }
-ocamldep.opt -modules LMJ.mli > LMJ.mli.depends
+ocamldep.opt -modules LMJ.mli > LMJ.mli.depends # cached
 # Target: LMJ.cmi, tags: { byte, compile, extension:mli, file:LMJ.mli, interf, ocaml, quiet }
-ocamlc.opt -c -o LMJ.cmi LMJ.mli
+ocamlc.opt -c -o LMJ.cmi LMJ.mli # cached
 # Target: parser.mly, tags: { byte, compile, extension:ml, extension:mly, file:parser.ml, file:parser.mly, infer, menhir, ocaml, parser, quiet }
-menhir --explain --dump --ocamlc ocamlc.opt --infer parser.mly
-+ menhir --explain --dump --ocamlc ocamlc.opt --infer parser.mly
-Warning: 2 states have shift/reduce conflicts.
-Warning: 14 shift/reduce conflicts were arbitrarily resolved.
+menhir --explain --dump --ocamlc ocamlc.opt --infer parser.mly # cached
 # Target: parser.mli.depends, tags: { extension:mli, file:parser.mli, ocaml, ocamldep, quiet }
-ocamldep.opt -modules parser.mli > parser.mli.depends
+ocamldep.opt -modules parser.mli > parser.mli.depends # cached
 # Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
-ocamlc.opt -c -o parser.cmi parser.mli
+ocamlc.opt -c -o parser.cmi parser.mli # cached
 # Target: lmj2mj.ml.depends, tags: { extension:ml, file:lmj2mj.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules lmj2mj.ml > lmj2mj.ml.depends
+ocamldep.opt -modules lmj2mj.ml > lmj2mj.ml.depends # cached
 # Target: MJ.mli.depends, tags: { extension:mli, file:MJ.mli, ocaml, ocamldep, quiet }
-ocamldep.opt -modules MJ.mli > MJ.mli.depends
+ocamldep.opt -modules MJ.mli > MJ.mli.depends # cached
 # Target: stringMap.mli.depends, tags: { extension:mli, file:stringMap.mli, ocaml, ocamldep, quiet }
-ocamldep.opt -modules stringMap.mli > stringMap.mli.depends
+ocamldep.opt -modules stringMap.mli > stringMap.mli.depends # cached
 # Target: stringSet.mli.depends, tags: { extension:mli, file:stringSet.mli, ocaml, ocamldep, quiet }
-ocamldep.opt -modules stringSet.mli > stringSet.mli.depends
+ocamldep.opt -modules stringSet.mli > stringSet.mli.depends # cached
 # Target: stringSet.cmi, tags: { byte, compile, extension:mli, file:stringSet.mli, interf, ocaml, quiet }
-ocamlc.opt -c -o stringSet.cmi stringSet.mli
+ocamlc.opt -c -o stringSet.cmi stringSet.mli # cached
 # Target: stringMap.cmi, tags: { byte, compile, extension:mli, file:stringMap.mli, interf, ocaml, quiet }
-ocamlc.opt -c -o stringMap.cmi stringMap.mli
+ocamlc.opt -c -o stringMap.cmi stringMap.mli # cached
 # Target: MJ.cmi, tags: { byte, compile, extension:mli, file:MJ.mli, interf, ocaml, quiet }
-ocamlc.opt -c -o MJ.cmi MJ.mli
+ocamlc.opt -c -o MJ.cmi MJ.mli # cached
 # Target: mj2c.ml.depends, tags: { extension:ml, file:mj2c.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules mj2c.ml > mj2c.ml.depends
+ocamldep.opt -modules mj2c.ml > mj2c.ml.depends # cached
 # Target: printMJ.ml.depends, tags: { extension:ml, file:printMJ.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules printMJ.ml > printMJ.ml.depends
+ocamldep.opt -modules printMJ.ml > printMJ.ml.depends # cached
 # Target: print.ml.depends, tags: { extension:ml, file:print.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules print.ml > print.ml.depends
+ocamldep.opt -modules print.ml > print.ml.depends # cached
 # Target: print.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:print.cmo, file:print.ml, implem, ocaml, quiet }
 ocamlc.opt -c -o print.cmo print.ml
 + ocamlc.opt -c -o print.cmo print.ml

@@ -52,46 +52,46 @@ and expr () e = expr6 () e
 
 let indentation = 2
 
-let rec instr () = function
-  | ISetVar (x, e) -> sprintf "%s = %a;" x expr e
-  | IArraySet (id, ei, ev) -> sprintf "%s[%a] = %a;" id expr ei expr ev
-  | IIf (c, i1, i2) ->
+let rec statement () = function
+  | SSetVar (x, e) -> sprintf "%s = %a;" x expr e
+  | SArraySet (id, ei, ev) -> sprintf "%s[%a] = %a;" id expr ei expr ev
+  | SIf (c, i1, i2) ->
       sprintf "if (%a) %a%telse %a"
         expr c
-        instr i1
+        statement i1
         nl
-        instr i2
-  | IWhile (c, i) ->
+        statement i2
+  | SWhile (c, i) ->
       sprintf "while (%a) %a"
         expr c
-        instr i
-  | IBlock is -> sprintf "{%a%t}" (indent indentation (seplist nl instr)) is nl
-  | ISyso e -> sprintf "System.out.println(%a);" expr e
+        statement i
+  | SBlock is -> sprintf "{%a%t}" (indent indentation (seplist nl statement)) is nl
+  | SSysou e -> sprintf "System.out.println(%a);" expr e
 
-let typ () = function
-  | TypInt -> "int"
-  | TypBool -> "boolean"
-  | TypIntArray -> "int[]"
-  | Typ id -> id
+let java_type () = function
+  | TypeInt -> "int"
+  | TypeBool -> "boolean"
+  | TypeIntArray -> "int[]"
+  | Type id -> id
 
-let binding () (x, t) = sprintf "%a %s" typ t x
+let binding () (x, t) = sprintf "%a %s" java_type t x
 
-let metho () (name, m) =
+let java_method () (name, m) =
   sprintf "public %a %s(%a) {%a%a%a%t}"
-    typ m.result
+    java_type m.result
     name
     (seplist comma binding) m.formals
     (termlist semicolon (indent indentation binding)) (StringMap.to_association_list m.locals)
-    (list (indent indentation instr)) (match m.body with | IBlock is -> is | _ -> assert false)
+    (list (indent indentation statement)) (match m.body with | IBlock is -> is | _ -> assert false)
     (indent indentation (fun () -> sprintf "return %a;" expr)) m.return
     nl
 
-let clas () (name, c) =
+let java_class () (name, c) =
   (match c.extends with
   | None -> sprintf "class %s {%a%a%t}" name
   | Some class_name -> sprintf "class %s extends %s {%a%a%t}" name class_name)
     (termlist semicolon (indent indentation binding)) (StringMap.to_association_list c.attributes)
-    (list (indent indentation metho)) (StringMap.to_association_list c.methods)
+    (list (indent indentation java_method)) (StringMap.to_association_list c.methods)
     nl
 
 let print_program p =
@@ -99,8 +99,8 @@ let print_program p =
     (
       sprintf "class %s {%a%t}%t%a"
         p.name
-        (indent indentation (fun () -> sprintf "public static void main(String[] %s) {%a%t}" p.main_args (indent indentation instr) p.main)) nl
+        (indent indentation (fun () -> sprintf "public static void main(String[] %s) {%a%t}" p.main_args (indent indentation statement) p.main)) nl
         nl
         nl
-        (seplist nl clas) (StringMap.to_association_list p.defs)
+        (seplist nl java_class) (StringMap.to_association_list p.defs)
     )
