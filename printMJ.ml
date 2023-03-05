@@ -78,12 +78,12 @@ let binding () (x, t) = sprintf "%a %s" java_type t x
 
 let java_method () (name, m) =
   sprintf "public %a %s(%a) {%a%a%a%t}"
-    java_type m.result
+    java_type m.return_type
     name
-    (seplist comma binding) m.formals
-    (termlist semicolon (indent indentation binding)) (StringMap.to_association_list m.locals)
-    (list (indent indentation statement)) (match m.body with | IBlock is -> is | _ -> assert false)
-    (indent indentation (fun () -> sprintf "return %a;" expr)) m.return
+    (seplist comma binding) m.arguments
+    (termlist semicolon (indent indentation binding)) (StringMap.to_association_list m.method_declarations)
+    (list (indent indentation statement)) (match m.method_statements with | IBlock is -> is | _ -> assert false)
+    (indent indentation (fun () -> sprintf "return %a;" expr)) m.return_expression
     nl
 
 let java_class () (name, c) =
