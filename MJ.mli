@@ -25,21 +25,21 @@ and binop = LMJ.binop =
 
 and unop = LMJ.unop = UOpNot
 
-and instruction =
-| IBlock of instruction list
-| IIf of expression * instruction * instruction
-| IWhile of expression * instruction
-| ISyso of expression
-| ISetVar of identifier * expression
-| IArraySet of identifier * expression * expression
+and statement =
+| SBlock of instruction list
+| SIf of expression * instruction * instruction
+| SWhile of expression * instruction
+| SSysou of expression
+| SSetVar of identifier * expression
+| SArraySet of identifier * expression * expression
 
-and typ =
-| TypInt
-| TypBool
-| TypIntArray
-| Typ of identifier
+and java_type =
+| TypeInt
+| TypeBool
+| TypeIntArray
+| Type of identifier
 
-and metho = {
+and java_method = {
 
   formals: (string * typ) list;
 
@@ -53,7 +53,7 @@ and metho = {
 
 }
 
-and clas = {
+and java_class = {
 
   extends: string option;
 

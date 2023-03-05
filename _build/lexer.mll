@@ -17,7 +17,6 @@ let letter = ['a'-'z''A'-'Z''_']
 let ident = letter (digit | letter)*
 
 rule get_token = parse
-  | "//" [^ '\n']* '\n'
   | '\n'      { newline lexbuf; get_token lexbuf }
   | space+    { get_token lexbuf }
   | "/*"      { parse_comment lexbuf }
