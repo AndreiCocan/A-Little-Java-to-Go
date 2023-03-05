@@ -12,26 +12,26 @@ and translate_raw_expression = function
 | LMJ.EThis -> MJ.EThis
 | LMJ.EObjectAlloc id -> MJ.EObjectAlloc (Location.content id)
 
-and translate_instruction = function
-| LMJ.IBlock is -> MJ.IBlock (List.map translate_instruction is)
-| LMJ.IIf (c, i1, i2) -> MJ.IIf (translate_expression c, translate_instruction i1, translate_instruction i2)
-| LMJ.IWhile (c, i) -> MJ.IWhile (translate_expression c, translate_instruction i)
-| LMJ.ISyso e -> MJ.ISyso (translate_expression e)
-| LMJ.ISetVar (id, e) -> MJ.ISetVar (Location.content id, translate_expression e)
-| LMJ.IArraySet (a, e1, e2) -> MJ.IArraySet (Location.content a, translate_expression e1, translate_expression e2)
+and translate_statement = function
+| LMJ.SBlock is -> MJ.SBlock (List.map translate_instruction is)
+| LMJ.SIf (c, i1, i2) -> MJ.SIf (translate_expression c, translate_instruction i1, translate_instruction i2)
+| LMJ.SWhile (c, i) -> MJ.SWhile (translate_expression c, translate_instruction i)
+| LMJ.SSysou e -> MJ.SSysou (translate_expression e)
+| LMJ.SSetVar (id, e) -> MJ.SSetVar (Location.content id, translate_expression e)
+| LMJ.SArraySet (a, e1, e2) -> MJ.SArraySet (Location.content a, translate_expression e1, translate_expression e2)
 
-let translate_typ = function
-| LMJ.TypInt -> MJ.TypInt
-| LMJ.TypBool -> MJ.TypBool
-| LMJ.TypIntArray -> MJ.TypIntArray
-| LMJ.Typ id -> MJ.Typ (Location.content id)
+let translate_java_type = function
+| LMJ.TypeInt -> MJ.TypeInt
+| LMJ.TypeBool -> MJ.TypeBool
+| LMJ.TypeIntArray -> MJ.TypeeIntArray
+| LMJ.Type id -> MJ.Type (Location.content id)
 
 let translate_binding f (id, t) = (Location.content id, f t)
 
 let translate_bindings f bindings =
   StringMap.of_association_list (List.map (translate_binding f) bindings)
 
-let translate_metho m =
+let translate_java_method m =
   {
     MJ.formals = List.map (fun (id, t) -> (Location.content id, translate_typ t)) m.LMJ.formals;
     MJ.result  = translate_typ m.LMJ.result;
@@ -40,7 +40,7 @@ let translate_metho m =
     MJ.return  = translate_expression m.LMJ.return
   }
 
-let translate_clas c =
+let translate_java_class c =
   {
     MJ.extends =
       (match c.LMJ.extends with
