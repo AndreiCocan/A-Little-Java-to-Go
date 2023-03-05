@@ -31,7 +31,7 @@ let () =
       Lexing.pos_cnum  = 0
     };
   try
-    PrintTokens.print stdout lexbuf true;
+    (*PrintTokens.print stdout lexbuf true;*)
     let program = Parser.program Lexer.get_token lexbuf in
     Typechecking.typecheck_program program;
     let mj = Lmj2mj.translate_program program in

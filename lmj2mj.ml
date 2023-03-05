@@ -36,7 +36,7 @@ let translate_java_method m =
     MJ.arguments = List.map (fun (id, t) -> (Location.content id, translate_java_type t)) m.LMJ.arguments;
     MJ.return_type  = translate_java_type m.LMJ.return_type;
     MJ.method_declarations  = translate_bindings translate_java_type m.LMJ.method_declarations;
-    MJ.method_statements    = translate_statement m.LMJ.method_statements;
+    MJ.method_statements    = List.map translate_statement m.LMJ.method_statements;
     MJ.return_expression  = translate_expression m.LMJ.return_expression
   }
 

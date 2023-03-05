@@ -82,7 +82,8 @@ let java_method () (name, m) =
     name
     (seplist comma binding) m.arguments
     (termlist semicolon (indent indentation binding)) (StringMap.to_association_list m.method_declarations)
-    (list (indent indentation statement)) (match m.method_statements with | SBlock is -> is | _ -> assert false)
+    (*(list (indent indentation statement)) (match m.method_statements with | SBlock is -> is | _ -> assert false)*)
+    (list (indent indentation statement)) m.method_statements
     (indent indentation (fun () -> sprintf "return %a;" expr)) m.return_expression
     nl
 

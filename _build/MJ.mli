@@ -47,7 +47,7 @@ and java_method = {
 
   method_declarations: java_type StringMap.t;
 
-  method_statements: statement;
+  method_statements: statement list;
 
   return_expression: expression
 
