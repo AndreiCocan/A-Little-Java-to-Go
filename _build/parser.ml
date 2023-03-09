@@ -426,7 +426,7 @@ let _menhir_action_12 =
   fun () ->
     (
 # 139 "parser.mly"
-                            (TypeIntArray)
+                            ( TypeIntArray)
 # 431 "parser.ml"
      : (LMJ.java_type))
 

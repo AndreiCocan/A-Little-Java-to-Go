@@ -31,14 +31,14 @@ let () =
       Lexing.pos_cnum  = 0
     };
   try
-    (*PrintTokens.print stdout lexbuf true;*)
+    PrintTokens.print stdout lexbuf true;
     let program = Parser.program Lexer.get_token lexbuf in
     Typechecking.typecheck_program program;
     let mj = Lmj2mj.translate_program program in
     Printf.printf "/*\n";
     PrintMJ.print_program mj;
     Printf.printf "*/\n";
-    Mj2c.program2c mj;
+    (*Mj2c.program2c mj;*)
     close_in f;
     exit 0
   with

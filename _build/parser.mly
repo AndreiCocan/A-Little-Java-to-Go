@@ -136,7 +136,7 @@ statement:
 
 java_type:
 | INTEGER                   { TypeInt }
-| INTEGER LBRACKET RBRACKET {TypeIntArray}
+| INTEGER LBRACKET RBRACKET { TypeIntArray}
 | BOOLEAN                   { TypeBool }
 | type_name = IDENT         { Type type_name }
 ;

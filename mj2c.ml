@@ -1,6 +1,6 @@
 open MJ
 open Print
-module CI = ClassInfo
+open ClassInfoModule
 let expression2v (method_name : string) (class_info : ClassInfo.t) out (expr : MJ.expression) : unit =
   let rec expression2v out ex =
     match ex with
@@ -31,7 +31,7 @@ let binop2v out (binop : MJ.binop) : unit =
   | OpLt  -> fprintf out "<"
   | OpAnd -> fprintf out "&&"
 
-let statement2v (method_name : string) (class_info : ClassInfo.t) out (ins : MJ.instruction) : unit =
+let statement2v (method_name : string) (class_info : ClassInfo.t) out (stat : MJ.statement) : unit =
   let rec statement2v out stat = 
     match stat with
     | SBlock statements -> fprint out "{%a%t}" (indent indentation (seplist nl statement2v)) statements nl
@@ -42,7 +42,14 @@ let statement2v (method_name : string) (class_info : ClassInfo.t) out (ins : MJ.
       nl
       statement2v stmnt2
     | SWhile (ex, stmnt) -> fprintf out "for %a {%a%t}" (expression2v method_name class_info) ex statement2v stmnt nl
-    | SSysou ex -> fprintf out ""
+    | SSysou ex -> fprintf out "println(%a)" (expr2c method_name class_info) e
+    | SSetVar (var,ex) -> fprintf out "%a = %a" (variable2v method_name class_info) var (expression2v method_name class_info) ex
+    | SArraySet (array, index, ex) -> fprintf out "%a[%a] = %a"
+      (variable2v method_name class_info) array
+      (expression2v method_name class_info) index
+      (expression2v method_name class_info) ex
+  in
+  statement2v out stat
   
 let java_type2v out (java_type : MJ.java_type) : unit =
   match java_type with
@@ -60,6 +67,25 @@ let variable2v (method_name : string) (class_info : CI.t) out (var : string) : u
     fprintf out "%s.%s" (String.get class_origin 0 |> Char.lowercase_ascii) var
   else 
     fprintf out "%s" var
+
+
+let decl2c out ((var_name, t) : string * MJ.java_type) : unit =
+  match t with
+  | TypeInt -> fprintf out "mut %s %a " var_name type2c t 
+  
+let method_definition2c out ((class_name, java_class) : string * MJ.java_clas) : unit =
+  let class_info = get_class_info class_name in 
+  let method_definition2c out (method_name, m) =
+    let return2c out expr = 
+      fprintf out "return %a" (expression2v method_name class_info) expr
+    in 
+    fprintf out "fn (%s %s) %s(%a) %s {\n%a%a%a\n}"
+      (String.get class_name 0 |> Char.lowercase_ascii)
+      class_name
+      method_name
+      (prec_list comma decl2c) m.formals
+      (seplist comma decl2v) 
+
 
 
 (** [class_definition2v out (name, c)] defines the V structure representing the class [name] with type [v] on the output channel [out]. *)

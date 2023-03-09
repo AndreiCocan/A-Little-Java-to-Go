@@ -1,5 +1,56 @@
 module SM = StringMap
 
+(*__________________________________________________________________________________________*)
+(*Utility functions for the translation*)
+
+
+(* A hash table from the name of a class to a [class_info]. *)
+let class_infos = Hashtbl.create 57
+
+(* Fills the [class_infos] hash table using the classes defined in [program]. *)
+let init_class_infos (prog : MJ.program) : unit =
+  let main =
+    {
+      extends = None;
+      attributes = [];
+      methods = []
+    }
+  in
+  ClassInfo.create prog.name main prog.defs |> Hashtbl.add class_infos p.name;
+  List.iter
+    (
+      fun (class_name, clas) ->
+      ClassInfo.create class_name clas p.defs
+      |> Hashtbl.add class_infos class_name
+    ) prog.defs
+
+(* Returns the [class_info] associated with class name [c]. *)
+let get_class_info (class_name : string) : ClassInfo.t =
+  Hashtbl.find class_infos class_name
+
+(*Gets the class name of the the type of expression [e] in the context
+  of method [m] in [class_info]. If no class type is associated with expression [e], [get_class]
+  returns the empty string. *)
+let rec get_class_expr (method_name : string) (class_info : ClassInfo.t) (e : MJ.expression) : string =
+match e with
+| EGetVar x -> ClassInfo.class_of method_name x class_info
+| EMethodCall (obj, met, _) ->
+                          begin
+                            let java_type =
+                              get_class_expr method_name class_info o
+                              |> get_class_info
+                              |> ClassInfo.return_type met
+                            in
+                            match java_type with
+                            | Typ t -> t
+                            | _ -> ""
+                          end
+| EThis -> ClassInfo.class_name class_info
+| EObjectAlloc id -> id
+| _ -> ""
+
+(*__________________________________________________________________________________________*)
+(*ClassInfo interface and implementation*)
 
 module type ClassInfoInterface = sig
   type t

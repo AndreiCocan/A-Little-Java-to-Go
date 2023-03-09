@@ -43,10 +43,54 @@ ocamlc.opt -c -o stringMap.cmi stringMap.mli # cached
 ocamlc.opt -c -o MJ.cmi MJ.mli # cached
 # Target: lmj2mj.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:lmj2mj.cmo, file:lmj2mj.ml, implem, ocaml, quiet }
 ocamlc.opt -c -o lmj2mj.cmo lmj2mj.ml # cached
-# Target: mj2c.ml.depends, tags: { extension:ml, file:mj2c.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules mj2c.ml > mj2c.ml.depends
-+ ocamldep.opt -modules mj2c.ml > mj2c.ml.depends
-File "mj2c.ml", line 53, characters 0-0:
-Error: Syntax error
-Command exited with code 2.
-# Compilation unsuccessful.
+# Target: printMJ.ml.depends, tags: { extension:ml, file:printMJ.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules printMJ.ml > printMJ.ml.depends # cached
+# Target: print.ml.depends, tags: { extension:ml, file:print.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules print.ml > print.ml.depends # cached
+# Target: print.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:print.cmo, file:print.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o print.cmo print.ml # cached
+# Target: printMJ.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:printMJ.cmo, file:printMJ.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o printMJ.cmo printMJ.ml # cached
+# Target: printTokens.ml.depends, tags: { extension:ml, file:printTokens.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules printTokens.ml > printTokens.ml.depends # cached
+# Target: printTokens.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:printTokens.cmo, file:printTokens.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o printTokens.cmo printTokens.ml # cached
+# Target: typechecking.ml.depends, tags: { extension:ml, file:typechecking.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules typechecking.ml > typechecking.ml.depends # cached
+# Target: typechecking.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:typechecking.cmo, file:typechecking.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o typechecking.cmo typechecking.ml # cached
+# Target: main.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:main.cmo, file:main.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o main.cmo main.ml
+# Target: error.cmx, tags: { compile, extension:cmx, extension:ml, file:error.cmx, file:error.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o error.cmx error.ml # cached
+# Target: location.cmx, tags: { compile, extension:cmx, extension:ml, file:location.cmx, file:location.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o location.cmx location.ml # cached
+# Target: parser.ml.depends, tags: { extension:ml, file:parser.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules parser.ml > parser.ml.depends
+# Target: parser.cmx, tags: { compile, extension:cmx, extension:ml, file:parser.cmx, file:parser.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o parser.cmx parser.ml
+# Target: stringMap.ml.depends, tags: { extension:ml, file:stringMap.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules stringMap.ml > stringMap.ml.depends # cached
+# Target: stringSet.ml.depends, tags: { extension:ml, file:stringSet.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules stringSet.ml > stringSet.ml.depends # cached
+# Target: stringSet.cmx, tags: { compile, extension:cmx, extension:ml, file:stringSet.cmx, file:stringSet.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o stringSet.cmx stringSet.ml # cached
+# Target: stringMap.cmx, tags: { compile, extension:cmx, extension:ml, file:stringMap.cmx, file:stringMap.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o stringMap.cmx stringMap.ml # cached
+# Target: lmj2mj.cmx, tags: { compile, extension:cmx, extension:ml, file:lmj2mj.cmx, file:lmj2mj.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o lmj2mj.cmx lmj2mj.ml # cached
+# Target: print.cmx, tags: { compile, extension:cmx, extension:ml, file:print.cmx, file:print.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o print.cmx print.ml # cached
+# Target: printMJ.cmx, tags: { compile, extension:cmx, extension:ml, file:printMJ.cmx, file:printMJ.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o printMJ.cmx printMJ.ml # cached
+# Target: lexer.cmx, tags: { compile, extension:cmx, extension:ml, file:lexer.cmx, file:lexer.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o lexer.cmx lexer.ml
+# Target: typechecking.cmx, tags: { compile, extension:cmx, extension:ml, file:typechecking.cmx, file:typechecking.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o typechecking.cmx typechecking.ml # cached
+# Target: printTokens.cmx, tags: { compile, extension:cmx, extension:ml, file:printTokens.cmx, file:printTokens.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o printTokens.cmx printTokens.ml
+# Target: main.cmx, tags: { compile, extension:cmx, extension:ml, file:main.cmx, file:main.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o main.cmx main.ml
+# Target: main.native, tags: { dont_link_with, extension:native, file:main.native, link, native, ocaml, program, quiet }
+ocamlopt.opt error.cmx location.cmx parser.cmx lexer.cmx stringSet.cmx stringMap.cmx lmj2mj.cmx print.cmx printMJ.cmx printTokens.cmx typechecking.cmx main.cmx -o main.native
+# Compilation successful.
