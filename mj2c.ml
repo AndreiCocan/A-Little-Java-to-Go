@@ -10,10 +10,13 @@ let expression2v (method_name : string) (class_info : ClassInfo.t) out (expr : M
     | EBinOp (binop,ex1,ex2) -> fprintf out "%a %a %a" (expression2v ex1) (e1 binop2c op) (expression2 ex2)
     | EMethodCall (java_object,method_name,args) -> fprintf out "%a.%s(%a)" (expression2v java_object) method_name ((seplist comma expression2v) args)
     | EArrayGet (array,index) -> fprintf out "%a[%a]" (expression2v array) (expression2v index)
-    | EArrayAlloc size -> fprintf out "[]int{cap: %a}" expression2v size
-    | EArrayLength array -> fprintf out "%a.cap" (expression2v array)
+    | EArrayAlloc size -> fprintf out "[]int{len: %a, init: 0}" expression2v size
+    | EArrayLength array -> fprintf out "%a.len" (expression2v array)
+    | EThis -> fprintf out "this"
+    | EObjectAlloc class_name -> fprintf out "%s{}" class_name
   in 
   expression2v out expr
+
 let constant2v out (const : MJ.constant) : unit = 
   match const with
   | ConstBool true -> fprintf out "true"
@@ -28,6 +31,19 @@ let binop2v out (binop : MJ.binop) : unit =
   | OpLt  -> fprintf out "<"
   | OpAnd -> fprintf out "&&"
 
+let statement2v (method_name : string) (class_info : ClassInfo.t) out (ins : MJ.instruction) : unit =
+  let rec statement2v out stat = 
+    match stat with
+    | SBlock statements -> fprint out "{%a%t}" (indent indentation (seplist nl statement2v)) statements nl
+      
+    | SIf(ex,stmnt1,stmnt2) -> fprint out "if %a %a%telse %a" 
+      (expression2v method_name class_info) ex
+      statement2v stmnt1
+      nl
+      statement2v stmnt2
+    | SWhile (ex, stmnt) -> fprintf out "for %a {%a%t}" (expression2v method_name class_info) ex statement2v stmnt nl
+    | SSysou ex -> fprintf out ""
+  
 let java_type2v out (java_type : MJ.java_type) : unit =
   match java_type with
   | TypeInt -> fprintf out "int"
