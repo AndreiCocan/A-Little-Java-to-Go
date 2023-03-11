@@ -9,23 +9,6 @@ let constant2v () = function
   | ConstBool false -> "false"
   | ConstInt i -> sprintf "%ld" i
 
-(*
-let expression2v (expr : MJ.expression) =
-  let rec expression2v ex =
-    match ex with
-    | EConst const -> sprintf  "%a" constant2v const
-    | EGetVar var -> sprintf "%s" var
-    (*| EUnOp (UOpNot, ex1) -> sprintf "!(%a)" expression2v ex1*)
-    | EBinOp (binop,ex1,ex2) -> sprintf "%a %a %a" (expression2v ex1) (binop2c op) (expression2 ex2)
-    | EMethodCall (java_object,method_name,args) -> sprintf "%a.%s(%a)" (expression2v java_object) method_name ((seplist comma expression2v) args)
-    | EArrayGet (array,index) -> sprintf "%a[%a]" (expression2v array) (expression2v index)
-    | EArrayAlloc size -> sprintf "[]int{len: %a, init: 0}" expression2v size
-    | EArrayLength array -> sprintf "%a.len" (expression2v array)
-    | EThis -> sprintf "this"
-    | EObjectAlloc class_name -> sprintf "%s{}" class_name
-  in 
-  expression2v expr
-*)
 let binop2v = function
   | OpAdd -> sprintf "+"
   | OpSub -> sprintf "-"
@@ -91,22 +74,15 @@ let java_type2v () = function
   | TypeIntArray -> sprintf "[]int"
   | Type t -> sprintf "%s" t
 
-(*
-let variable2v (method_name : string) (class_info : ClassInfo.t) out (var : string) : unit =
-  if ClassInfo.is_attribute method_name var class_info 
-  then 
-    let class_origin = ClassInfo.attribute_class_origin var class_info
-    in 
-    sprintf "%s.%s" (String.get class_origin 0 |> Char.lowercase_ascii) var
-  else 
-    sprintf "%s" var
-*)
 
 let decl2v() (var_name, t)=
   sprintf "%s %a" var_name java_type2v t
 
 let decl_mut2v () (var_name, t) =
-  sprintf "mut %s %a" var_name java_type2v t 
+  match t with
+  | TypeInt -> sprintf "mut %s := 0" var_name
+  | TypeBool -> sprintf "mut %s := false" var_name
+  | TypeIntArray | Type _ -> sprintf "mut %s := %a{}" var_name java_type2v t
  
 let method2v () (method_name, m, class_name)  =
   let return2v () expr = 
@@ -118,18 +94,21 @@ let method2v () (method_name, m, class_name)  =
     method_name
     (seplist comma decl2v) m.arguments
     java_type2v m.return_type
-    (termlist semicolon (indent indentation decl_mut2v)) (StringMap.to_association_list m.method_declarations)
+    (termlist nl (indent indentation decl_mut2v)) (StringMap.to_association_list m.method_declarations)
     (list (indent indentation statement2v)) m.method_statements
     (indent indentation return2v) m.return_expression
 
 let class2v () (class_name, java_class) =
-  match java_class.extends with
+  (match java_class.extends with
   | None -> sprintf "struct %s {\nmut:\n%a\n}\n%a" class_name
-  (*| Some ex_name -> sprintf "struct %s {%a\nmut:\n%a}%t%a" class_name (indent indentation (fun () -> sprintf "%s" )) ex_name*)
+  | Some ex_name -> sprintf "struct %s {%amut:\n%a}\n%a" 
+    class_name 
+    (indent indentation (fun () -> sprintf "%s%t" ex_name)) nl
+  )
     (termlist semicolon (indent indentation decl2v)) (StringMap.to_association_list java_class.attributes)
     (*Methods for the class*)
     (list method2v) (List.map (fun (x, y) -> (x, y, class_name)) (StringMap.to_association_list java_class.methods))
-  |_->sprintf ""
+
 let program2v p = 
   Printf.fprintf stdout "%s\n%!"
   (
