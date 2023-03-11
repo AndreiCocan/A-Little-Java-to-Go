@@ -99,13 +99,20 @@ let method2v () (method_name, m, class_name)  =
     (indent indentation return2v) m.return_expression
 
 let class2v () (class_name, java_class) =
+  (*If there is no attributes, don't put a mut section*)
+  let isMutSection() attributes =
+    match attributes with
+    | [] -> sprintf ""
+    | _ -> sprintf "mut:"
+  in
   (match java_class.extends with
-  | None -> sprintf "struct %s {\nmut:\n%a\n}\n%a" class_name
-  | Some ex_name -> sprintf "struct %s {%amut:\n%a}\n%a" 
+  | None -> sprintf "struct %s {\n%a%a\n}\n%a" class_name
+  | Some ex_name -> sprintf "struct %s {%a\n%a%a}\n%a" 
     class_name 
     (indent indentation (fun () -> sprintf "%s%t" ex_name)) nl
   )
-    (termlist semicolon (indent indentation decl2v)) (StringMap.to_association_list java_class.attributes)
+    isMutSection (StringMap.to_association_list java_class.attributes)
+    (termlist nl (indent indentation decl2v)) (StringMap.to_association_list java_class.attributes)
     (*Methods for the class*)
     (list method2v) (List.map (fun (x, y) -> (x, y, class_name)) (StringMap.to_association_list java_class.methods))
 
