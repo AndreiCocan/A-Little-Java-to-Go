@@ -124,10 +124,9 @@ let method2v () (method_name, m, class_name)  =
 
 let class2v () (class_name, java_class) =
   match java_class.extends with
-  | None -> sprintf "struct %s {mut:%a}%t%a" class_name
+  | None -> sprintf "struct %s {\nmut:\n%a\n}\n%a" class_name
   (*| Some ex_name -> sprintf "struct %s {%a\nmut:\n%a}%t%a" class_name (indent indentation (fun () -> sprintf "%s" )) ex_name*)
     (termlist semicolon (indent indentation decl2v)) (StringMap.to_association_list java_class.attributes)
-    nl
     (*Methods for the class*)
     (list method2v) (List.map (fun (x, y) -> (x, y, class_name)) (StringMap.to_association_list java_class.methods))
   |_->sprintf ""
