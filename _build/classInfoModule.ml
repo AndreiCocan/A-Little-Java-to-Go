@@ -50,15 +50,13 @@ module type ClassInfoInterface = sig
 end
 
 module ClassInfo : ClassInfoType = struct
-  (*The first element of the triple is the class origin of the attribute,
-  the second element is an index used to create the field of the corresponding
-  V structure in a correct order and the third element is the type of the attribute.*)
-  type attribute_info = (string * int * MJ.java_type) list SM.t
+  (*The first element of the tuple is the class origin of the attribute,
+  the second element is the type of the attribute.*)
+  type attribute_info = (string * MJ.java_type) list SM.t
 
-  (*The first element of the triple is the class origin of the method,
-  the second element is the virtual table index and
-  the third element is the [MJ.java_method] type for the method. *)
-  type method_info = (string * int * MJ.java_method) SM.t
+  (*The first element of the tuple is the class origin of the method,
+  the second element is the [MJ.java_method] type for the method. *)
+  type method_info = (string * MJ.java_method) SM.t
 
   type t = {
     class_name : string;
@@ -70,6 +68,7 @@ module ClassInfo : ClassInfoType = struct
 
   (*Function to fold a function on all the hierachy starting by the class [parent] all the way to the 
     top of the hierarchy*)
+    (*
   let rec fold_class_hierarchy (f : string -> MJ.java_class -> 'a -> 'a) 
   (defs : (MJ.identifier * MJ.java_class) list) (parent : string option) (acc : 'a) : 'a =
     match parent with
@@ -89,12 +88,14 @@ module ClassInfo : ClassInfoType = struct
     index := !index + 1 ;
     res
 
+  *)
 
   (** If a parent class and a child class have the same attribute name, the attribute
   of the child class is before the attribute of the parent class in the list. *)
+  (*
   let reorder_attribute class_name index java_type = function
   | None -> Some [class_name, index, java_type]
-  | Some list -> Some ((class_name, index, java_type) :: list)
+  | Some list -> Some ((class_name, index, java_type) :: list)*)
 (*
   let set_method_index class_name java_class acc=
     let n = ref (SM.cardinal acc) 
