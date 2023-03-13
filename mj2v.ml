@@ -78,13 +78,13 @@ let java_type2v () = function
 let decl2v() (var_name, t)=
   sprintf "%s %a" var_name java_type2v t
 
-let decl_mut2v () (var_name, t) =
+let decl_var2v () (var_name, t) =
   match t with
-  | TypeInt -> sprintf "mut %s := 0" var_name
-  | TypeBool -> sprintf "mut %s := false" var_name
+  | TypeInt -> sprintf "var %s int" var_name
+  | TypeBool -> sprintf "var %s := false" var_name
   | TypeIntArray | Type _ -> sprintf "mut %s := %a{}" var_name java_type2v t
  
-let method2v () (method_name, m, class_name)  =
+let method2v () (method_name, m, class_name,java_class)  =
   let return2v () expr = 
     sprintf "return %a" expression2v expr
   in 
@@ -93,7 +93,7 @@ let method2v () (method_name, m, class_name)  =
     (String.lowercase_ascii method_name)
     (seplist comma decl2v) m.arguments
     java_type2v m.return_type
-    (termlist nl (indent indentation decl_mut2v)) (StringMap.to_association_list m.method_declarations)
+    (termlist nl (indent indentation decl_var2v)) (StringMap.to_association_list m.method_declarations)
     (list (indent indentation statement2v)) m.method_statements
     (indent indentation return2v) m.return_expression
 
@@ -106,7 +106,7 @@ let class2v () (class_name, java_class) =
   )
     (termlist nl (indent indentation decl2v)) (StringMap.to_association_list java_class.attributes)
     (*Methods for the class*)
-    (list method2v) (List.map (fun (x, y) -> (x, y, class_name)) (StringMap.to_association_list java_class.methods))
+    (list method2v) (List.map (fun (x, y) -> (x, y, class_name,java_class)) (StringMap.to_association_list java_class.methods))
 
 let program2v p = 
   Printf.fprintf stdout "%s\n%!"
