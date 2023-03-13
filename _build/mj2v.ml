@@ -55,13 +55,13 @@ and expression2v () e = expr6 () e
 let rec statement2v out stat = 
   match stat with
   | SBlock statements -> sprintf"{%a%t}" (indent indentation (seplist nl statement2v)) statements nl
-  | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a %a%telse %a" 
+  | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {\n%a%t\n} else {\n%a\n}" 
     (expression2v) ex
     statement2v stmnt1
     nl
     statement2v stmnt2
-  | SWhile (ex, stmnt) -> sprintf "for %a %a\n" expression2v ex statement2v stmnt
-  | SSysou ex -> sprintf "println(%a)" expression2v ex
+  | SWhile (ex, stmnt) -> sprintf "for %a {\n%a\n}" expression2v ex statement2v stmnt
+  | SSysou ex -> sprintf "fmt.Println(%a)" expression2v ex
   | SSetVar (var,ex) -> sprintf "%s = %a" var expression2v ex
   | SArraySet (array, index, ex) -> sprintf "%s[%a] = %a"
     array
@@ -88,10 +88,9 @@ let method2v () (method_name, m, class_name)  =
   let return2v () expr = 
     sprintf "return %a" expression2v expr
   in 
-  sprintf "fn (%c %s) %s(%a) %a {\n%a%a%a\n}\n"
-    (String.get class_name 0 |> Char.lowercase_ascii)
+  sprintf "func (this %s) %s(%a) %a {\n%a%a%a\n}\n"
     class_name
-    method_name
+    (String.lowercase_ascii method_name)
     (seplist comma decl2v) m.arguments
     java_type2v m.return_type
     (termlist nl (indent indentation decl_mut2v)) (StringMap.to_association_list m.method_declarations)
@@ -99,19 +98,12 @@ let method2v () (method_name, m, class_name)  =
     (indent indentation return2v) m.return_expression
 
 let class2v () (class_name, java_class) =
-  (*If there is no attributes, don't put a mut section*)
-  let isMutSection() attributes =
-    match attributes with
-    | [] -> sprintf ""
-    | _ -> sprintf "mut:"
-  in
   (match java_class.extends with
-  | None -> sprintf "struct %s {\n%a%a\n}\n%a" class_name
-  | Some ex_name -> sprintf "struct %s {%a\n%a%a}\n%a" 
+  | None -> sprintf "type %s struct{\n%a\n}\n%a" class_name
+  | Some ex_name -> sprintf "type %s struct {%a\n%a}\n%a" 
     class_name 
-    (indent indentation (fun () -> sprintf "%s%t" ex_name)) nl
+    (indent indentation (fun () -> sprintf "*%s%t" ex_name)) nl
   )
-    isMutSection (StringMap.to_association_list java_class.attributes)
     (termlist nl (indent indentation decl2v)) (StringMap.to_association_list java_class.attributes)
     (*Methods for the class*)
     (list method2v) (List.map (fun (x, y) -> (x, y, class_name)) (StringMap.to_association_list java_class.methods))
@@ -120,7 +112,9 @@ let program2v p =
   Printf.fprintf stdout "%s\n%!"
   (
     sprintf 
-    "%a\
+    "package main\n\
+    import \"fmt\"\n\n\
+    %a\
     fn main(){\
     %a\
     \n}\n"
