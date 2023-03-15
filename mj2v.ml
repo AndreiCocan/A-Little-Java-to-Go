@@ -70,17 +70,17 @@ let rec statement2v () (stat,class_attribute) =
   match stat with
   | SBlock statements -> sprintf"{%a%t}" (indent indentation (seplist nl statement2v)) (statements,class_attribute) nl
   | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {\n%a%t\n} else {\n%a\n}" 
-    (expression2v) ex
+    expression2v (ex,class_attribute)
     statement2v (stmnt1,class_attribute)
     nl
     statement2v (stmnt2,class_attribute)
-  | SWhile (ex, stmnt) -> sprintf "for %a {\n%a\n}" expression2v ex statement2v (stmnt,class_attribute)
-  | SSysou ex -> sprintf "fmt.Println(%a)" expression2v ex
-  | SSetVar (var,ex) -> sprintf "%a = %a" var2v var expression2v ex
-  | SArraySet (array, index, ex) -> sprintf "%s[%a] = %a"
-    array
-    expression2v index
-    expression2v ex
+  | SWhile (ex, stmnt) -> sprintf "for %a {\n%a\n}" expression2v (ex,class_attribute) statement2v (stmnt,class_attribute)
+  | SSysou ex -> sprintf "fmt.Println(%a)" expression2v (ex,class_attribute)
+  | SSetVar (var,ex) -> sprintf "%a = %a" var2v (var,class_attribute) expression2v (ex,class_attribute)
+  | SArraySet (array, index, ex) -> sprintf "%a[%a] = %a"
+    var2v (array,class_attribute)
+    expression2v (index,class_attribute)
+    expression2v(ex,class_attribute)
   
 let java_type2v () = function
   | TypeInt -> sprintf "int"
