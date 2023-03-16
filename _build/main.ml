@@ -38,7 +38,7 @@ let () =
     Printf.printf "/*\n";
     PrintMJ.print_program mj;
     Printf.printf "*/\n";
-    Mj2v.program2v mj;
+    Mj2go.program2go mj;
     close_in f;
     exit 0
   with
