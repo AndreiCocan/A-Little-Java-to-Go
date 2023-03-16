@@ -126,8 +126,8 @@ let class2go () (class_name, java_class) =
     (*Methods for the class*)
     (list method2go) (List.map (fun (x, y) -> (x, y, class_name,java_class)) (StringMap.to_association_list java_class.methods))
 
-let program2go p = 
-  Printf.fprintf stdout "%s\n%!"
+let program2go out p = 
+  Printf.fprintf out "%s\n%!"
   (
     sprintf 
     "package main\n\

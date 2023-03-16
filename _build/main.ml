@@ -18,7 +18,7 @@ let () =
     exit 1
   end;
 
-  ofile := (Filename.chop_extension !ifile) ^ ".c";
+  ofile := (Filename.chop_extension !ifile) ^ ".go";
 
   let f = open_in !ifile in
 
@@ -38,7 +38,9 @@ let () =
     Printf.printf "/*\n";
     PrintMJ.print_program mj;
     Printf.printf "*/\n";
-    Mj2go.program2go mj;
+    let output = open_out !ofile 
+    in
+    Mj2go.program2go output mj;
     close_in f;
     exit 0
   with
