@@ -1,6 +1,6 @@
 ### Starting build.
 # Target: main.ml.depends, tags: { extension:ml, file:main.ml, ocaml, ocamldep, quiet }
-ocamldep.opt -modules main.ml > main.ml.depends
+ocamldep.opt -modules main.ml > main.ml.depends # cached
 # Target: error.ml.depends, tags: { extension:ml, file:error.ml, ocaml, ocamldep, quiet }
 ocamldep.opt -modules error.ml > error.ml.depends # cached
 # Target: error.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:error.cmo, file:error.ml, implem, ocaml, quiet }

@@ -64,17 +64,21 @@ let expression2go class_attribute e =
 let statement2go class_attribute stat = 
   let rec statement2go () stat =
     match stat with 
-    | SBlock statements -> sprintf"{%a\n}" 
+    | SBlock statements -> sprintf"{%a%t}" 
     (indent indentation (seplist nl statement2go)) statements 
+    nl
 
-    | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {\n%a\n\n} else {\n%a\n}" 
+    | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {%a%t} else {%a%t}" 
       (expression2go class_attribute) ex 
-      statement2go stmnt1
-      statement2go stmnt2
+      (indent indentation (statement2go)) stmnt1
+      nl
+      (indent indentation (statement2go)) stmnt2
+      nl
 
-    | SWhile (ex, stmnt) -> sprintf "for %a {\n%a\n}" 
+    | SWhile (ex, stmnt) -> sprintf "for %a {%a%t}" 
       (expression2go class_attribute) ex 
-      statement2go stmnt
+      (indent indentation (statement2go)) stmnt
+      nl
 
     | SSysou ex -> sprintf "fmt.Println(%a)" 
       (expression2go class_attribute) ex 
@@ -106,7 +110,7 @@ let method2go () (method_name, m, class_name,java_class)  =
   let return2go () expr = 
     sprintf "return %a" (expression2go java_class.attributes) expr
   in 
-  sprintf "func (this %s) %s(%a) %a {\n%a%a%a\n}\n"
+  sprintf "func (this %s) %s(%a) %a {%a%a%a%t}%t%t"
     class_name
     method_name
     (seplist comma decl2go) m.arguments
@@ -114,15 +118,21 @@ let method2go () (method_name, m, class_name,java_class)  =
     (termlist nl (indent indentation decl_var2go)) (StringMap.to_association_list m.method_declarations)
     (list (indent indentation (statement2go java_class.attributes))) m.method_statements
     (indent indentation return2go) m.return_expression
-
+    nl
+    nl
+    nl
 let class2go () (class_name, java_class) =
   (match java_class.extends with
-  | None -> sprintf "type %s struct{\n%a\n}\n%a" class_name
-  | Some ex_name -> sprintf "type %s struct {%a\n%a}\n%a" 
+  | None -> sprintf "type %s struct{%a%t}%t%t%a" class_name 
+  | Some ex_name -> sprintf "type %s struct {%a%t%a%t}%t%t%a" 
     class_name 
     (indent indentation (fun () -> sprintf "*%s%t" ex_name)) nl
+    nl
   )
     (termlist nl (indent indentation decl2go)) (StringMap.to_association_list java_class.attributes)
+    nl
+    nl
+    nl
     (*Methods for the class*)
     (list method2go) (List.map (fun (x, y) -> (x, y, class_name,java_class)) (StringMap.to_association_list java_class.methods))
 
