@@ -1,7 +1,6 @@
 open MJ
 open Print
 open Printf
-
 let indentation = 2
 
 let constant2v () = function
@@ -9,33 +8,33 @@ let constant2v () = function
   | ConstBool false -> "false"
   | ConstInt i -> sprintf "%ld" i
 
-let binop2v = function
+let binop2v () = function
   | OpAdd -> sprintf "+"
   | OpSub -> sprintf "-"
   | OpMul -> sprintf "*"
   | OpLt  -> sprintf "<"
   | OpAnd -> sprintf "&&"
 
-let var2v () (var_name, class_attribute) =
-try 
-StringMap.find var_name class_attribute;
-sprintf "this.%s" var_name;
-with Not_found ->  sprintf "%s" var_name
-
+let var2v class_attribute var_name =
+  try 
+  StringMap.find var_name class_attribute;
+  sprintf "this.%s" var_name;
+  with Not_found ->  sprintf "%s" var_name
+(**
 let rec expr0 () (e,class_attribute) =
   match e with
   | EConst const -> sprintf  "%a" constant2v const
-  | EGetVar var -> var2v  "%s" (var,class_attribute)
+  | EGetVar var -> sprintf  "%a" var2v (var,class_attribute)
   | EThis -> "this"
-  | EMethodCall (java_object,method_name,args) -> sprintf "%a.%s(%a)" expr0 (java_object,class_attribute) method_name (seplist comma expression2v) (args,class_attribute)
-  | EArrayGet (array,index) -> sprintf "%a[%a]" expr0 (array,class_attribute) expression2v (index,class_attribute)
+  | EMethodCall (java_object,method_name,args) -> sprintf "%a.%s(%a)" expr0 (java_object,class_attribute) method_name (seplist comma expression2v) args
+  | EArrayGet (array,index) -> sprintf "%a[%a]" expr0 (array,class_attribute) expression2v index
   | EArrayLength array -> sprintf "%a.len" expr0 (array,class_attribute)
   | EObjectAlloc class_name -> sprintf "%s{}" class_name
-  | e -> sprintf "(%a)" expression2v (e,class_attribute)
+  | e -> sprintf "(%a)" expression2v e
 
 and expr1 ()  (e,class_attribute)=
   match e with
-  | EArrayAlloc size -> sprintf "[]int{len: %a, init: 0}" expression2v (size,class_attribute)
+  | EArrayAlloc size -> sprintf "[]int{len: %a, init: 0}" expression2v size
   | e -> expr0 () (e,class_attribute)
 
 and expr2 ()  (e,class_attribute)=
@@ -64,24 +63,73 @@ and expr6 () (e,class_attribute) =
   | e -> expr5 () (e,class_attribute)
 
 and expression2v () (e,class_attribute) = expr6 () (e,class_attribute)
+*)
+let expression2v class_attribute e = 
+  let rec expr2v () e =
+    match e with
+    | EConst const -> sprintf  "%a" 
+      constant2v const
 
+    | EGetVar var -> sprintf  "%s" 
+      (var2v class_attribute var)
 
-let rec statement2v () (stat,class_attribute) = 
-  match stat with
-  | SBlock statements -> sprintf"{%a%t}" (indent indentation (seplist nl statement2v)) (statements,class_attribute) nl
-  | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {\n%a%t\n} else {\n%a\n}" 
-    expression2v (ex,class_attribute)
-    statement2v (stmnt1,class_attribute)
-    nl
-    statement2v (stmnt2,class_attribute)
-  | SWhile (ex, stmnt) -> sprintf "for %a {\n%a\n}" expression2v (ex,class_attribute) statement2v (stmnt,class_attribute)
-  | SSysou ex -> sprintf "fmt.Println(%a)" expression2v (ex,class_attribute)
-  | SSetVar (var,ex) -> sprintf "%a = %a" var2v (var,class_attribute) expression2v (ex,class_attribute)
-  | SArraySet (array, index, ex) -> sprintf "%a[%a] = %a"
-    var2v (array,class_attribute)
-    expression2v (index,class_attribute)
-    expression2v(ex,class_attribute)
-  
+    | EThis -> sprintf "this"
+
+    | EMethodCall (java_object,method_name,args) -> sprintf "%a.%s(%a)"
+      expr2v java_object
+      method_name 
+      (seplist comma expr2v) args
+
+    | EArrayAlloc size -> sprintf "make([]int,%a)" 
+      expr2v size
+
+    | EObjectAlloc class_name -> sprintf "%s{}" 
+      class_name
+    
+    | EArrayGet (array,index) -> sprintf "%a[%a]" 
+      expr2v array
+      expr2v index
+
+    | EArrayLength array -> sprintf "len(%a)" 
+      expr2v array
+    
+    | EUnOp (UOpNot, e) -> sprintf "!%a" 
+    expr2v e
+
+    | EBinOp (op, e1, e2) -> sprintf "%a %a %a" 
+    expr2v e1 
+    binop2v op 
+    expr2v e1
+  in
+  expr2v e
+
+let statement2v class_attribute stat = 
+  let rec statement2v () stat =
+    match stat with 
+    | SBlock statements -> sprintf"{%a\n}" 
+    (indent indentation (seplist nl statement2v)) statements 
+
+    | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {\n%a\n\n} else {\n%a\n}" 
+      (expression2v class_attribute) ex 
+      statement2v stmnt1
+      statement2v stmnt2
+
+    | SWhile (ex, stmnt) -> sprintf "for %a {\n%a\n}" 
+      (expression2v class_attribute) ex 
+      statement2v stmnt
+
+    | SSysou ex -> sprintf "fmt.Println(%a)" 
+      (expression2v class_attribute) ex 
+
+    | SSetVar (var,ex) -> sprintf "%s = %a" 
+      (var2v class_attribute var) 
+      (expression2v class_attribute) ex 
+
+    | SArraySet (array, index, ex) -> sprintf "%s[%a] = %a"
+      (var2v class_attribute array)
+      (expression2v class_attribute) index 
+      (expression2v class_attribute) ex
+  in statement2v stat
 let java_type2v () = function
   | TypeInt -> sprintf "int"
   | TypeBool -> sprintf "bool"
@@ -95,12 +143,12 @@ let decl2v() (var_name, t)=
 let decl_var2v () (var_name, t) =
   match t with
   | TypeInt -> sprintf "var %s int" var_name
-  | TypeBool -> sprintf "var %s := false" var_name
+  | TypeBool -> sprintf "var %s bool" var_name
   | TypeIntArray | Type _ -> sprintf "mut %s := %a{}" var_name java_type2v t
  
 let method2v () (method_name, m, class_name,java_class)  =
   let return2v () expr = 
-    sprintf "return %a" expression2v expr
+    sprintf "return %a" (expression2v java_class.attributes) expr
   in 
   sprintf "func (this %s) %s(%a) %a {\n%a%a%a\n}\n"
     class_name
@@ -108,7 +156,7 @@ let method2v () (method_name, m, class_name,java_class)  =
     (seplist comma decl2v) m.arguments
     java_type2v m.return_type
     (termlist nl (indent indentation decl_var2v)) (StringMap.to_association_list m.method_declarations)
-    (list (indent indentation statement2v)) (List.map (fun (x, y) -> (x, y, java_class.attributes)) m.method_statements)
+    (list (indent indentation (statement2v java_class.attributes))) m.method_statements
     (indent indentation return2v) m.return_expression
 
 let class2v () (class_name, java_class) =
@@ -135,6 +183,6 @@ let program2v p =
     (*Classes*)
     (termlist nl class2v) (StringMap.to_association_list p.defs)   
     (*Main*)
-    (indent indentation statement2v) p.main
+    (indent indentation (statement2v (StringMap.of_association_list []))) p.main
   )
 

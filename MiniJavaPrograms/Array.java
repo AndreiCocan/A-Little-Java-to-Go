@@ -1,6 +1,8 @@
 class Array {
     public static void main(String[] args) {
         System.out.println(new Main().init());
+        int b;
+        b = 0;
     }
 }
 

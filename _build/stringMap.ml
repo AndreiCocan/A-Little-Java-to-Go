@@ -28,3 +28,6 @@ let lift f s =
   StringSet.fold (fun x m ->
     add x (f x) m
   ) s empty
+
+let find m elem = 
+  find m elem
