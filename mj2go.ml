@@ -106,8 +106,10 @@ let java_type2go () = function
 let decl2go() (var_name, t)=
   sprintf "%s %a" var_name java_type2go t
 
-let decl_var2go () (var_name, t) =
-  sprintf "var %s %a%t_ = %s" 
+let decl_var2go () (var_name, t) = 
+  (match t with
+  | Type t ->   sprintf "var %s %aI%t_ = %s" 
+  | _ ->  sprintf "var %s %a%t_ = %s")
   var_name 
   java_type2go t
   nl
@@ -128,17 +130,33 @@ let method2go () (method_name, m, class_name,java_class)  =
     nl
     nl
     nl
+
+let method_decl2go () (method_name,m)=
+  sprintf "%s(%a) %a"
+  method_name
+  (seplist comma decl2go) m.arguments
+  java_type2go m.return_type
+
+let create_go_interface () (class_name, java_class) =
+  sprintf "type %sI interface{%a%t}%t" 
+  class_name
+  (list (indent indentation (method_decl2go))) (StringMap.to_association_list java_class.methods)
+  nl
+  nl
+
 let class2go () (class_name, java_class) =
   (match java_class.extends with
-  | None -> sprintf "type %s struct{%a%t}%t%t%a" class_name 
-  | Some ex_name -> sprintf "type %s struct {%a%t%a%t}%t%t%a" 
+  | None -> sprintf "type %s struct{%a%t}%t%t%a%t%a" class_name 
+  | Some ex_name -> sprintf "type %s struct {%a%t%a%t}%t%t%a%t%a" 
     class_name 
-    (indent indentation (fun () -> sprintf "*%s%t" ex_name)) nl
+    (indent indentation (fun () -> sprintf "%s" )) ex_name
     nl
   )
     (termlist nl (indent indentation decl2go)) (StringMap.to_association_list java_class.attributes)
     nl
     nl
+    nl
+    create_go_interface (class_name, java_class)
     nl
     (*Methods for the class*)
     (list method2go) (List.map (fun (x, y) -> (x, y, class_name,java_class)) (StringMap.to_association_list java_class.methods))
