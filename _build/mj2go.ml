@@ -33,15 +33,18 @@ let expression2go class_attribute e =
 
     | EThis -> sprintf "this"
 
-    | EMethodCall (java_object,method_name,args) -> sprintf "%a.%s(%a)"
-      expr2go java_object
-      method_name 
-      (seplist comma expr2go) args
+    | EMethodCall (java_object,method_name,args) -> (match java_object with
+                                                    |EThis -> sprintf "%a.%s(%a)"
+                                                    |_-> sprintf "%a.%s(%a)")
+                                                    expr2go java_object
+                                                    method_name 
+                                                    (seplist comma expr2go) args
+
 
     | EArrayAlloc size -> sprintf "make([]int,%a)" 
       expr2go size
 
-    | EObjectAlloc class_name -> sprintf "%s{}" 
+    | EObjectAlloc class_name -> sprintf "(&%s{})" 
       class_name
     
     | EArrayGet (array,index) -> sprintf "%a[%a]" 
@@ -51,7 +54,7 @@ let expression2go class_attribute e =
     | EArrayLength array -> sprintf "len(%a)" 
       expr2go array
     
-    | EUnOp (UOpNot, e) -> sprintf "!%a" 
+    | EUnOp (UOpNot, e) -> sprintf "!(%a)" 
     expr2go e
 
     | EBinOp (op, e1, e2) -> sprintf "%a %a %a" 
@@ -97,7 +100,7 @@ let java_type2go () = function
   | TypeInt -> sprintf "int"
   | TypeBool -> sprintf "bool"
   | TypeIntArray -> sprintf "[]int"
-  | Type t -> sprintf "%s" t
+  | Type t -> sprintf "* %s" t
 
 
 let decl2go() (var_name, t)=
@@ -109,8 +112,8 @@ let decl_var2go () (var_name, t) =
 let method2go () (method_name, m, class_name,java_class)  =
   let return2go () expr = 
     sprintf "return %a" (expression2go java_class.attributes) expr
-  in 
-  sprintf "func (this %s) %s(%a) %a {%a%a%a%t}%t%t"
+  in
+  sprintf "func (this *%s) %s(%a) %a {%a%a%a%t}%t%t"
     class_name
     method_name
     (seplist comma decl2go) m.arguments
