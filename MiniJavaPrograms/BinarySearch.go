@@ -10,8 +10,10 @@ type BS struct{
 
 func (this *BS) Compare(num1 int, num2 int) bool {
   var aux02 int
+  _ = aux02
 
   var retval bool
+  _ = retval
 
   retval = false
   aux02 = num2 + 1
@@ -29,10 +31,13 @@ func (this *BS) Compare(num1 int, num2 int) bool {
 
 func (this *BS) Div(num int) int {
   var aux03 int
+  _ = aux03
 
   var count01 int
+  _ = count01
 
   var count02 int
+  _ = count02
 
   count01 = 0
   count02 = 0
@@ -48,12 +53,16 @@ func (this *BS) Div(num int) int {
 
 func (this *BS) Init(sz int) int {
   var aux01 int
+  _ = aux01
 
   var aux02 int
+  _ = aux02
 
   var j int
+  _ = j
 
   var k int
+  _ = k
 
   this.size = sz
   this.number = make([]int,sz)
@@ -73,6 +82,7 @@ func (this *BS) Init(sz int) int {
 
 func (this *BS) Print() int {
   var j int
+  _ = j
 
   j = 1
   for j < this.size {
@@ -87,17 +97,25 @@ func (this *BS) Print() int {
 
 func (this *BS) Search(num int) bool {
   var aux01 int
+  _ = aux01
 
   var bs01 bool
+  _ = bs01
 
   var left int
+  _ = left
 
   var medium int
+  _ = medium
 
+  var nt int
+  _ = nt
 
   var right int
+  _ = right
 
   var var_cont bool
+  _ = var_cont
 
   aux01 = 0
   bs01 = false
@@ -123,6 +141,7 @@ func (this *BS) Search(num int) bool {
       if right < left {
         var_cont = false
       } else {
+        nt = 0
       }
     }
   }
@@ -135,10 +154,14 @@ func (this *BS) Search(num int) bool {
 }
 
 func (this *BS) Start(sz int) int {
+  var aux01 int
+  _ = aux01
 
+  var aux02 int
+  _ = aux02
 
-  this.Init(sz)
-  this.Print()
+  aux01 = this.Init(sz)
+  aux02 = this.Print()
   if this.Search(8) {
     fmt.Println(1)
   } else {

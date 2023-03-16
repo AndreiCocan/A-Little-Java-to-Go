@@ -5,30 +5,35 @@ type BT struct{
 }
 
 func (this *BT) Start() int {
+  var ntb bool
+  _ = ntb
 
+  var nti int
+  _ = nti
 
   var root * Tree
+  _ = root
 
   root = (&Tree{})
-  root.Init(16)
-  root.Print()
+  ntb = root.Init(16)
+  ntb = root.Print()
   fmt.Println(100000000)
-  root.Insert(8)
-  root.Print()
-  root.Insert(24)
-  root.Insert(4)
-  root.Insert(12)
-  root.Insert(20)
-  root.Insert(28)
-  root.Insert(14)
-  root.Print()
+  ntb = root.Insert(8)
+  ntb = root.Print()
+  ntb = root.Insert(24)
+  ntb = root.Insert(4)
+  ntb = root.Insert(12)
+  ntb = root.Insert(20)
+  ntb = root.Insert(28)
+  ntb = root.Insert(14)
+  ntb = root.Print()
   fmt.Println(root.Search(24))
   fmt.Println(root.Search(12))
   fmt.Println(root.Search(16))
   fmt.Println(root.Search(50))
   fmt.Println(root.Search(12))
-  root.Delete(12)
-  root.Print()
+  ntb = root.Delete(12)
+  ntb = root.Print()
   fmt.Println(root.Search(12))
   return 0
 }
@@ -51,8 +56,10 @@ type Tree struct{
 
 func (this *Tree) Compare(num1 int, num2 int) bool {
   var ntb bool
+  _ = ntb
 
   var nti int
+  _ = nti
 
   ntb = false
   nti = num2 + 1
@@ -70,18 +77,25 @@ func (this *Tree) Compare(num1 int, num2 int) bool {
 
 func (this *Tree) Delete(v_key int) bool {
   var cont bool
+  _ = cont
 
   var current_node * Tree
+  _ = current_node
 
   var found bool
+  _ = found
 
   var is_root bool
+  _ = is_root
 
   var key_aux int
+  _ = key_aux
 
   var ntb bool
+  _ = ntb
 
   var parent_node * Tree
+  _ = parent_node
 
   current_node = this
   parent_node = this
@@ -129,7 +143,6 @@ func (this *Tree) Delete(v_key int) bool {
       is_root = false
     }
   }
-  fmt.Println(ntb)
   return found
 }
 
@@ -162,15 +175,20 @@ func (this *Tree) Init(v_key int) bool {
 
 func (this *Tree) Insert(v_key int) bool {
   var cont bool
+  _ = cont
 
   var current_node * Tree
+  _ = current_node
 
   var key_aux int
+  _ = key_aux
 
   var new_node * Tree
+  _ = new_node
 
   var ntb bool
-  fmt.Println(ntb)
+  _ = ntb
+
   new_node = (&Tree{})
   ntb = new_node.Init(v_key)
   current_node = this
@@ -210,9 +228,11 @@ func (this *Tree) Insert(v_key int) bool {
 
 func (this *Tree) Print() bool {
   var current_node * Tree
+  _ = current_node
 
   var ntb bool
-  fmt.Println(ntb)
+  _ = ntb
+
   current_node = this
   ntb = this.RecPrint(current_node)
   return true
@@ -220,7 +240,8 @@ func (this *Tree) Print() bool {
 
 func (this *Tree) RecPrint(node * Tree) bool {
   var ntb bool
-  fmt.Println(ntb)
+  _ = ntb
+
   if node.GetHas_Left() {
     {
       ntb = this.RecPrint(node.GetLeft())
@@ -241,11 +262,14 @@ func (this *Tree) RecPrint(node * Tree) bool {
 
 func (this *Tree) Remove(p_node * Tree, c_node * Tree) bool {
   var auxkey1 int
+  _ = auxkey1
 
   var auxkey2 int
+  _ = auxkey2
 
   var ntb bool
-  fmt.Println(ntb)
+  _ = ntb
+
   if c_node.GetHas_Left() {
     ntb = this.RemoveLeft(p_node, c_node)
   } else {
@@ -274,7 +298,8 @@ func (this *Tree) Remove(p_node * Tree, c_node * Tree) bool {
 
 func (this *Tree) RemoveLeft(p_node * Tree, c_node * Tree) bool {
   var ntb bool
-  fmt.Println(ntb)
+  _ = ntb
+
   for c_node.GetHas_Left() {
     {
       ntb = c_node.SetKey(c_node.GetLeft().GetKey())
@@ -289,7 +314,8 @@ func (this *Tree) RemoveLeft(p_node * Tree, c_node * Tree) bool {
 
 func (this *Tree) RemoveRight(p_node * Tree, c_node * Tree) bool {
   var ntb bool
-  fmt.Println(ntb)
+  _ = ntb
+
   for c_node.GetHas_Right() {
     {
       ntb = c_node.SetKey(c_node.GetRight().GetKey())
@@ -304,12 +330,16 @@ func (this *Tree) RemoveRight(p_node * Tree, c_node * Tree) bool {
 
 func (this *Tree) Search(v_key int) int {
   var cont bool
+  _ = cont
 
   var current_node * Tree
+  _ = current_node
 
   var ifound int
+  _ = ifound
 
   var key_aux int
+  _ = key_aux
 
   current_node = this
   cont = true

@@ -107,7 +107,11 @@ let decl2go() (var_name, t)=
   sprintf "%s %a" var_name java_type2go t
 
 let decl_var2go () (var_name, t) =
-  sprintf "var %s %a" var_name java_type2go t
+  sprintf "var %s %a%t_ = %s" 
+  var_name 
+  java_type2go t
+  nl
+  var_name
  
 let method2go () (method_name, m, class_name,java_class)  =
   let return2go () expr = 
