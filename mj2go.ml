@@ -102,16 +102,22 @@ let java_type2go () = function
   | TypeIntArray -> sprintf "[]int"
   | Type t -> sprintf "* %s" t
 
+let java_type2go_without_pointers () = function
+  | TypeInt -> sprintf "int"
+  | TypeBool -> sprintf "bool"
+  | TypeIntArray -> sprintf "[]int"
+  | Type t -> sprintf "%s" t
+
 
 let decl2go() (var_name, t)=
   sprintf "%s %a" var_name java_type2go t
 
 let decl_var2go () (var_name, t) = 
   (match t with
-  | Type t ->   sprintf "var %s %aI%t_ = %s" 
+  | Type t ->  sprintf "var %s %aI%t_ = %s" 
   | _ ->  sprintf "var %s %a%t_ = %s")
   var_name 
-  java_type2go t
+  java_type2go_without_pointers t
   nl
   var_name
  

@@ -76,13 +76,13 @@ type MainI interface{
 }
 
 func (this *Main) start() int {
-  var a * AI
+  var a AI
   _ = a
 
-  var b * AI
+  var b AI
   _ = b
 
-  var c * AI
+  var c AI
   _ = c
 
   var tmp1 bool
