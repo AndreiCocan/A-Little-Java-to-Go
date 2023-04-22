@@ -1,12 +1,11 @@
 package main
 import "fmt"
 
-type Fac struct{
-}
-
 type FacI interface{
   computeFac(num int) int
 }
+
+type Fac struct{}
 
 func (this *Fac) computeFac(num int) int {
   var numAux int

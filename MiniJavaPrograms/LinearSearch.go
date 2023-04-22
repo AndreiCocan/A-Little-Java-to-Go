@@ -1,18 +1,17 @@
 package main
 import "fmt"
 
-type LS struct{
-  number []int
-
-  size int
-
-}
-
 type LSI interface{
   Init(sz int) int
   Print() int
   Search(num int) int
   Start(sz int) int
+}
+
+type LS struct{
+  number []int
+
+  size int
 }
 
 func (this *LS) Init(sz int) int {

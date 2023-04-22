@@ -1,18 +1,17 @@
 package main
 import "fmt"
 
-type QS struct{
-  number []int
-
-  size int
-
-}
-
 type QSI interface{
   Init(sz int) int
   Print() int
   Sort(left int, right int) int
   Start(sz int) int
+}
+
+type QS struct{
+  number []int
+
+  size int
 }
 
 func (this *QS) Init(sz int) int {
