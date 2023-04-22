@@ -14,8 +14,8 @@ func (this *MyVisitor) visit(n * Tree) int {
 
   if n.GetHas_Right() {
     {
-      r = n.GetRight()
-      nti = r.accept(this)
+      this.r = n.GetRight()
+      nti = this.r.accept(this)
     }
   } else {
     nti = 0
@@ -23,8 +23,8 @@ func (this *MyVisitor) visit(n * Tree) int {
   fmt.Println(n.GetKey())
   if n.GetHas_Left() {
     {
-      l = n.GetLeft()
-      nti = l.accept(this)
+      this.l = n.GetLeft()
+      nti = this.l.accept(this)
     }
   } else {
     nti = 0

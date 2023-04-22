@@ -20,28 +20,30 @@ let obj_cast () t =
   | Type t -> sprintf ".(*%s)" t
   | _ -> sprintf ""
 
-(*Check if the variable is in the class attributes to put this before*)
-let var2go class_attribute method_declarations var_name =
+let check_id_in_list id lst =
+  List.exists (fun (i, _) -> i = id) lst
+
+let var2go method_args method_declarations var_name =
   if StringMap.mem var_name method_declarations then
     sprintf "%s" var_name
-  else if StringMap.mem var_name class_attribute then
-    sprintf "this.%s" var_name
-  else
+  else if check_id_in_list var_name method_args then
     sprintf "%s" var_name
+  else
+    sprintf "this.%s" var_name
 
-let var2go_method_call class_attribute method_declarations var_name =
+let var2go_method_call method_args method_declarations var_name =
   if StringMap.mem var_name method_declarations then
     sprintf "%s%a" var_name obj_cast (StringMap.find var_name method_declarations)
 
-  else if StringMap.mem var_name class_attribute then
-    sprintf "this.%s" var_name
-  else
+  else if check_id_in_list var_name method_args then
     sprintf "%s" var_name
-let expression2go class_attribute method_declarations e = 
+  else
+    sprintf "this.%s" var_name
+let expression2go method_args method_declarations e = 
   let rec expr2go_method_call () e =
     match e with
     | EGetVar var-> sprintf "%s" 
-      (var2go_method_call class_attribute method_declarations var)
+      (var2go_method_call method_args method_declarations var)
     |_-> sprintf "%a" 
       expr2go e
   and expr2go () e =
@@ -50,7 +52,7 @@ let expression2go class_attribute method_declarations e =
       constant2go const
 
     | EGetVar var -> sprintf  "%s" 
-      (var2go class_attribute method_declarations var)
+      (var2go method_args method_declarations var)
 
     | EThis -> sprintf "this"
 
@@ -85,17 +87,17 @@ let expression2go class_attribute method_declarations e =
   in
   expr2go e
 
-let expression2go_method_call class_attribute method_declarations e = 
+let expression2go_method_call method_args method_declarations e = 
   let rec expr2go_method_call () e =
     match e with
     | EGetVar var-> sprintf "%s" 
-      (var2go_method_call class_attribute method_declarations var)
+      (var2go_method_call method_args method_declarations var)
     |_-> sprintf "%a" 
-      (expression2go class_attribute method_declarations) e
+      (expression2go method_args method_declarations) e
   in 
   expr2go_method_call e
 
-let statement2go class_attribute method_declarations stat = 
+let statement2go method_args method_declarations stat = 
   let rec statement2go () stat =
     match stat with 
     | SBlock statements -> sprintf"{%a%t}" 
@@ -103,28 +105,28 @@ let statement2go class_attribute method_declarations stat =
     nl
 
     | SIf(ex,stmnt1,stmnt2) -> sprintf "if %a {%a%t} else {%a%t}" 
-      (expression2go class_attribute method_declarations) ex 
+      (expression2go method_args method_declarations) ex 
       (indent indentation (statement2go)) stmnt1
       nl
       (indent indentation (statement2go)) stmnt2
       nl
 
     | SWhile (ex, stmnt) -> sprintf "for %a {%a%t}" 
-      (expression2go class_attribute method_declarations) ex 
+      (expression2go method_args method_declarations) ex 
       (indent indentation (statement2go)) stmnt
       nl
 
     | SSysou ex -> sprintf "fmt.Println(%a)" 
-      (expression2go class_attribute method_declarations) ex 
+      (expression2go method_args method_declarations) ex 
 
     | SSetVar (var,ex) -> sprintf "%s = %a" 
-      (var2go class_attribute method_declarations var) 
-      (expression2go class_attribute method_declarations) ex 
+      (var2go method_args method_declarations var) 
+      (expression2go method_args method_declarations) ex 
 
     | SArraySet (array, index, ex) -> sprintf "%s[%a] = %a"
-      (var2go class_attribute method_declarations array)
-      (expression2go class_attribute method_declarations) index 
-      (expression2go class_attribute method_declarations) ex
+      (var2go method_args method_declarations array)
+      (expression2go method_args method_declarations) index 
+      (expression2go method_args method_declarations) ex
   in statement2go stat
 
 let java_type2go () = function
@@ -155,7 +157,7 @@ let decl_var2go () (var_name, t) =
 let method2go () (method_name, m, class_name,java_class)  =
   let return2go () expr =
     sprintf "return %a" 
-    (expression2go_method_call java_class.attributes m.method_declarations) expr
+    (expression2go_method_call m.arguments m.method_declarations) expr
   in
   sprintf "func (this *%s) %s(%a) %a {%a%a%a%t}%t%t"
     class_name
@@ -163,7 +165,7 @@ let method2go () (method_name, m, class_name,java_class)  =
     (seplist comma decl2go) m.arguments
     java_type2go m.return_type
     (termlist nl (indent indentation decl_var2go)) (StringMap.to_association_list m.method_declarations)
-    (list (indent indentation (statement2go java_class.attributes m.method_declarations))) m.method_statements
+    (list (indent indentation (statement2go m.arguments m.method_declarations))) m.method_statements
     (indent indentation return2go) m.return_expression
     nl
     nl
@@ -228,6 +230,6 @@ let program2go out p =
     (*Classes*)
     (termlist nl class2go) (List.map (fun (x, y) -> (x, y, p.defs)) (StringMap.to_association_list p.defs)) 
     (*Main*)
-    (indent indentation (statement2go (StringMap.of_association_list []) (StringMap.of_association_list []))) p.main
+    (indent indentation (statement2go [] (StringMap.of_association_list []))) p.main
   )
 
