@@ -133,33 +133,33 @@ func (this *LL) Start() int {
   aux01 = head.Print()
   el01 = (&Element{})
   aux01 = el01.Init(25, 37000, false)
-  head = head.Insert(el01)
+  head = head.Insert(el01.(*Element))
   aux01 = head.Print()
   fmt.Println(10000000)
   el01 = (&Element{})
   aux01 = el01.Init(39, 42000, true)
   el02 = el01
-  head = head.Insert(el01)
+  head = head.Insert(el01.(*Element))
   aux01 = head.Print()
   fmt.Println(10000000)
   el01 = (&Element{})
   aux01 = el01.Init(22, 34000, false)
-  head = head.Insert(el01)
+  head = head.Insert(el01.(*Element))
   aux01 = head.Print()
   el03 = (&Element{})
   aux01 = el03.Init(27, 34000, false)
-  fmt.Println(head.Search(el02))
-  fmt.Println(head.Search(el03))
+  fmt.Println(head.Search(el02.(*Element)))
+  fmt.Println(head.Search(el03.(*Element)))
   fmt.Println(10000000)
   el01 = (&Element{})
   aux01 = el01.Init(28, 35000, false)
-  head = head.Insert(el01)
+  head = head.Insert(el01.(*Element))
   aux01 = head.Print()
   fmt.Println(2220000)
-  head = head.Delete(el02)
+  head = head.Delete(el02.(*Element))
   aux01 = head.Print()
   fmt.Println(33300000)
-  head = head.Delete(el01)
+  head = head.Delete(el01.(*Element))
   aux01 = head.Print()
   fmt.Println(44440000)
   return 0
@@ -224,7 +224,7 @@ func (this *List) Delete(e * Element) * List {
   var_elem = this.elem
   for !(var_end) && !(ret_val) {
     {
-      if e.Equal(var_elem) {
+      if e.Equal(var_elem.(*Element)) {
         {
           ret_val = true
           if aux04 < 0 {
@@ -255,7 +255,7 @@ func (this *List) Delete(e * Element) * List {
       }
     }
   }
-  return my_head
+  return my_head.(*List)
 }
 
 func (this *List) GetElem() * Element {
@@ -294,8 +294,8 @@ func (this *List) Insert(new_elem * Element) * List {
 
   aux03 = this
   aux02 = (&List{})
-  ret_val = aux02.InitNew(new_elem, aux03, false)
-  return aux02
+  ret_val = aux02.InitNew(new_elem, aux03.(*List), false)
+  return aux02.(*List)
 }
 
 func (this *List) Print() bool {
@@ -344,7 +344,7 @@ func (this *List) Search(e * Element) int {
   var_elem = this.elem
   for !(var_end) {
     {
-      if e.Equal(var_elem) {
+      if e.Equal(var_elem.(*Element)) {
         {
           int_ret_val = 1
         }

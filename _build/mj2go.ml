@@ -15,6 +15,11 @@ let binop2go () = function
   | OpLt  -> sprintf "<"
   | OpAnd -> sprintf "&&"
 
+let obj_cast () t = 
+  match t with
+  | Type t -> sprintf ".(*%s)" t
+  | _ -> sprintf ""
+
 (*Check if the variable is in the class attributes to put this before*)
 let var2go class_attribute method_declarations var_name =
   if StringMap.mem var_name method_declarations then
@@ -24,8 +29,22 @@ let var2go class_attribute method_declarations var_name =
   else
     sprintf "%s" var_name
 
+let var2go_method_call class_attribute method_declarations var_name =
+  if StringMap.mem var_name method_declarations then
+    sprintf "%s%a" var_name obj_cast (StringMap.find var_name method_declarations)
+
+  else if StringMap.mem var_name class_attribute then
+    sprintf "this.%s" var_name
+  else
+    sprintf "%s" var_name
 let expression2go class_attribute method_declarations e = 
-  let rec expr2go () e =
+  let rec expr2go_method_call () e =
+    match e with
+    | EGetVar var-> sprintf "%s" 
+      (var2go_method_call class_attribute method_declarations var)
+    |_-> sprintf "%a" 
+      expr2go e
+  and expr2go () e =
     match e with
     | EConst const -> sprintf  "%a" 
       constant2go const
@@ -40,7 +59,7 @@ let expression2go class_attribute method_declarations e =
                                                     |_-> sprintf "%a.%s(%a)")
                                                     expr2go java_object
                                                     method_name 
-                                                    (seplist comma expr2go) args
+                                                    (seplist comma expr2go_method_call) args
 
 
     | EArrayAlloc size -> sprintf "make([]int,%a)" 
@@ -65,6 +84,16 @@ let expression2go class_attribute method_declarations e =
     expr2go e2
   in
   expr2go e
+
+let expression2go_method_call class_attribute method_declarations e = 
+  let rec expr2go_method_call () e =
+    match e with
+    | EGetVar var-> sprintf "%s" 
+      (var2go_method_call class_attribute method_declarations var)
+    |_-> sprintf "%a" 
+      (expression2go class_attribute method_declarations) e
+  in 
+  expr2go_method_call e
 
 let statement2go class_attribute method_declarations stat = 
   let rec statement2go () stat =
@@ -124,8 +153,9 @@ let decl_var2go () (var_name, t) =
   var_name
  
 let method2go () (method_name, m, class_name,java_class)  =
-  let return2go () expr = 
-    sprintf "return %a" (expression2go java_class.attributes m.method_declarations) expr
+  let return2go () expr =
+    sprintf "return %a" 
+    (expression2go_method_call java_class.attributes m.method_declarations) expr
   in
   sprintf "func (this *%s) %s(%a) %a {%a%a%a%t}%t%t"
     class_name

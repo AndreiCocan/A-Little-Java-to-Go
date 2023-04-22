@@ -15,19 +15,19 @@ func (this *MyVisitor) visit(n * Tree) int {
   if n.GetHas_Right() {
     {
       r = n.GetRight()
-      ntil = r.accept(this)
+      nti = r.accept(this)
     }
   } else {
-    ntil = 0
+    nti = 0
   }
   fmt.Println(n.GetKey())
   if n.GetHas_Left() {
     {
       l = n.GetLeft()
-      ntil = l.accept(this)
+      nti = l.accept(this)
     }
   } else {
-    ntil = 0
+    nti = 0
   }
   return 0
 }
@@ -52,31 +52,31 @@ func (this *TV) Start() int {
   var v MyVisitorI
   _ = v
 
-  rootl = (&Tree{})
-  ntbl = rootl.Init(16)
-  ntbl = rootl.Print()
+  root = (&Tree{})
+  ntb = root.Init(16)
+  ntb = root.Print()
   fmt.Println(100000000)
-  ntbl = rootl.Insert(8)
-  ntbl = rootl.Insert(24)
-  ntbl = rootl.Insert(4)
-  ntbl = rootl.Insert(12)
-  ntbl = rootl.Insert(20)
-  ntbl = rootl.Insert(28)
-  ntbl = rootl.Insert(14)
-  ntbl = rootl.Print()
+  ntb = root.Insert(8)
+  ntb = root.Insert(24)
+  ntb = root.Insert(4)
+  ntb = root.Insert(12)
+  ntb = root.Insert(20)
+  ntb = root.Insert(28)
+  ntb = root.Insert(14)
+  ntb = root.Print()
   fmt.Println(100000000)
-  vl = (&MyVisitor{})
+  v = (&MyVisitor{})
   fmt.Println(50000000)
-  ntil = rootl.accept(vl)
+  nti = root.accept(v.(*MyVisitor))
   fmt.Println(100000000)
-  fmt.Println(rootl.Search(24))
-  fmt.Println(rootl.Search(12))
-  fmt.Println(rootl.Search(16))
-  fmt.Println(rootl.Search(50))
-  fmt.Println(rootl.Search(12))
-  ntbl = rootl.Delete(12)
-  ntbl = rootl.Print()
-  fmt.Println(rootl.Search(12))
+  fmt.Println(root.Search(24))
+  fmt.Println(root.Search(12))
+  fmt.Println(root.Search(16))
+  fmt.Println(root.Search(50))
+  fmt.Println(root.Search(12))
+  ntb = root.Delete(12)
+  ntb = root.Print()
+  fmt.Println(root.Search(12))
   return 0
 }
 
@@ -126,18 +126,18 @@ func (this *Tree) Compare(num1 int, num2 int) bool {
   var nti int
   _ = nti
 
-  ntbl = false
-  ntil = num2 + 1
+  ntb = false
+  nti = num2 + 1
   if num1 < num2 {
-    ntbl = false
+    ntb = false
   } else {
-    if !(num1 < ntil) {
-      ntbl = false
+    if !(num1 < nti) {
+      ntb = false
     } else {
-      ntbl = true
+      ntb = true
     }
   }
-  return ntbl
+  return ntb
 }
 
 func (this *Tree) Delete(v_key int) bool {
@@ -162,53 +162,53 @@ func (this *Tree) Delete(v_key int) bool {
   var parent_node TreeI
   _ = parent_node
 
-  current_nodel = this
-  parent_nodel = this
-  contl = true
-  foundl = false
-  is_rootl = true
-  for contl {
+  current_node = this
+  parent_node = this
+  cont = true
+  found = false
+  is_root = true
+  for cont {
     {
-      key_auxl = current_nodel.GetKey()
-      if v_key < key_auxl {
-        if current_nodel.GetHas_Left() {
+      key_aux = current_node.GetKey()
+      if v_key < key_aux {
+        if current_node.GetHas_Left() {
           {
-            parent_nodel = current_nodel
-            current_nodel = current_nodel.GetLeft()
+            parent_node = current_node
+            current_node = current_node.GetLeft()
           }
         } else {
-          contl = false
+          cont = false
         }
       } else {
-        if key_auxl < v_key {
-          if current_nodel.GetHas_Right() {
+        if key_aux < v_key {
+          if current_node.GetHas_Right() {
             {
-              parent_nodel = current_nodel
-              current_nodel = current_nodel.GetRight()
+              parent_node = current_node
+              current_node = current_node.GetRight()
             }
           } else {
-            contl = false
+            cont = false
           }
         } else {
           {
-            if is_rootl {
-              if !(current_nodel.GetHas_Right() && !(current_nodel.GetHas_Left())) {
-                ntbl = true
+            if is_root {
+              if !(current_node.GetHas_Right() && !(current_node.GetHas_Left())) {
+                ntb = true
               } else {
-                ntbl = this.Remove(parent_nodel, current_nodel)
+                ntb = this.Remove(parent_node.(*Tree), current_node.(*Tree))
               }
             } else {
-              ntbl = this.Remove(parent_nodel, current_nodel)
+              ntb = this.Remove(parent_node.(*Tree), current_node.(*Tree))
             }
-            foundl = true
-            contl = false
+            found = true
+            cont = false
           }
         }
       }
-      is_rootl = false
+      is_root = false
     }
   }
-  return foundl
+  return found
 }
 
 func (this *Tree) GetHas_Left() bool {
@@ -254,34 +254,34 @@ func (this *Tree) Insert(v_key int) bool {
   var ntb bool
   _ = ntb
 
-  new_nodel = (&Tree{})
-  ntbl = new_nodel.Init(v_key)
-  current_nodel = this
-  contl = true
-  for contl {
+  new_node = (&Tree{})
+  ntb = new_node.Init(v_key)
+  current_node = this
+  cont = true
+  for cont {
     {
-      key_auxl = current_nodel.GetKey()
-      if v_key < key_auxl {
+      key_aux = current_node.GetKey()
+      if v_key < key_aux {
         {
-          if current_nodel.GetHas_Left() {
-            current_nodel = current_nodel.GetLeft()
+          if current_node.GetHas_Left() {
+            current_node = current_node.GetLeft()
           } else {
             {
-              contl = false
-              ntbl = current_nodel.SetHas_Left(true)
-              ntbl = current_nodel.SetLeft(new_nodel)
+              cont = false
+              ntb = current_node.SetHas_Left(true)
+              ntb = current_node.SetLeft(new_node.(*Tree))
             }
           }
         }
       } else {
         {
-          if current_nodel.GetHas_Right() {
-            current_nodel = current_nodel.GetRight()
+          if current_node.GetHas_Right() {
+            current_node = current_node.GetRight()
           } else {
             {
-              contl = false
-              ntbl = current_nodel.SetHas_Right(true)
-              ntbl = current_nodel.SetRight(new_nodel)
+              cont = false
+              ntb = current_node.SetHas_Right(true)
+              ntb = current_node.SetRight(new_node.(*Tree))
             }
           }
         }
@@ -298,8 +298,8 @@ func (this *Tree) Print() bool {
   var ntb bool
   _ = ntb
 
-  current_nodel = this
-  ntbl = this.RecPrint(current_nodel)
+  current_node = this
+  ntb = this.RecPrint(current_node.(*Tree))
   return true
 }
 
@@ -309,18 +309,18 @@ func (this *Tree) RecPrint(node * Tree) bool {
 
   if node.GetHas_Left() {
     {
-      ntbl = this.RecPrint(node.GetLeft())
+      ntb = this.RecPrint(node.GetLeft())
     }
   } else {
-    ntbl = true
+    ntb = true
   }
   fmt.Println(node.GetKey())
   if node.GetHas_Right() {
     {
-      ntbl = this.RecPrint(node.GetRight())
+      ntb = this.RecPrint(node.GetRight())
     }
   } else {
-    ntbl = true
+    ntb = true
   }
   return true
 }
@@ -336,23 +336,23 @@ func (this *Tree) Remove(p_node * Tree, c_node * Tree) bool {
   _ = ntb
 
   if c_node.GetHas_Left() {
-    ntbl = this.RemoveLeft(p_node, c_node)
+    ntb = this.RemoveLeft(p_node, c_node)
   } else {
     if c_node.GetHas_Right() {
-      ntbl = this.RemoveRight(p_node, c_node)
+      ntb = this.RemoveRight(p_node, c_node)
     } else {
       {
-        auxkey1l = c_node.GetKey()
-        auxkey2l = p_node.GetLeft().GetKey()
-        if this.Compare(auxkey1l, auxkey2l) {
+        auxkey1 = c_node.GetKey()
+        auxkey2 = p_node.GetLeft().GetKey()
+        if this.Compare(auxkey1, auxkey2) {
           {
-            ntbl = p_node.SetLeft(this.my_null)
-            ntbl = p_node.SetHas_Left(false)
+            ntb = p_node.SetLeft(this.my_null)
+            ntb = p_node.SetHas_Left(false)
           }
         } else {
           {
-            ntbl = p_node.SetRight(this.my_null)
-            ntbl = p_node.SetHas_Right(false)
+            ntb = p_node.SetRight(this.my_null)
+            ntb = p_node.SetHas_Right(false)
           }
         }
       }
@@ -367,13 +367,13 @@ func (this *Tree) RemoveLeft(p_node * Tree, c_node * Tree) bool {
 
   for c_node.GetHas_Left() {
     {
-      ntbl = c_node.SetKey(c_node.GetLeft().GetKey())
+      ntb = c_node.SetKey(c_node.GetLeft().GetKey())
       p_node = c_node
       c_node = c_node.GetLeft()
     }
   }
-  ntbl = p_node.SetLeft(this.my_null)
-  ntbl = p_node.SetHas_Left(false)
+  ntb = p_node.SetLeft(this.my_null)
+  ntb = p_node.SetHas_Left(false)
   return true
 }
 
@@ -383,13 +383,13 @@ func (this *Tree) RemoveRight(p_node * Tree, c_node * Tree) bool {
 
   for c_node.GetHas_Right() {
     {
-      ntbl = c_node.SetKey(c_node.GetRight().GetKey())
+      ntb = c_node.SetKey(c_node.GetRight().GetKey())
       p_node = c_node
       c_node = c_node.GetRight()
     }
   }
-  ntbl = p_node.SetRight(this.my_null)
-  ntbl = p_node.SetHas_Right(false)
+  ntb = p_node.SetRight(this.my_null)
+  ntb = p_node.SetHas_Right(false)
   return true
 }
 
@@ -406,35 +406,35 @@ func (this *Tree) Search(v_key int) int {
   var key_aux int
   _ = key_aux
 
-  current_nodel = this
-  contl = true
-  ifoundl = 0
-  for contl {
+  current_node = this
+  cont = true
+  ifound = 0
+  for cont {
     {
-      key_auxl = current_nodel.GetKey()
-      if v_key < key_auxl {
-        if current_nodel.GetHas_Left() {
-          current_nodel = current_nodel.GetLeft()
+      key_aux = current_node.GetKey()
+      if v_key < key_aux {
+        if current_node.GetHas_Left() {
+          current_node = current_node.GetLeft()
         } else {
-          contl = false
+          cont = false
         }
       } else {
-        if key_auxl < v_key {
-          if current_nodel.GetHas_Right() {
-            current_nodel = current_nodel.GetRight()
+        if key_aux < v_key {
+          if current_node.GetHas_Right() {
+            current_node = current_node.GetRight()
           } else {
-            contl = false
+            cont = false
           }
         } else {
           {
-            ifoundl = 1
-            contl = false
+            ifound = 1
+            cont = false
           }
         }
       }
     }
   }
-  return ifoundl
+  return ifound
 }
 
 func (this *Tree) SetHas_Left(val bool) bool {
@@ -467,7 +467,7 @@ func (this *Tree) accept(v * Visitor) int {
   _ = nti
 
   fmt.Println(333)
-  ntil = v.visit(this)
+  nti = v.visit(this)
   return 0
 }
 
@@ -489,18 +489,18 @@ func (this *Visitor) visit(n * Tree) int {
   if n.GetHas_Right() {
     {
       this.r = n.GetRight()
-      ntil = this.r.accept(this)
+      nti = this.r.accept(this)
     }
   } else {
-    ntil = 0
+    nti = 0
   }
   if n.GetHas_Left() {
     {
       this.l = n.GetLeft()
-      ntil = this.l.accept(this)
+      nti = this.l.accept(this)
     }
   } else {
-    ntil = 0
+    nti = 0
   }
   return 0
 }

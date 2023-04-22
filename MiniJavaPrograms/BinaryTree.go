@@ -155,10 +155,10 @@ func (this *Tree) Delete(v_key int) bool {
               if !(current_node.GetHas_Right()) && !(current_node.GetHas_Left()) {
                 ntb = true
               } else {
-                ntb = this.Remove(parent_node, current_node)
+                ntb = this.Remove(parent_node.(*Tree), current_node.(*Tree))
               }
             } else {
-              ntb = this.Remove(parent_node, current_node)
+              ntb = this.Remove(parent_node.(*Tree), current_node.(*Tree))
             }
             found = true
             cont = false
@@ -229,7 +229,7 @@ func (this *Tree) Insert(v_key int) bool {
             {
               cont = false
               ntb = current_node.SetHas_Left(true)
-              ntb = current_node.SetLeft(new_node)
+              ntb = current_node.SetLeft(new_node.(*Tree))
             }
           }
         }
@@ -241,7 +241,7 @@ func (this *Tree) Insert(v_key int) bool {
             {
               cont = false
               ntb = current_node.SetHas_Right(true)
-              ntb = current_node.SetRight(new_node)
+              ntb = current_node.SetRight(new_node.(*Tree))
             }
           }
         }
@@ -259,7 +259,7 @@ func (this *Tree) Print() bool {
   _ = ntb
 
   current_node = this
-  ntb = this.RecPrint(current_node)
+  ntb = this.RecPrint(current_node.(*Tree))
   return true
 }
 
