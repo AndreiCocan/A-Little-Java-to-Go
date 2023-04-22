@@ -8,6 +8,13 @@ type LS struct{
 
 }
 
+type LSI interface{
+  Init(sz int) int
+  Print() int
+  Search(num int) int
+  Start(sz int) int
+}
+
 func (this *LS) Init(sz int) int {
   var aux01 int
   _ = aux01

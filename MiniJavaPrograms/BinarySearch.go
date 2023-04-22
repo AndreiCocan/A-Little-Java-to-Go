@@ -1,11 +1,19 @@
 package main
 import "fmt"
 
+type BSI interface{
+  Compare(num1 int, num2 int) bool
+  Div(num int) int
+  Init(sz int) int
+  Print() int
+  Search(num int) bool
+  Start(sz int) int
+}
+
 type BS struct{
   number []int
 
   size int
-
 }
 
 func (this *BS) Compare(num1 int, num2 int) bool {

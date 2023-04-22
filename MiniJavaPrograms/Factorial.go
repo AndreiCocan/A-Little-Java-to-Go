@@ -4,6 +4,10 @@ import "fmt"
 type Fac struct{
 }
 
+type FacI interface{
+  computeFac(num int) int
+}
+
 func (this *Fac) computeFac(num int) int {
   var numAux int
   _ = numAux

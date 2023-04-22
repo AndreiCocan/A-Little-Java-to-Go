@@ -1,14 +1,13 @@
 package main
 import "fmt"
 
-type A struct{
-  a int
-
-}
-
 type AI interface{
   draw() int
   init() bool
+}
+
+type A struct{
+  a int
 }
 
 func (this *A) draw() int {
@@ -22,16 +21,14 @@ func (this *A) init() bool {
 }
 
 
-type B struct {
-  A
-
-  a int
-
-}
-
 type BI interface{
   draw() int
   init() bool
+}
+
+type B struct {
+  A
+  a int
 }
 
 func (this *B) draw() int {
@@ -45,16 +42,14 @@ func (this *B) init() bool {
 }
 
 
-type C struct {
-  B
-
-  a int
-
-}
-
 type CI interface{
   draw() int
   init() bool
+}
+
+type C struct {
+  B
+  a int
 }
 
 func (this *C) draw() int {
@@ -68,12 +63,11 @@ func (this *C) init() bool {
 }
 
 
-type Main struct{
-}
-
 type MainI interface{
   start() int
 }
+
+type Main struct{}
 
 func (this *Main) start() int {
   var a AI

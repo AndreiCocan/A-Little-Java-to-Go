@@ -1,11 +1,17 @@
 package main
 import "fmt"
 
+type BBSI interface{
+  Init(sz int) int
+  Print() int
+  Sort() int
+  Start(sz int) int
+}
+
 type BBS struct{
   number []int
 
   size int
-
 }
 
 func (this *BBS) Init(sz int) int {
@@ -108,12 +114,16 @@ func (this *BBS) Start(sz int) int {
 }
 
 
-type array struct{
+type arrayI interface{
 }
 
+type array struct{}
 
-type array_ struct{
+
+type array_I interface{
 }
+
+type array_ struct{}
 
 
 func main(){

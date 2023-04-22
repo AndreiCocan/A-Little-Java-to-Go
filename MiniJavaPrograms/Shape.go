@@ -1,11 +1,13 @@
 package main
 import "fmt"
 
-type Circle struct {
-  *Shape
-  
-
+type CircleI interface{
+  draw() int
+  init() int
 }
+
+type Circle struct {
+  Shape}
 
 func (this *Circle) draw() int {
   fmt.Println(102)
@@ -13,11 +15,13 @@ func (this *Circle) draw() int {
 }
 
 
-type Rectangle struct {
-  *Shape
-  
-
+type RectangleI interface{
+  draw() int
+  init() int
 }
+
+type Rectangle struct {
+  Shape}
 
 func (this *Rectangle) draw() int {
   fmt.Println(101)
@@ -25,8 +29,12 @@ func (this *Rectangle) draw() int {
 }
 
 
-type Shape struct{
+type ShapeI interface{
+  draw() int
+  init() int
 }
+
+type Shape struct{}
 
 func (this *Shape) draw() int {
   fmt.Println(100)
@@ -34,13 +42,13 @@ func (this *Shape) draw() int {
 }
 
 func (this *Shape) init() int {
-  var c * Circle
+  var c CircleI
   _ = c
 
-  var r * Rectangle
+  var r RectangleI
   _ = r
 
-  var s * Shape
+  var s ShapeI
   _ = s
 
   var tmp int

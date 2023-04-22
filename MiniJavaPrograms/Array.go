@@ -1,8 +1,12 @@
 package main
 import "fmt"
 
-type Main struct{
+type MainI interface{
+  createArray(n int) []int
+  init() int
 }
+
+type Main struct{}
 
 func (this *Main) createArray(n int) []int {
   var a []int
