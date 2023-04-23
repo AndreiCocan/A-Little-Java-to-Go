@@ -21,6 +21,7 @@ See the installation process of `go` documented [here](https://go.dev/doc/instal
 Once you have the dependencies (see above), run the following commands in your terminal.
 ```bash
 git clone https://github.com/AndreiCocan/A-Little-Java-to-Go
+cd A-Little-Java-to-Go
 make
 ./ljava2go file.java
 ```

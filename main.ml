@@ -5,7 +5,7 @@ let ofile = ref ""
 
 let set_file f s = f := s
 
-let usage = "usage: mini-java file.java"
+let usage = "usage: ljava2go file.java"
 
 let () =
   Arg.parse [] (set_file ifile) usage;
