@@ -30,7 +30,7 @@ To translate a java file run the following command.
 ```
 A `file.go` file will now be created at the same location as `file.java`
 
-Then, you first need to create the module your code will be in. To do that, create a folder in which you will put the go file and init the go module:
+Then, you first need to create the module your code will be in. To do that, create a folder in which you will put the `file.go` and init the go module:
 ```bash
 mkdir translatedJava2Go
 cd translatedJava2Go
