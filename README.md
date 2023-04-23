@@ -2,12 +2,15 @@
 
 `Little Java to Go` is a transpiler written in [Ocaml](https://ocaml.org) from [MiniJava](https://www.cambridge.org/resources/052182060X/), which is a subset of [Java](https://en.wikipedia.org/wiki/Java_%28programming_language%29), to [Golang](https://go.dev).
 
+---
 It was made in the context of a compilation class and proved to be a challenging project.
-The program currently supports full translation from `MiniJava` to `Golang` but some cases of java polymorphism still remains untranslatable due to fundamental differences between the two languages. 
+The program currently supports translation from `MiniJava` to `Golang` but some cases of java polymorphism still remains untranslatable due to fundamental differences between the two languages. 
 
-Java allows for dynamic method dispatch through the use of virtual method tables and runtime type information, which allows it to handle method overriding and inheritance in a more flexible manner. Golang, on the other hand, uses interfaces and struct embedding to achieve similar functionality, but with a more static and explicit approach.
+Indeed, Java allows for dynamic method dispatch through the use of virtual method tables and runtime type information, which allows it to handle method overriding and inheritance in a more flexible manner. Golang, on the other hand, uses interfaces and struct embedding to achieve similar functionality, but with a more static and explicit approach.
+
 This means that some cases of Java polymorphism may not be directly translatable to Golang without significant changes to the code. In particular, cases that rely heavily on inheritance and dynamic method dispatch are difficult to replicate in Golang.
 
+However, it is still possible to translate many Java programs to Golang using the Little Java to Go transpiler. By understanding the limitations of Golang and using the appropriate language constructs, it is possible to create Golang code that captures the essence of original Java programs.
 
 ## Dependencies
 ### Ocaml 
