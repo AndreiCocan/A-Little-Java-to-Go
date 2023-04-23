@@ -17,6 +17,8 @@ See the installation process of `go` documented [here](https://go.dev/doc/instal
 
 ## Download, Compile and Run
 Once you have the dependencies (see above), run the following commands in your terminal.
-```bqsh
-git clone 
+```bash
+git clone https://github.com/AndreiCocan/A-Little-Java-to-Go
+make
+./mini-java file.java
 ```
