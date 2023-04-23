@@ -22,7 +22,7 @@ Once you have the dependencies (see above), run the following commands in your t
 ```bash
 git clone https://github.com/AndreiCocan/A-Little-Java-to-Go
 make
-./mini-java file.java
+./ljava2go file.java
 ```
 A `file.go` file will now be created at the same location as `file.java`
 
