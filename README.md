@@ -15,7 +15,7 @@ eval `opam config env`
 opam install -y ocamlbuild ocamlfind menhir
 ```
 ### Golang
-See the installation process of `go` documented [here](https://go.dev/doc/install) 
+See the installation process of `Go` documented [here](https://go.dev/doc/install) 
 
 ## Download, Compile and Run
 Once you have the dependencies (see above), run the following commands in your terminal.
@@ -36,7 +36,7 @@ mkdir translatedJava2Go
 cd translatedJava2Go
 go mod init translatedJava2Go
 ```
-To run the go file, use:
+To run the Go file, use:
 ```bash
 go run file.go
 ```
