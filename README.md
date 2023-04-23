@@ -23,6 +23,9 @@ Once you have the dependencies (see above), run the following commands in your t
 git clone https://github.com/AndreiCocan/A-Little-Java-to-Go
 cd A-Little-Java-to-Go
 make
+```
+To translate a java file run the following command.
+```bash
 ./ljava2go file.java
 ```
 A `file.go` file will now be created at the same location as `file.java`
