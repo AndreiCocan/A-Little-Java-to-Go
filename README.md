@@ -1,6 +1,6 @@
 # Little Java to Go - A MiniJava to Golang transpiler
 
-`Little Java to Go` is a transpiler written in Ocaml from [MiniJava](https://www.cambridge.org/resources/052182060X/), which is a subset of [Java](https://en.wikipedia.org/wiki/Java_%28programming_language%29), to [Golang](https://go.dev).
+`Little Java to Go` is a transpiler written in [Ocaml](https://ocaml.org) from [MiniJava](https://www.cambridge.org/resources/052182060X/), which is a subset of [Java](https://en.wikipedia.org/wiki/Java_%28programming_language%29), to [Golang](https://go.dev).
 
 It was made in the context of a compilation class and proved to be a challenging project.
 
